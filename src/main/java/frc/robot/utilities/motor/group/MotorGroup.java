@@ -1,6 +1,6 @@
-package frc.team1923.robot.utilities.motor.group;
+package frc.robot.utilities.motor.group;
 
-import frc.team1923.robot.utilities.motor.Motor;
+import frc.robot.utilities.motor.Motor;
 
 public abstract class MotorGroup<T extends Motor> {
     protected final int leaderID;

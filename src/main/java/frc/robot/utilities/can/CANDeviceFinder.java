@@ -1,4 +1,4 @@
-package frc.team1923.robot.utilities.can;
+package frc.robot.utilities.can;
 
 import edu.wpi.first.hal.can.CANInvalidBufferException;
 import edu.wpi.first.hal.can.CANJNI;

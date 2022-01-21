@@ -1,4 +1,4 @@
-package frc.team1923.robot.utilities.motor;
+package frc.robot.utilities.motor;
 
 public interface Motor {
     void setSpeed(double speed);

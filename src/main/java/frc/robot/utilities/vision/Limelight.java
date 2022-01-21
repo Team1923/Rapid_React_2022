@@ -1,4 +1,4 @@
-package frc.team1923.robot.utilities.vision;
+package frc.robot.utilities.vision;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;

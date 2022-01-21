@@ -1,6 +1,6 @@
-package frc.team1923.robot.utilities.command;
+package frc.robot.utilities.command;
 
-import frc.team1923.robot.utilities.motor.Motor;
+import frc.robot.utilities.motor.Motor;
 
 import java.util.ArrayList;
 import java.util.Arrays;

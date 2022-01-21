@@ -1,4 +1,4 @@
-package frc.team1923.robot.utilities.motor;
+package frc.robot.utilities.motor;
 
 public class OptimizedMotor implements Motor {
     private enum Mode {

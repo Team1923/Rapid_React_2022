@@ -1,9 +1,9 @@
-package frc.team1923.robot.utilities.command;
+package frc.robot.utilities.command;
 
-import frc.team1923.robot.utilities.controller.Axis;
-import frc.team1923.robot.utilities.motor.Motor;
-import frc.team1923.robot.utilities.motor.OptimizedMotor;
-import frc.team1923.robot.utilities.motor.group.MotorGroup;
+import frc.robot.utilities.controller.Axis;
+import frc.robot.utilities.motor.Motor;
+import frc.robot.utilities.motor.OptimizedMotor;
+import frc.robot.utilities.motor.group.MotorGroup;
 
 public class SingleMotorSubsystem<T extends Motor> extends MotorSubsystem {
     private final T rawMotor;

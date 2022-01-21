@@ -1,6 +1,6 @@
-package frc.team1923.robot.utilities.motor.group;
+package frc.robot.utilities.motor.group;
 
-import frc.team1923.robot.utilities.motor.ConfigurableMotor;
+import frc.robot.utilities.motor.ConfigurableMotor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

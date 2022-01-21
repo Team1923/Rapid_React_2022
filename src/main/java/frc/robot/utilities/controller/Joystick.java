@@ -1,4 +1,4 @@
-package frc.team1923.robot.utilities.controller;
+package frc.robot.utilities.controller;
 
 public class Joystick {
     public final Axis x, y;

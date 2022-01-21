@@ -1,4 +1,4 @@
-package frc.team1923.robot.utilities.motor;
+package frc.robot.utilities.motor;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;

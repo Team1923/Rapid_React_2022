@@ -1,6 +1,6 @@
-package frc.team1923.robot.utilities.motor.group;
+package frc.robot.utilities.motor.group;
 
-import frc.team1923.robot.utilities.motor.ConfigurableMotor;
+import frc.robot.utilities.motor.ConfigurableMotor;
 
 public abstract class ConfigurableMotorGroup<T extends ConfigurableMotor<T>> extends MotorGroup<T> {
     protected ConfigurableMotorGroup(int leaderID, int... followerIDs) {

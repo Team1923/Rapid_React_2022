@@ -1,6 +1,6 @@
-package frc.team1923.robot.utilities.motor.group;
+package frc.robot.utilities.motor.group;
 
-import frc.team1923.robot.utilities.motor.SparkMaxMotor;
+import frc.robot.utilities.motor.SparkMaxMotor;
 
 public class SparkMaxGroup extends ConfigurableMotorGroup<SparkMaxMotor> {
     public SparkMaxGroup(int leaderID, int... followerIDs) {

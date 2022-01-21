@@ -1,6 +1,6 @@
-package frc.team1923.robot.utilities.motor.group;
+package frc.robot.utilities.motor.group;
 
-import frc.team1923.robot.utilities.motor.TalonFXMotor;
+import frc.robot.utilities.motor.TalonFXMotor;
 
 public class TalonFXGroup extends ConfigurableMotorGroup<TalonFXMotor> {
     public TalonFXGroup(int leaderID, int... followerIDs) {

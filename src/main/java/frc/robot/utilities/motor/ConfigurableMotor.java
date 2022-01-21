@@ -1,4 +1,4 @@
-package frc.team1923.robot.utilities.motor;
+package frc.robot.utilities.motor;
 
 public interface ConfigurableMotor<T extends ConfigurableMotor<T>> extends Motor {
     void setSoftLimits(double reverse, double forward);
