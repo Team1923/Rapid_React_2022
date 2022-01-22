@@ -5,8 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DriveTrainCommands.TankDriveCommand;
+import frc.robot.utilities.controller.PS4Controller;
 import frc.robot.utilities.controller.XboxController;
+import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -20,7 +23,8 @@ public class RobotContainer {
   
 
 
-  public final XboxController driver = new XboxController(0);
+  public final XboxController driver = new XboxController(Constants.driverPort);
+  public final PS4Controller operator = new PS4Controller(Constants.operatorPort);
 
 
 
@@ -29,6 +33,7 @@ public class RobotContainer {
 
     //Starting the DriveTrain 
     new TankDriveCommand(driver.rightStick.y, driver.leftStick.y);
+
     
 
   }

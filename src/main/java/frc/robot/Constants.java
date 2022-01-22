@@ -6,7 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-
+import frc.robot.utilities.controller.Controller;
 import frc.robot.utilities.motor.TalonFXMotor;
 import frc.robot.utilities.motor.group.MotorGroup;
 import frc.robot.utilities.motor.group.TalonFXGroup;
@@ -23,8 +23,11 @@ public final class Constants {
 
     //DriveTrain Constant
     public static final MotorGroup<TalonFXMotor> RightMotors = new TalonFXGroup(0, 0, 0); //Change Ids
-    public static final MotorGroup<TalonFXMotor> LeftMotors = new TalonFXGroup(0, 0, 0);
+    public static final MotorGroup<TalonFXMotor> LeftMotors = new TalonFXGroup(0, 0, 0).inverting();
 
-   
+    //Controller Ports
+    public static final int driverPort = 0;
+    public static final int operatorPort = 1;
+
 
 }
