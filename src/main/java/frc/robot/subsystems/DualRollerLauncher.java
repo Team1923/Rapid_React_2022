@@ -70,19 +70,19 @@ public class DualRollerLauncher extends SubsystemBase {
     // this will allow it to be actually usable.
 
     // front roller PID
-    if (back_kp != b_kp.getDouble(0)) {
-      back_kp = (int) b_kp.getDouble(0);
+    if (front_kp != f_kp.getDouble(0)) {
+      front_kp = (int) f_kp.getDouble(0);
       b_kp.setDouble(back_kp);
     }
 
-    if (back_ki != b_ki.getDouble(0)) {
-      back_ki = (int) b_ki.getDouble(0);
-      b_ki.setDouble(back_ki);
+    if (front_ki != f_ki.getDouble(0)) {
+      front_ki = (int) f_ki.getDouble(0);
+      f_ki.setDouble(front_ki);
     }
 
-    if (back_kd != b_kd.getDouble(0)) {
-      back_kd = (int) b_kd.getDouble(0);
-      b_kd.setDouble(back_kd);
+    if (front_kd != f_kd.getDouble(0)) {
+      front_kd = (int) f_kd.getDouble(0);
+      f_kd.setDouble(front_kd);
     }
 
     // back roller PID
