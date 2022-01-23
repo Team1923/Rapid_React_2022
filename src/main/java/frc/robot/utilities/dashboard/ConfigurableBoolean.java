@@ -5,16 +5,18 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ConfigurableBoolean {
-    public ConfigurableBoolean(String name, Runnable callback) {
-        NetworkTableEntry entry = SmartDashboard.getEntry(name);
-        entry.addListener(entryNotification -> {
-            if (entryNotification.value.getBoolean()) {
-                entry.setBoolean(false);
-                callback.run();
-            }
-        }, EntryListenerFlags.kUpdate);
+  public ConfigurableBoolean(String name, Runnable callback) {
+    NetworkTableEntry entry = SmartDashboard.getEntry(name);
+    entry.addListener(
+        entryNotification -> {
+          if (entryNotification.value.getBoolean()) {
+            entry.setBoolean(false);
+            callback.run();
+          }
+        },
+        EntryListenerFlags.kUpdate);
 
-        entry.setBoolean(true);
-        entry.setBoolean(false);
-    }
+    entry.setBoolean(true);
+    entry.setBoolean(false);
+  }
 }

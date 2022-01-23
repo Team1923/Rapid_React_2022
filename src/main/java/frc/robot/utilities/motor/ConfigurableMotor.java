@@ -1,23 +1,27 @@
 package frc.robot.utilities.motor;
 
 public interface ConfigurableMotor<T extends ConfigurableMotor<T>> extends Motor {
-    void setSoftLimits(double reverse, double forward);
-    void enableSoftLimits(boolean enable);
+  void setSoftLimits(double reverse, double forward);
 
-    default void enableSoftLimits() {
-        this.enableSoftLimits(true);
-    }
+  void enableSoftLimits(boolean enable);
 
-    default void disableSoftLimits() {
-        this.enableSoftLimits(false);
-    }
+  default void enableSoftLimits() {
+    this.enableSoftLimits(true);
+  }
 
-    void setRamp(double rate);
+  default void disableSoftLimits() {
+    this.enableSoftLimits(false);
+  }
 
-    void setP(double p);
-    void setI(double i);
-    void setD(double d);
-    void setF(double f);
+  void setRamp(double rate);
 
-    void follow(T leader);
+  void setP(double p);
+
+  void setI(double i);
+
+  void setD(double d);
+
+  void setF(double f);
+
+  void follow(T leader);
 }
