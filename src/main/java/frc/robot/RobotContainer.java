@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.DriveTrainCommands.DualRollerLauncherCommand;
 import frc.robot.commands.DriveTrainCommands.TankDriveCommand;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.controller.PS4Controller;
@@ -19,11 +20,15 @@ import frc.robot.utilities.controller.XboxController;
 public class RobotContainer {
 
   public static final DualRollerLauncher drl = new DualRollerLauncher();
+  public static final DualRollerLauncherCommand drlCommand = new DualRollerLauncherCommand(drl);
 
   public final XboxController driver = new XboxController(Constants.driverPort);
   public final PS4Controller operator = new PS4Controller(Constants.operatorPort);
 
   public RobotContainer() {
+
+    //starting the roller wheels
+    driver.a.whenHeld(drlCommand);
 
     // Starting the DriveTrain
     new TankDriveCommand(driver.rightStick.y, driver.leftStick.y);
