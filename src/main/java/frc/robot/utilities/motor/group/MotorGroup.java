@@ -3,58 +3,58 @@ package frc.robot.utilities.motor.group;
 import frc.robot.utilities.motor.Motor;
 
 public abstract class MotorGroup<T extends Motor> {
-    protected final int leaderID;
-    protected final int[] followerIDs;
+  protected final int leaderID;
+  protected final int[] followerIDs;
 
-    protected boolean invert, coast;
+  protected boolean invert, coast;
 
-    protected boolean softLimit;
-    protected double forwardSoftLimit, reverseSoftLimit;
+  protected boolean softLimit;
+  protected double forwardSoftLimit, reverseSoftLimit;
 
-    protected double rampRate;
+  protected double rampRate;
 
-    protected double p, i, d, f;
+  protected double p, i, d, f;
 
-    protected MotorGroup(int leaderID, int... followerIDs) {
-        this.leaderID = leaderID;
-        this.followerIDs = followerIDs;
-    }
+  protected MotorGroup(int leaderID, int... followerIDs) {
+    this.leaderID = leaderID;
+    this.followerIDs = followerIDs;
+  }
 
-    public abstract T create();
+  public abstract T create();
 
-    public MotorGroup<T> inverting() {
-        this.invert = true;
+  public MotorGroup<T> inverting() {
+    this.invert = true;
 
-        return this;
-    }
+    return this;
+  }
 
-    public MotorGroup<T> coasting() {
-        this.coast = true;
+  public MotorGroup<T> coasting() {
+    this.coast = true;
 
-        return this;
-    }
+    return this;
+  }
 
-    public MotorGroup<T> softLimiting(double reverse, double forward) {
-        this.softLimit = true;
+  public MotorGroup<T> softLimiting(double reverse, double forward) {
+    this.softLimit = true;
 
-        this.forwardSoftLimit = forward;
-        this.reverseSoftLimit = reverse;
+    this.forwardSoftLimit = forward;
+    this.reverseSoftLimit = reverse;
 
-        return this;
-    }
+    return this;
+  }
 
-    public MotorGroup<T> ramping(double rate) {
-        this.rampRate = rate;
+  public MotorGroup<T> ramping(double rate) {
+    this.rampRate = rate;
 
-        return this;
-    }
+    return this;
+  }
 
-    public MotorGroup<T> withPIDF(double p, double i, double d, double f) {
-        this.p = p;
-        this.i = i;
-        this.d = d;
-        this.f = f;
+  public MotorGroup<T> withPIDF(double p, double i, double d, double f) {
+    this.p = p;
+    this.i = i;
+    this.d = d;
+    this.f = f;
 
-        return this;
-    }
+    return this;
+  }
 }

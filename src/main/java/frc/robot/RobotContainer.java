@@ -4,14 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveTrainCommands.TankDriveCommand;
+import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.controller.PS4Controller;
 import frc.robot.utilities.controller.XboxController;
-import frc.robot.Constants;
-
-import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,27 +17,17 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  
 
+  public static final DualRollerLauncher drl = new DualRollerLauncher();
 
   public final XboxController driver = new XboxController(Constants.driverPort);
   public final PS4Controller operator = new PS4Controller(Constants.operatorPort);
 
+  public RobotContainer() {
 
-
-  public RobotContainer(){
-
-
-    //Starting the DriveTrain 
+    // Starting the DriveTrain
     new TankDriveCommand(driver.rightStick.y, driver.leftStick.y);
-
-    
-
   }
- 
-
-
-
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

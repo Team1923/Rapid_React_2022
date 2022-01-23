@@ -1,16 +1,19 @@
 package frc.robot.utilities.motor;
 
 public interface Motor {
-    void setSpeed(double speed);
+  void setSpeed(double speed);
 
-    default void stop() {
-        this.setSpeed(0);
-    }
+  default void stop() {
+    this.setSpeed(0);
+  }
 
-    double getPosition();
-    void resetPosition(double position);
-    void setPosition(double position);
+  double getPosition();
 
-    double getVelocity();
-    void setVelocity(double velocity);
+  void resetPosition(double position);
+
+  void setPosition(double position);
+
+  double getVelocity();
+
+  void setVelocity(double velocity);
 }

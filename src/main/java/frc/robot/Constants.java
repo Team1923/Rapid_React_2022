@@ -4,13 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import frc.robot.utilities.controller.Controller;
-import frc.robot.utilities.motor.TalonFXMotor;
-import frc.robot.utilities.motor.group.MotorGroup;
-import frc.robot.utilities.motor.group.TalonFXGroup;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -21,13 +14,24 @@ import frc.robot.utilities.motor.group.TalonFXGroup;
  */
 public final class Constants {
 
-    //DriveTrain Constant
-    public static final MotorGroup<TalonFXMotor> RightMotors = new TalonFXGroup(0, 0, 0); //Change Ids
-    public static final MotorGroup<TalonFXMotor> LeftMotors = new TalonFXGroup(0, 0, 0).inverting();
+  // Motor group reflection breaks with 2022 FRC/CTRE stuff, so in leiu of that it had to be
+  // swapped.
+  // It compiles, but doesn't run.
 
-    //Controller Ports
-    public static final int driverPort = 0;
-    public static final int operatorPort = 1;
+  // DriveTrain Constants - TODO CHANGE
+  public static final int l1 = 10;
+  public static final int l2 = 11;
+  public static final int l3 = 12;
+  public static final int r1 = 13;
+  public static final int r2 = 14;
+  public static final int r3 = 15;
 
+  // Controller Ports
+  public static final int driverPort = 0;
+  public static final int operatorPort = 1;
 
+  // dual roller launcher constants
+
+  public static final int frontRollerMotor = 16;
+  public static final int backRollerMotor = 17;
 }
