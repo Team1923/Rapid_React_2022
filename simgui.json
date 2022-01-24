@@ -6,13 +6,5 @@
       "/LiveWindow/TankDriveCommand": "Subsystem",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler"
     }
-  },
-  "NetworkTables": {
-    "Shuffleboard": {
-      "open": true,
-      "tune dual roller": {
-        "open": true
-      }
-    }
   }
 }

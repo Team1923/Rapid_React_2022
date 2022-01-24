@@ -12,11 +12,11 @@ public class Controller {
   }
 
   protected Axis axis(int axis) {
-    return new Axis(() -> DriverStation.getInstance().getStickAxis(this.port, axis));
+    return new Axis(() -> DriverStation.getStickAxis(this.port, axis));
   }
 
   protected Button button(int button) {
-    return new Button(() -> DriverStation.getInstance().getStickButton(this.port, button));
+    return new Button(() -> DriverStation.getStickButton(this.port, button));
   }
 
   protected DPad dPad(int pov) {
@@ -30,7 +30,7 @@ public class Controller {
   private Button povButton(int pov, double... angles) {
     return new Button(
         () -> {
-          double angle = DriverStation.getInstance().getStickPOV(this.port, pov);
+          double angle = DriverStation.getStickPOV(this.port, pov);
           for (double i : angles) if (i == angle) return true;
           return false;
         });

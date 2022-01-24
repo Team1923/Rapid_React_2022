@@ -64,6 +64,20 @@ public class DualRollerLauncher extends SubsystemBase {
    
   }
 
+  public void setPIDBack(double kP, double kI, double kD) {
+    backMotor.config_kP(0, kP);
+    backMotor.config_kI(0, kI);
+    backMotor.config_kD(0, kD);
+    backMotor.config_kF(0, 0); // we explicitly set this to avoid any shenanigans with feedforwards
+    backMotor.config_IntegralZone(0, 0.0); // not sure if this should be zero or not.
+  }
+
+  public void setBackVelocity(double setpt) {
+
+    backMotor.set(ControlMode.Velocity, setpt);
+   
+  }
+
   @Override
   public void periodic() {
 

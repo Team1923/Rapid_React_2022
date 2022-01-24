@@ -5,8 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.DriveTrainCommands.DualRollerLauncherCommand;
 import frc.robot.commands.DriveTrainCommands.TankDriveCommand;
+import frc.robot.commands.DualRollerLauncherCommand.DualRollerLauncherCommand;
+import frc.robot.commands.DualRollerLauncherCommand.DualRollerLauncherCommandSet0;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.controller.PS4Controller;
 import frc.robot.utilities.controller.XboxController;
@@ -27,9 +28,9 @@ public class RobotContainer {
   public RobotContainer() {
 
     //starting the roller wheel
-    driver.a.whenPressed(new DualRollerLauncherCommand(drl));
+    driver.a.whileHeld(new DualRollerLauncherCommand(drl));
     //Stopping the roller wheel
-    driver.b.whenPressed(new DualRollerLauncherCommand(drl, 0));
+    driver.b.whileHeld(new DualRollerLauncherCommandSet0(drl));
 
     // Starting the DriveTrain
     new TankDriveCommand(driver.rightStick.y, driver.leftStick.y);
