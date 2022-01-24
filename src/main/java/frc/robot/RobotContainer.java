@@ -20,15 +20,16 @@ import frc.robot.utilities.controller.XboxController;
 public class RobotContainer {
 
   public static final DualRollerLauncher drl = new DualRollerLauncher();
-  public static final DualRollerLauncherCommand drlCommand = new DualRollerLauncherCommand(drl);
 
   public final XboxController driver = new XboxController(Constants.driverPort);
   public final PS4Controller operator = new PS4Controller(Constants.operatorPort);
 
   public RobotContainer() {
 
-    //starting the roller wheels
-    driver.a.whenHeld(drlCommand);
+    //starting the roller wheel
+    driver.a.whenPressed(new DualRollerLauncherCommand(drl));
+    //Stopping the roller wheel
+    driver.b.whenPressed(new DualRollerLauncherCommand(drl, 0));
 
     // Starting the DriveTrain
     new TankDriveCommand(driver.rightStick.y, driver.leftStick.y);

@@ -1,5 +1,7 @@
 package frc.robot.commands.DriveTrainCommands;
 
+import com.ctre.phoenix.motorcontrol.VelocityMeasPeriod;
+
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -15,22 +17,30 @@ public class DualRollerLauncherCommand extends CommandBase{
     
 
     NetworkTableEntry rpm = tuneDualRollerTab.add("Velocity", 0).getEntry();
-    
+    NetworkTableEntry currentVelocity = tuneDualRollerTab.add("Velocity", 0).getEntry();
+    double TargetVelocity;
+
 
 
 
     //creating a drl command
     public DualRollerLauncherCommand(DualRollerLauncher drl){
-        
         this.drl = drl;
+        TargetVelocity = rpm.getDouble(0);
+        
+    }
+
+    public DualRollerLauncherCommand(DualRollerLauncher drl, int vel){
+        this.drl = drl;
+        TargetVelocity = vel;
         
     }
 
 
     //setting the front motors to the target RPM.
     public void execute(){
+       currentVelocity.setDouble(drl.frontMotor.getSelectedSensorVelocity());
         
-        double TargetVelocity = rpm.getDouble(0);
 
         drl.setFrontVelocity(TargetVelocity);
         

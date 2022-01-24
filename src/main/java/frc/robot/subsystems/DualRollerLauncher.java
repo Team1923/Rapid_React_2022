@@ -61,6 +61,7 @@ public class DualRollerLauncher extends SubsystemBase {
   public void setFrontVelocity(double setpt) {
 
     frontMotor.set(ControlMode.Velocity, setpt);
+   
   }
 
   @Override
