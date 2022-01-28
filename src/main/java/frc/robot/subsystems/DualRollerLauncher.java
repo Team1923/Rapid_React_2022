@@ -61,7 +61,6 @@ public class DualRollerLauncher extends SubsystemBase {
   public void setFrontVelocity(double setpt) {
 
     frontMotor.set(ControlMode.Velocity, setpt);
-   
   }
 
   public void setPIDBack(double kP, double kI, double kD) {
@@ -75,7 +74,6 @@ public class DualRollerLauncher extends SubsystemBase {
   public void setBackVelocity(double setpt) {
 
     backMotor.set(ControlMode.Velocity, setpt);
-   
   }
 
   @Override
