@@ -7,25 +7,26 @@ public class ArcadeDriveCommand extends CommandBase {
 
   public ArcadeDriveCommand(DriveTrainSubsystem drive) {
     addRequirements(drive);
+    drive.arcadeDrive(0, 0);
+    /* by default we stop the drivetrain.  this _will_ have issues
+    until we switch to closed loop control and add ramp rates. */
   }
 
-  /*this command can return true at any time, because it'll be a continuous, default command.
-  We don't need to worry about the isFinished function for a "stateless" command, that commands a subsystem without
-  much smarts, but if we were say, chaining a launcher command, we *would* need to write some logic
-  to determine whether the command can be like "yep we did the thing we need to."
-
-  See: https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html#simple-command-example
-  */
-
-  // second command to do zeroing and stuff.
   public ArcadeDriveCommand(DriveTrainSubsystem drive, double xSpeed, double zRot) {
     addRequirements(drive);
     drive.arcadeDrive(xSpeed, zRot);
   }
 
+  /* The isFinished function will return false forever, because we're using this as a default command and cannot, by definition, ever be done.
+  It simply takes a lower priority by virtue of that, and cancels the default command if something *else*
+  gets scheduled / needs the subsystem 'drive', which our drive command will.
+
+  See: https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html#simple-command-example
+  */
+
   @Override
   public boolean isFinished() {
 
-    return true;
+    return false;
   }
 }
