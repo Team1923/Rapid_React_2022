@@ -34,9 +34,10 @@ public final class Constants {
   public static final int frontRollerMotor = 16;
   public static final int backRollerMotor = 17;
 
-  // dual roller launcher constants
-
   // TODO CHANGE climber motor IDs
   public static final int climberLeft = 20;
   public static final int climberRight = 21;
+
+  // intake motor
+  public static final int intakeMotor = 22;
 }
