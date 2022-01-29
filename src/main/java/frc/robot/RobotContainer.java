@@ -30,15 +30,15 @@ public class RobotContainer {
   public static final DualRollerLauncher drl = new DualRollerLauncher();
 
   public RobotContainer() {
-    new JoystickButton(driver, XboxController.Button.kA.value)
-        .whileHeld(new DualRollerLauncherCommand(drl));
+    //new JoystickButton(driver, XboxController.Button.kA.value)
+       // .whileHeld(new DualRollerLauncherCommand(drl));
 
     // this stuff is mirrored mostly from this.
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-
+/*
     new JoystickButton(driver, XboxController.Axis.kLeftY.value)
         .and(new JoystickButton(driver, XboxController.Axis.kRightX.value))
-        .whenActive(new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX()));
+        .whenActive(new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX()));*/
   }
 
   public Command getAutonomousCommand() {

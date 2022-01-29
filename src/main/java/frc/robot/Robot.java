@@ -3,11 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.subsystems.DriveTrainSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -19,6 +22,14 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  public static XboxController driver = new XboxController(0);
+  public static PS4Controller operator = new PS4Controller(1);
+
+  public static Joystick controller;
+
+  public static DriveTrainSubsystem drive = new DriveTrainSubsystem();
+
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -28,6 +39,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    controller = new Joystick(0);
   }
 
   /**
@@ -74,6 +86,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+
+  
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -81,7 +96,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    new ArcadeDriveCommand(drive, controller.getRawAxis(1), controller.getRawAxis(5));
+
+  }
 
   @Override
   public void testInit() {

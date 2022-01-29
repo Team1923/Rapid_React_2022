@@ -19,12 +19,12 @@ public final class Constants {
   // It compiles, but doesn't run.
 
   // DriveTrain Constants - TODO CHANGE
-  public static final int l1 = 10;
-  public static final int l2 = 11;
-  public static final int l3 = 12;
-  public static final int r1 = 13;
-  public static final int r2 = 14;
-  public static final int r3 = 15;
+  public static final int l1 = 1;
+  public static final int l2 = 2;
+  public static final int l3 = 3;
+  public static final int r1 = 4;
+  public static final int r2 = 5;
+  public static final int r3 = 6;
 
   // Controller Ports
   public static final int driverPort = 0;
