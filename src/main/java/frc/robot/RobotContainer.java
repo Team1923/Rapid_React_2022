@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.DualRollerLauncherCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
@@ -30,12 +29,12 @@ public class RobotContainer {
   public static final DualRollerLauncher drl = new DualRollerLauncher();
 
   public RobotContainer() {
-    //new JoystickButton(driver, XboxController.Button.kA.value)
-       // .whileHeld(new DualRollerLauncherCommand(drl));
+    new JoystickButton(driver, XboxController.Button.kA.value)
+        .whileHeld(new DualRollerLauncherCommand(drl));
 
     // this stuff is mirrored mostly from this.
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-/*
+    /*
     new JoystickButton(driver, XboxController.Axis.kLeftY.value)
         .and(new JoystickButton(driver, XboxController.Axis.kRightX.value))
         .whenActive(new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX()));*/
