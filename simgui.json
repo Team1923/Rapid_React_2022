@@ -2,6 +2,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/DriveTrainSubsystem": "Subsystem",
       "/LiveWindow/DualRollerLauncher": "Subsystem",
       "/LiveWindow/TankDriveCommand": "Subsystem",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler"

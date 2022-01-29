@@ -16,22 +16,27 @@ public final class Constants {
 
   // Motor group reflection breaks with 2022 FRC/CTRE stuff, so in leiu of that it had to be
   // swapped.
-  // It compiles, but doesn't run.
 
-  // DriveTrain Constants - TODO CHANGE
-  public static final int l1 = 10;
-  public static final int l2 = 11;
-  public static final int l3 = 12;
-  public static final int r1 = 13;
-  public static final int r2 = 14;
-  public static final int r3 = 15;
+  // DriveTrain Constants
+  public static final int l1 = 1;
+  public static final int l2 = 2;
+  public static final int l3 = 3;
+  public static final int r1 = 4;
+  public static final int r2 = 5;
+  public static final int r3 = 6;
 
   // Controller Ports
   public static final int driverPort = 0;
   public static final int operatorPort = 1;
 
-  // dual roller launcher constants
+  // dual roller launcher ports
 
   public static final int frontRollerMotor = 16;
   public static final int backRollerMotor = 17;
+
+  // dual roller launcher constants
+
+  // TODO CHANGE climber motor IDs
+  public static final int climberLeft = 20;
+  public static final int climberRight = 21;
 }

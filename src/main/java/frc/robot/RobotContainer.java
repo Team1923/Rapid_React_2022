@@ -4,13 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.DriveTrainCommands.TankDriveCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualRollerLauncherCommand.DualRollerLauncherCommand;
-import frc.robot.commands.DualRollerLauncherCommand.DualRollerLauncherCommandSet0;
+import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
-import frc.robot.utilities.controller.PS4Controller;
-import frc.robot.utilities.controller.XboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,20 +20,24 @@ import frc.robot.utilities.controller.XboxController;
  */
 public class RobotContainer {
 
+  // controllers
+  public static XboxController driver = new XboxController(0);
+  public static PS4Controller operator = new PS4Controller(1);
+
+  public static DriveTrainSubsystem drive = new DriveTrainSubsystem();
+
   public static final DualRollerLauncher drl = new DualRollerLauncher();
 
-  public final XboxController driver = new XboxController(Constants.driverPort);
-  public final PS4Controller operator = new PS4Controller(Constants.operatorPort);
-
   public RobotContainer() {
+    new JoystickButton(driver, XboxController.Button.kA.value)
+        .whileHeld(new DualRollerLauncherCommand(drl));
 
-    //starting the roller wheel
-    driver.a.whileHeld(new DualRollerLauncherCommand(drl));
-    //Stopping the roller wheel
-    driver.b.whileHeld(new DualRollerLauncherCommandSet0(drl));
-
-    // Starting the DriveTrain
-    new TankDriveCommand(driver.rightStick.y, driver.leftStick.y);
+    // this stuff is mirrored mostly from this.
+    // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+    /*
+    new JoystickButton(driver, XboxController.Axis.kLeftY.value)
+        .and(new JoystickButton(driver, XboxController.Axis.kRightX.value))
+        .whenActive(new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX()));*/
   }
 
   public Command getAutonomousCommand() {

@@ -1,25 +1,32 @@
 package frc.robot.commands.DriveTrainCommands;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.utilities.controller.Axis;
 
-public class ArcadeDriveCommand extends DriveTrainSubsystem {
+public class ArcadeDriveCommand extends CommandBase {
 
-  private Axis LeftStick, RightStick;
-
-  public ArcadeDriveCommand(Axis LeftStick, Axis RightStick) {
-
-    this.LeftStick = LeftStick;
-    this.RightStick = RightStick;
+  public ArcadeDriveCommand(DriveTrainSubsystem drive) {
+    addRequirements(drive);
+    drive.arcadeDrive(0, 0);
+    /* by default we stop the drivetrain.  this _will_ have issues
+    until we switch to closed loop control and add ramp rates. */
   }
 
-  public void excute() {
-    setSpeed(
-        LeftStick.add(RightStick.map(value -> value * Math.pow(1 - 0.5 * LeftStick.get(), 2)))
-            .clamp()
-            .get(),
-        LeftStick.subtract(RightStick.map(value -> value * Math.pow(1 - 0.5 * LeftStick.get(), 2)))
-            .clamp()
-            .get());
+  public ArcadeDriveCommand(DriveTrainSubsystem drive, double xSpeed, double zRot) {
+    addRequirements(drive);
+    drive.arcadeDrive(xSpeed, zRot);
+  }
+
+  /* The isFinished function will return false forever, because we're using this as a default command and cannot, by definition, ever be done.
+  It simply takes a lower priority by virtue of that, and cancels the default command if something *else*
+  gets scheduled / needs the subsystem 'drive', which our drive command will.
+
+  See: https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html#simple-command-example
+  */
+
+  @Override
+  public boolean isFinished() {
+
+    return false;
   }
 }
