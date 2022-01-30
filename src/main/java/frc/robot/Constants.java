@@ -40,4 +40,10 @@ public final class Constants {
 
   // intake motor
   public static final int intakeMotor = 22;
+
+  //climber motors
+
+  public static final int leftClimberMotor = 23;
+  public static final int rightClimberMotor = 24;
+
 }
