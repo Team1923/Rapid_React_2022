@@ -4,16 +4,25 @@
 
 package frc.robot.commands.Climber;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
+
+  boolean isFinished = false;
   public ClimberCommand(ClimberSubsystem climber, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climber);
     climber.runClimber(speed);
+         
+    TalonFX leftMotor = climber.getLeftMotor();
 
+    double currentValue = leftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30).value;
+    isFinished = climber.isInRange(currentValue, 10, 0.2);
 
   }
 
@@ -32,6 +41,6 @@ public class ClimberCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }

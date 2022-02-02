@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
@@ -29,8 +28,6 @@ public class Robot extends TimedRobot {
   public static XboxController driver = new XboxController(0);
   public static PS4Controller operator = new PS4Controller(1);
 
-
-
   public static DriveTrainSubsystem drive = new DriveTrainSubsystem();
   public static ClimberSubsystem climber = new ClimberSubsystem();
 
@@ -43,7 +40,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    
   }
 
   /**
@@ -100,16 +96,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightY());
+    new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX());
 
-    if(driver.getRightTriggerAxis() > 0){
+    if (driver.getRightTriggerAxis() > 0) {
       new ClimberCommand(climber, driver.getRightTriggerAxis());
-    }
-    else if(driver.getLeftTriggerAxis() > 0){
+    } else if (driver.getLeftTriggerAxis() > 0) {
       new ClimberCommand(climber, driver.getLeftTriggerAxis() * -1);
     }
-
-   
   }
 
   @Override

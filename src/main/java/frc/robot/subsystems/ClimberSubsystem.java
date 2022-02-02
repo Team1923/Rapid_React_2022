@@ -8,30 +8,56 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.Intake.RunIntakeCommand;
-
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
-
   private TalonFX leftMotor = new TalonFX(Constants.leftClimberMotor);
+
   private TalonFX rightMotor = new TalonFX(Constants.rightClimberMotor);
 
+  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = 
+    new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
+  
+
+  
 
   public ClimberSubsystem() {
     leftMotor.configFactoryDefault();
     rightMotor.configFactoryDefault();
+
+    //follow
+    rightMotor.follow(leftMotor);
     rightMotor.setInverted(InvertType.InvertMotorOutput);
 
+    leftMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+    rightMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+
+    //configing motion magic
+    leftMotor.selectProfileSlot(0, 0);
+    leftMotor.config_kF(Constants.kIdx, Constants.kF, Constants.kTimeoutMs);
+    leftMotor.config_kP(Constants.kIdx, Constants.kP, Constants.kTimeoutMs);
+    leftMotor.config_kI(Constants.kIdx, Constants.kI, Constants.kTimeoutMs);
+		leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
+
+    
+
+  } 
+
+  public void runClimber(double speed) {
+    double target = 0;
+    leftMotor.set(ControlMode.MotionMagic, target ); // target is based on controller values
   }
 
-  public void runClimber(double speed){
-    leftMotor.set(ControlMode.PercentOutput, speed);
-    rightMotor.set(ControlMode.PercentOutput, speed);
+  public TalonFX getLeftMotor(){
+    return leftMotor;
+  }
+
+
+  public boolean isInRange(double currentValue, double target, double variation){
+
+    return(  currentValue < (target + variation) && currentValue > (target - variation));
 
   }
 

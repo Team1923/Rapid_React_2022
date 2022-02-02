@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -15,6 +16,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private TalonFX l2 = new TalonFX(Constants.l2);
   private TalonFX l3 = new TalonFX(Constants.l3);
 
+  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = 
+    new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
+
   public DriveTrainSubsystem() {
 
     // follower setup
@@ -22,16 +26,31 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // Taken from example here:
     // https://github.com/CrossTheRoadElec/Phoenix-Examples-Languages/blob/master/Java%20Talon%20FX%20(Falcon%20500)/DifferentialDrive/src/main/java/frc/robot/Robot.java#L143
 
+    r1.configFactoryDefault();
+    r2.configFactoryDefault();
+    r3.configFactoryDefault();
+    l1.configFactoryDefault();
+    l2.configFactoryDefault();
+    l3.configFactoryDefault();
+
+    r1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+    l1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+    
+
     r2.follow(r1);
     r3.follow(r1);
     l2.follow(l1);
     l3.follow(l1);
+
+    
 
     // set inverts to make "full forward" actually make the robot go forward.
 
     l2.setInverted(InvertType.FollowMaster);
     l2.setInverted(InvertType.FollowMaster);
     l1.setInverted(InvertType.InvertMotorOutput);
+
+    
 
     setDefaultCommand(new ArcadeDriveCommand(this));
   }
