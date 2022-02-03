@@ -17,48 +17,40 @@ public class ClimberSubsystem extends SubsystemBase {
 
   private TalonFX rightMotor = new TalonFX(Constants.rightClimberMotor);
 
-  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = 
-    new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
-  
-
-  
+  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
+      new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
   public ClimberSubsystem() {
     leftMotor.configFactoryDefault();
     rightMotor.configFactoryDefault();
 
-    //follow
+    // follow
     rightMotor.follow(leftMotor);
     rightMotor.setInverted(InvertType.InvertMotorOutput);
 
     leftMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
     rightMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
 
-    //configing motion magic
+    // configing motion magic
     leftMotor.selectProfileSlot(0, 0);
     leftMotor.config_kF(Constants.kIdx, Constants.kF, Constants.kTimeoutMs);
     leftMotor.config_kP(Constants.kIdx, Constants.kP, Constants.kTimeoutMs);
     leftMotor.config_kI(Constants.kIdx, Constants.kI, Constants.kTimeoutMs);
-		leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
-
-    
-
-  } 
+    leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
+  }
 
   public void runClimber(double speed) {
     double target = 0;
-    leftMotor.set(ControlMode.MotionMagic, target ); // target is based on controller values
+    leftMotor.set(ControlMode.MotionMagic, target); // target is based on controller values
   }
 
-  public TalonFX getLeftMotor(){
+  public TalonFX getLeftMotor() {
     return leftMotor;
   }
 
+  public boolean isInRange(double currentValue, double target, double variation) {
 
-  public boolean isInRange(double currentValue, double target, double variation){
-
-    return(  currentValue < (target + variation) && currentValue > (target - variation));
-
+    return (currentValue < (target + variation) && currentValue > (target - variation));
   }
 
   @Override

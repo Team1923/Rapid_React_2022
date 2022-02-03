@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Climber.ClimberCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 /**
@@ -29,7 +27,6 @@ public class Robot extends TimedRobot {
   public static PS4Controller operator = new PS4Controller(1);
 
   public static DriveTrainSubsystem drive = new DriveTrainSubsystem();
-  public static ClimberSubsystem climber = new ClimberSubsystem();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -97,12 +94,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX());
-
-    if (driver.getRightTriggerAxis() > 0) {
-      new ClimberCommand(climber, driver.getRightTriggerAxis());
-    } else if (driver.getLeftTriggerAxis() > 0) {
-      new ClimberCommand(climber, driver.getLeftTriggerAxis() * -1);
-    }
   }
 
   @Override
