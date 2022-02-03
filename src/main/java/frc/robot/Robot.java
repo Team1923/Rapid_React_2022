@@ -92,8 +92,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-
-    new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX());
   }
 
   @Override
