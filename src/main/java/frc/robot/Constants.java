@@ -17,8 +17,7 @@ public final class Constants {
   // Motor group reflection breaks with 2022 FRC/CTRE stuff, so in leiu of that it had to be
   // swapped.
 
-
-  //motion magic stuff
+  // motion magic stuff
   public static final int kIdx = 0;
   public static final int kPIDloopIdx = 0;
   public static final int kTimeoutMs = 0;
@@ -28,7 +27,6 @@ public final class Constants {
   public static final double kF = 0.2;
   public static final double kIzone = 0;
   public static final double kPeakOutput = 1.0;
-
 
   // DriveTrain Constants
   public static final int l1 = 1;

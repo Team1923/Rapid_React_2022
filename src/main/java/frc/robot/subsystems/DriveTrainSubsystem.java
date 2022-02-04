@@ -16,8 +16,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private TalonFX l2 = new TalonFX(Constants.l2);
   private TalonFX l3 = new TalonFX(Constants.l3);
 
-  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration = 
-    new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
+  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
+      new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
   public DriveTrainSubsystem() {
 
@@ -35,22 +35,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     r1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
     l1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
-    
 
     r2.follow(r1);
     r3.follow(r1);
     l2.follow(l1);
     l3.follow(l1);
 
-    
-
     // set inverts to make "full forward" actually make the robot go forward.
 
     l2.setInverted(InvertType.FollowMaster);
     l2.setInverted(InvertType.FollowMaster);
     l1.setInverted(InvertType.InvertMotorOutput);
-
-    
 
     setDefaultCommand(new ArcadeDriveCommand(this));
   }
