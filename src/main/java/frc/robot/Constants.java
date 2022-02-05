@@ -14,8 +14,9 @@ package frc.robot;
  */
 public final class Constants {
 
-  // Motor group reflection breaks with 2022 FRC/CTRE stuff, so in leiu of that it had to be
-  // swapped.
+  // Controller Ports
+  public static final int driverPort = 0;
+  public static final int operatorPort = 1;
 
   // motion magic stuff
   public static final int kIdx = 0;
@@ -36,24 +37,26 @@ public final class Constants {
   public static final int r2 = 5;
   public static final int r3 = 6;
 
-  // Controller Ports
-  public static final int driverPort = 0;
-  public static final int operatorPort = 1;
+  // shooter ports
 
-  // dual roller launcher ports
+  // the front of the robot is the RIO-side.
+  // the "front" roller is the colson set, the
+  // "back" set is the squishy wheels.
 
-  public static final int frontRollerMotor = 16;
-  public static final int backRollerMotor = 17;
+  public static final int frontRollerMotor = 7;
+  public static final int backRollerMotor = 8;
 
-  // TODO CHANGE climber motor IDs
-  public static final int climberLeft = 20;
-  public static final int climberRight = 21;
+  // conveyor motors
+
+  public static final int beltRollerMotor = 9;
+  public static final int wheelConveyorMotor = 10;
+  // TODO: Refactor name.
 
   // intake motor
-  public static final int intakeMotor = 22;
+  public static final int intakeMotor = 11;
 
   // climber motors
 
-  public static final int leftClimberMotor = 23;
-  public static final int rightClimberMotor = 24;
+  public static final int leftClimberMotor = 12;
+  public static final int rightClimberMotor = 13;
 }

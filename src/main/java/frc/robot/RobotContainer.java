@@ -35,17 +35,12 @@ public class RobotContainer {
         /*.whileHeld(new DualRollerLauncherCommand(drl));*/
         .whileActiveContinuous(new PrintCommand("doing its thing"));
 
-    // it works!
+    // it works, for real this time.  At least in sim.
     new SpectrumAxisButton(driver, XboxController.Axis.kRightX.value, .05, ThresholdType.DEADBAND)
         .or(
             new SpectrumAxisButton(
                 driver, XboxController.Axis.kLeftY.value, .05, ThresholdType.DEADBAND))
         .whileActiveContinuous(new ArcadeDriveCommand(drive, driver));
-    /*new PrintCommand(
-    ""
-        + driver.getRawAxis(XboxController.Axis.kLeftY.value)
-        + "\t"
-        + driver.getRawAxis(XboxController.Axis.kRightX.value)));*/
 
     // this stuff is mirrored mostly from this.
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
