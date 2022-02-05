@@ -13,6 +13,9 @@
       "DriveTrainSubsystem": {
         "open": true
       },
+      "DualRollerLauncher": {
+        "open": true
+      },
       "open": true
     }
   }

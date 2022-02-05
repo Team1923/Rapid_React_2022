@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.DriveTrainCommands.StopDT;
@@ -36,6 +35,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     r1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
     l1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+
+    // r1.setNeutralMode(NeutralMode.Brake);
+    // l1.setNeutralMode(NeutralMode.Brake);
 
     r2.follow(r1);
     r3.follow(r1);
@@ -95,9 +97,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         }
       }
     }
-
-    DriverStation.reportWarning(
-        "Left Side" + limit(leftMotorOutput) + "Right Side" + limit(rightMotorOutput), false);
 
     r1.set(ControlMode.PercentOutput, limit(rightMotorOutput));
     l1.set(ControlMode.PercentOutput, limit(leftMotorOutput));

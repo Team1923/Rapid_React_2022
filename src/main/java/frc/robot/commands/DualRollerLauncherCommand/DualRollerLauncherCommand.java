@@ -12,25 +12,25 @@ public class DualRollerLauncherCommand extends CommandBase {
 
   ShuffleboardTab tuneDualRollerTab = Shuffleboard.getTab("tune dual roller");
 
-  NetworkTableEntry rpm;
-  NetworkTableEntry currentVelocity;
+  NetworkTableEntry frontnt;
+  NetworkTableEntry backnt;
   double TargetVelocity;
 
   // creating a drl command
   public DualRollerLauncherCommand(DualRollerLauncher drl) {
-    rpm = tuneDualRollerTab.add("Velocity", 0).getEntry();
-    currentVelocity = tuneDualRollerTab.add("Current Vel", 0).getEntry();
+    addRequirements(drl);
+    frontnt = tuneDualRollerTab.add("front percentout", 0).getEntry();
+    backnt = tuneDualRollerTab.add("back percentout", 0).getEntry();
 
     this.drl = drl;
-    TargetVelocity = rpm.getDouble(0);
   }
 
   // setting the front motors to the target RPM.
+  @Override
   public void execute() {
     // currentVelocity.setDouble(drl.frontMotor.getSelectedSensorVelocity(0));
-    currentVelocity.setDouble(TargetVelocity);
 
-    drl.setFrontVelocity(TargetVelocity);
-    drl.setBackVelocity(TargetVelocity);
+    this.drl.setFront(frontnt.getDouble(0));
+    this.drl.setBack(backnt.getDouble(0));
   }
 }

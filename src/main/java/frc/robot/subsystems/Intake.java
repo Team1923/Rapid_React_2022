@@ -14,6 +14,7 @@ import frc.robot.commands.Intake.RunIntakeCommand;
 public class Intake extends SubsystemBase {
 
   private TalonFX intakeMotor = new TalonFX(Constants.intakeMotor);
+
   SupplyCurrentLimitConfiguration supplyCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
