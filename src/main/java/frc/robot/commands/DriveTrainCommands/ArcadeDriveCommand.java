@@ -4,8 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class ArcadeDriveCommand extends CommandBase {
+  private DriveTrainSubsystem drive;
 
   public ArcadeDriveCommand(DriveTrainSubsystem drive) {
+    this.drive = drive;
     addRequirements(drive);
     drive.arcadeDrive(0, 0);
     /* by default we stop the drivetrain.  this _will_ have issues
@@ -13,6 +15,7 @@ public class ArcadeDriveCommand extends CommandBase {
   }
 
   public ArcadeDriveCommand(DriveTrainSubsystem drive, double xSpeed, double zRot) {
+    this.drive = drive;
     addRequirements(drive);
     drive.arcadeDrive(xSpeed, zRot);
   }
@@ -28,5 +31,11 @@ public class ArcadeDriveCommand extends CommandBase {
   public boolean isFinished() {
 
     return false;
+  }
+
+  @Override
+  public void end(boolean i) {
+    this.drive.arcadeDrive(0,0);
+
   }
 }

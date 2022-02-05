@@ -44,7 +44,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // set inverts to make "full forward" actually make the robot go forward.
 
     l2.setInverted(InvertType.FollowMaster);
-    l2.setInverted(InvertType.FollowMaster);
+    l3.setInverted(InvertType.FollowMaster);
     l1.setInverted(InvertType.InvertMotorOutput);
 
     setDefaultCommand(new ArcadeDriveCommand(this));
