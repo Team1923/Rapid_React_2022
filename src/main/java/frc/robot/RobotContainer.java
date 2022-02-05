@@ -7,9 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.commands.DualRollerLauncherCommand.DualRollerLauncherCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.SpectrumAxisButton;
@@ -32,18 +32,20 @@ public class RobotContainer {
 
   public RobotContainer() {
     new JoystickButton(driver, XboxController.Button.kA.value)
-        .whileHeld(new DualRollerLauncherCommand(drl));
+        /*.whileHeld(new DualRollerLauncherCommand(drl));*/
+        .whileActiveContinuous(new PrintCommand("doing its thing"));
 
     // it works!
     new SpectrumAxisButton(driver, XboxController.Axis.kRightX.value, .05, ThresholdType.DEADBAND)
-        .and(
+        .or(
             new SpectrumAxisButton(
                 driver, XboxController.Axis.kLeftY.value, .05, ThresholdType.DEADBAND))
-        .whileActiveContinuous(
-            new ArcadeDriveCommand(
-                drive,
-                driver.getRawAxis(XboxController.Axis.kLeftY.value),
-                XboxController.Axis.kRightX.value));
+        .whileActiveContinuous(new ArcadeDriveCommand(drive, driver));
+    /*new PrintCommand(
+    ""
+        + driver.getRawAxis(XboxController.Axis.kLeftY.value)
+        + "\t"
+        + driver.getRawAxis(XboxController.Axis.kRightX.value)));*/
 
     // this stuff is mirrored mostly from this.
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html

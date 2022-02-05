@@ -1,41 +1,44 @@
 package frc.robot.commands.DriveTrainCommands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class ArcadeDriveCommand extends CommandBase {
   private DriveTrainSubsystem drive;
+  private XboxController driver_int;
 
-  public ArcadeDriveCommand(DriveTrainSubsystem drive) {
+  public ArcadeDriveCommand(DriveTrainSubsystem drive, XboxController driver) {
+    this.driver_int = driver;
     this.drive = drive;
     addRequirements(drive);
-    drive.arcadeDrive(0, 0);
-    /* by default we stop the drivetrain.  this _will_ have issues
-    until we switch to closed loop control and add ramp rates. */
   }
 
-  public ArcadeDriveCommand(DriveTrainSubsystem drive, double xSpeed, double zRot) {
-    this.drive = drive;
-    addRequirements(drive);
-    drive.arcadeDrive(xSpeed, zRot);
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    double zRot = driver_int.getRightX();
+    double xSpeed = driver_int.getLeftY();
+
+    // DriverStation.reportWarning("" + xSpeed + "\t" + zRot, false);
+
+    this.drive.arcadeDrive(xSpeed, zRot);
   }
 
-  /* The isFinished function will return false forever, because we're using this as a default command and cannot, by definition, ever be done.
-  It simply takes a lower priority by virtue of that, and cancels the default command if something *else*
-  gets scheduled / needs the subsystem 'drive', which our drive command will.
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
 
-  See: https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html#simple-command-example
-  */
+    this.drive.arcadeDrive(0, 0);
+  }
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
     return false;
-  }
-
-  @Override
-  public void end(boolean i) {
-    this.drive.arcadeDrive(0,0);
-
   }
 }

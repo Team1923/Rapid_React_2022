@@ -7,5 +7,13 @@
       "/LiveWindow/TankDriveCommand": "Subsystem",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler"
     }
+  },
+  "NetworkTables": {
+    "LiveWindow": {
+      "DriveTrainSubsystem": {
+        "open": true
+      },
+      "open": true
+    }
   }
 }
