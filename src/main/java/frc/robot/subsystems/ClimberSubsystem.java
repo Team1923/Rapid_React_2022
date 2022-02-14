@@ -49,7 +49,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public void runClimber(double speed) {
     double target = 0;
-    leftMotor.set(ControlMode.PercentOutput, -1*speed); // target is based on controller values
+    leftMotor.set(ControlMode.PercentOutput, -1 * speed); // target is based on controller values
   }
 
   public boolean isInRange(double currentValue, double target, double variation) {

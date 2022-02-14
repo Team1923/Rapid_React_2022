@@ -30,25 +30,18 @@ public class DRLTestRun extends CommandBase {
     // this.drl.setBack(0.45);
 
     // front 0.48 back 0.55 (Shoot other ball)
+    // (kMaxRPM / 600) * (kSensorUnitsPerRotation / kGearRatio)
 
-    PIDController frontPID = new PIDController(this.drl.front_kp.getDouble(0), this.drl.front_ki.getDouble(0), this.drl.front_kd.getDouble(0));
-    PIDController backPID = new PIDController(this.drl.back_kp.getDouble(0), this.drl.back_ki.getDouble(0), this.drl.back_kd.getDouble(0));
+    this.drl.setFront();
+    this.drl.setBack();
 
-    //(kMaxRPM / 600) * (kSensorUnitsPerRotation / kGearRatio)
-
-
-    this.drl.setFront(frontPID.calculate(this.drl.frontMotor.getSelectedSensorVelocity(), this.drl.front_setpt.getDouble(0)));
-    System.out.println(frontPID.calculate(this.drl.frontMotor.getSelectedSensorVelocity(), this.drl.front_setpt.getDouble(0)));
-    this.drl.setBack(backPID.calculate(this.drl.backMotor.getSelectedSensorVelocity(), this.drl.back_setpt.getDouble(0)));
-    System.out.println(backPID.calculate(this.drl.backMotor.getSelectedSensorVelocity(), this.drl.back_setpt.getDouble(0)));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
 
-    this.drl.setFront(0);
-    this.drl.setBack(0);
+    this.drl.setZero();
   }
 
   // Returns true when the command should end.

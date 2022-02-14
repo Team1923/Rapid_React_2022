@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.ResourceBundle.Control;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -28,12 +30,14 @@ public class DualRollerLauncher extends SubsystemBase {
   public  NetworkTableEntry front_ki = tuneDualRollerTab.add("Launcher front I value", 0).getEntry();
   public NetworkTableEntry front_kd = tuneDualRollerTab.add("Launcher front D value", 0).getEntry();
   double front_integral, front_error, front_derivative, front_previous_error, front_velocity = 0;
+  public NetworkTableEntry frontRPM = tuneDualRollerTab.add("Front RPM", 0).getEntry();
 
   public NetworkTableEntry back_setpt = tuneDualRollerTab.add("Launcher back set point", 0).getEntry();
   public NetworkTableEntry back_kp = tuneDualRollerTab.add("Launcher back P value", 0).getEntry();
   public NetworkTableEntry back_ki = tuneDualRollerTab.add("Launcher back I value", 0).getEntry();
   public  NetworkTableEntry back_kd = tuneDualRollerTab.add("Launcher back D value", 0).getEntry();
   double back_integral, back_error, back_derivative, back_previous_error, back_velocity = 0;
+  public NetworkTableEntry backRPM = tuneDualRollerTab.add("Back RPM", 0).getEntry();
 
   public NetworkTableEntry frontnt;
   public NetworkTableEntry backnt;
@@ -57,42 +61,40 @@ public class DualRollerLauncher extends SubsystemBase {
     this.backMotor.setNeutralMode(NeutralMode.Coast);
     this.frontMotor.setNeutralMode(NeutralMode.Coast);
 
+    //configure P
+    this.frontMotor.config_kP(0, front_kp.getDouble(0), 20);
+    this.backMotor.config_kP(0, back_kp.getDouble(0), 20);
+    
+    //configure I
+    this.frontMotor.config_kI(0, front_ki.getDouble(0), 20);
+    this.backMotor.config_kI(0, back_ki.getDouble(0), 20);
+
+    //configure D
+    this.frontMotor.config_kD(0, front_kd.getDouble(0), 20);
+    this.backMotor.config_kD(0, back_kd.getDouble(0), 20);
+
     // setDefaultCommand(new DualRollerLauncherCommand(this, 0, 0)); // should stop it?
 
     frontnt = tuneDualRollerTab.add("front percent", 0).getEntry();
     backnt = tuneDualRollerTab.add("back percentout", 0).getEntry();
   }
 
-  // public double frontPID() {
-  //   front_error = front_setpt.getDouble(0) - frontMotor.getSelectedSensorVelocity();
-  //   front_integral += (front_error * 0.02);
-  //   front_derivative = (front_error - front_previous_error) / 0.02;
-  //   front_velocity =
-  //       front_kp.getDouble(0) * front_error
-  //           + front_ki.getDouble(0) * front_integral
-  //           + front_kd.getDouble(0) * front_derivative;
+  
 
-  //   return front_velocity;
-  // }
-
-  // public double backPID() {
-  //   back_error = back_setpt.getDouble(0) - backMotor.getSelectedSensorVelocity();
-  //   back_integral += (back_error * 0.02);
-  //   back_derivative = (back_error - back_previous_error) / 0.02;
-  //   back_velocity =
-  //       back_kp.getDouble(0) * back_error
-  //           + back_ki.getDouble(0) * back_integral
-  //           + back_kd.getDouble(0) * back_derivative;
-  //   return back_velocity;
-  // }
-
-  public void setFront(double spd) {
+  public void setFront() {
     // DriverStation.reportWarning("Setting front roller to" + spd, false);
-    frontMotor.set(ControlMode.Velocity, spd);
+    double vel = frontRPM.getDouble(0) * 2048.0 / 600;
+    frontMotor.set(ControlMode.Velocity, vel);
   }
 
-  public void setBack(double spd) {
+  public void setBack() {
     // DriverStation.reportWarning("Setting back roller to" + spd, false);
-    backMotor.set(ControlMode.Velocity, spd);
+    double vel = backRPM.getDouble(0) * 2048.0 / 600;
+    backMotor.set(ControlMode.Velocity, vel);
+  }
+
+  public void setZero(){
+    frontMotor.set(ControlMode.PercentOutput, 0);
+    backMotor.set(ControlMode.PercentOutput, 0);
   }
 }

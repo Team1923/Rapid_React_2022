@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Climber.ClimberTest;
 import frc.robot.commands.Conveyor.ConveyorTest;
@@ -53,10 +52,9 @@ public class RobotContainer {
 
     // SmartDashboard.putData("Run Launcher", new DRLTestRun(drl));
 
-    new JoystickButton(driver, XboxController.Button.kA.value).whileHeld(new
-    IntakeTest(intake));
-    new JoystickButton(driver, XboxController.Button.kA.value).whileHeld(new
-    ConveyorTest(conveyor));
+    new JoystickButton(driver, XboxController.Button.kA.value).whileHeld(new IntakeTest(intake));
+    new JoystickButton(driver, XboxController.Button.kA.value)
+        .whileHeld(new ConveyorTest(conveyor));
 
     // new JoystickButton(operator, PS4Controller.Button.kCross.value)
     //     .whileHeld(
@@ -66,8 +64,7 @@ public class RobotContainer {
     new JoystickButton(driver, XboxController.Button.kB.value)
         .whileHeld(new ConveyorTest2(conveyor));
 
-    new JoystickButton(driver, XboxController.Button.kY.value)
-        .whileHeld(new DRLTestRun(drl));
+    new JoystickButton(driver, XboxController.Button.kY.value).whileHeld(new DRLTestRun(drl));
 
     new JoystickButton(driver, XboxController.Button.kX.value)
         .whileHeld(new ConveyorTest3(conveyor));
@@ -85,7 +82,7 @@ public class RobotContainer {
             0.05,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ClimberTest(climber, operator));
-    
+
     // new JoystickButton(driver, XboxController.Button.kA.value)
     //     .whileActiveOnce(new RunIntakeCommand(intake, 0.7));
 
