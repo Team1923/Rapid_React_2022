@@ -4,17 +4,20 @@
 
 package frc.robot.commands.Intake;
 
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 public class IntakeTest extends CommandBase {
 
   Intake intake;
+  PS4Controller controller;
   /** Creates a new IntakeTest. */
-  public IntakeTest(Intake intake) {
+  public IntakeTest(Intake intake, PS4Controller controller) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
     this.intake = intake;
+    this.controller = controller; 
   }
 
   // Called when the command is initially scheduled.
@@ -24,8 +27,12 @@ public class IntakeTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    intake.runIntake(this.intake.intakeValue.getDouble(0));
+    if(controller.getSquareButtonPressed()){
+      intake.runIntake(-1*this.intake.intakeValue.getDouble(0));
+    }
+    if(controller.getCrossButtonPressed()){
+      intake.runIntake(this.intake.intakeValue.getDouble(0));
+    }
   }
 
   @Override

@@ -47,9 +47,19 @@ public class ClimberSubsystem extends SubsystemBase {
     leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
   }
 
-  public void runClimber(double speed) {
-    double target = 0;
-    leftMotor.set(ControlMode.PercentOutput, -1 * speed); // target is based on controller values
+  public void runClimber(double leftSpeed, double rightSpeed) {
+    // double target = driver.getRightTriggerAxis() * 2048 * 10;
+    // leftMotor.set(ControlMode.MotionMagic, target);
+    if (rightSpeed > 0.1) {
+      leftMotor.set(ControlMode.PercentOutput, -.5 * rightSpeed);
+    }
+    if (leftSpeed > 0.1) {
+      leftMotor.set(ControlMode.PercentOutput, .5 * leftSpeed);
+    }
+  }
+
+  public void setZero() {
+    this.leftMotor.set(ControlMode.PercentOutput, 0);
   }
 
   public boolean isInRange(double currentValue, double target, double variation) {

@@ -4,7 +4,7 @@
 
 package frc.robot.commands.Climber;
 
-import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
 
@@ -12,13 +12,13 @@ public class ClimberTest extends CommandBase {
   /** Creates a new ClimberTest. */
   ClimberSubsystem climber = new ClimberSubsystem();
 
-  private PS4Controller ps4;
+  XboxController xbox;
 
-  public ClimberTest(ClimberSubsystem climber, PS4Controller controller) {
+  public ClimberTest(ClimberSubsystem climber, XboxController controller) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climber);
     this.climber = climber;
-    this.ps4 = controller;
+    this.xbox = controller;
   }
 
   // Called when the command is initially scheduled.
@@ -28,13 +28,13 @@ public class ClimberTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.climber.runClimber(-1 * this.ps4.getLeftY());
+    this.climber.runClimber(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.climber.runClimber(0);
+    this.climber.setZero();
   }
 
   // Returns true when the command should end.

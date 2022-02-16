@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Climber.ClimberTest;
 import frc.robot.commands.Conveyor.ConveyorTest;
-import frc.robot.commands.Conveyor.ConveyorTest2;
-import frc.robot.commands.Conveyor.ConveyorTest3;
 import frc.robot.commands.DriveTrainCommands.DriveTest;
 import frc.robot.commands.DualRollerLauncherCommand.DRLTestRun;
 import frc.robot.commands.Intake.IntakeTest;
@@ -36,39 +34,37 @@ public class RobotContainer {
 
   public static DriveTrainSubsystem drive = new DriveTrainSubsystem();
   public static final DualRollerLauncher drl = new DualRollerLauncher();
+
   public static final ConveyorSubsystem conveyor = new ConveyorSubsystem();
   public static Intake intake = new Intake();
   public static ClimberSubsystem climber = new ClimberSubsystem();
 
   public RobotContainer() {
-    // new JoystickButton(driver, XboxController.Button.kA.value)
-    //     /*.whileHeld(new DualRollerLauncherCommand(drl));*/
-    //     .whileActiveContinuous(new DualRollerLauncherCommand(drl));
+    // intake in (CIRCLE)
+    new JoystickButton(operator, PS4Controller.Button.kCross.value)
+        .whileHeld(new IntakeTest(intake, operator));
 
-    // new ArcadeOldCommand(drive, driver.getLeftY(), driver.getRightX());
-    // new ConveyorCommand(conveyor, operator.getLeftY(), operator.getRightY());
+        new JoystickButton(operator, PS4Controller.Button.kSquare.value)
+        .whileHeld(new IntakeTest(intake, operator));
 
-    // SmartDashboard.putData("Run Launcher", new DualRollerLauncherCommand(drl, .4, .5));
-
-    // SmartDashboard.putData("Run Launcher", new DRLTestRun(drl));
-
-    new JoystickButton(driver, XboxController.Button.kA.value).whileHeld(new IntakeTest(intake));
-    new JoystickButton(driver, XboxController.Button.kA.value)
+    // intake, feeder, conveyor wheels IN (CIRCLE)
+    new JoystickButton(operator, PS4Controller.Button.kCircle.value)
+        .whileHeld(new IntakeTest(intake, operator));
+    new JoystickButton(operator, PS4Controller.Button.kCircle.value)
         .whileHeld(new ConveyorTest(conveyor));
 
-    // new JoystickButton(operator, PS4Controller.Button.kCross.value)
-    //     .whileHeld(
-    //         new ParallelCommandGroup(
-    //             new IntakeTest(new Intake()), new DRLTestRun(new DualRollerLauncher())));
+    // shoot ball (TRIANGLE)
+    new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
+        .toggleWhenPressed(new DRLTestRun(drl));
 
-    new JoystickButton(driver, XboxController.Button.kB.value)
-        .whileHeld(new ConveyorTest2(conveyor));
 
-    new JoystickButton(driver, XboxController.Button.kY.value).whileHeld(new DRLTestRun(drl));
 
-    new JoystickButton(driver, XboxController.Button.kX.value)
-        .whileHeld(new ConveyorTest3(conveyor));
 
+    // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
+    //      .toggleWhenPressed(new DRLTEST2(drl2));
+
+    
+    // drive (arcade)
     new SpectrumAxisButton(
             driver,
             XboxController.Axis.kLeftY.value,
@@ -76,26 +72,21 @@ public class RobotContainer {
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new DriveTest(drive, driver));
 
-    new SpectrumAxisButton(
-            operator,
-            PS4Controller.Axis.kLeftY.value,
-            0.05,
-            SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new ClimberTest(climber, operator));
+    // CLIMBER
+//     new SpectrumAxisButton(
+//             driver,
+//             XboxController.Axis.kLeftTrigger.value,
+//             0.1,
+//             SpectrumAxisButton.ThresholdType.DEADBAND)
+//         .whileActiveOnce(new ClimberTest(climber, driver));
 
-    // new JoystickButton(driver, XboxController.Button.kA.value)
-    //     .whileActiveOnce(new RunIntakeCommand(intake, 0.7));
-
-    // new JoystickButton(driver, XboxController.Button.kStart.value)
-    //     .whileActiveOnce(new DualRollerLauncherCommand(drl, .4, .5));
-
-    // this stuff is mirrored mostly from this.
-    // https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-    /*
-    new JoystickButton(driver, XboxController.Axis.kLeftY.value)
-        .and(new JoystickButton(driver, XboxController.Axis.kRightX.value))
-        .whenActive(new ArcadeDriveCommand(drive, driver.getLeftY(), driver.getRightX()));*/
-  }
+//     new SpectrumAxisButton(
+//             driver,
+//             XboxController.Axis.kRightTrigger.value,
+//             0.1,
+//             SpectrumAxisButton.ThresholdType.DEADBAND)
+//         .whileActiveOnce(new ClimberTest(climber, driver));
+}
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

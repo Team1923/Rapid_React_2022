@@ -24,9 +24,9 @@ public class AutonPaths extends SequentialCommandGroup {
   public AutonPaths() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-        new ParallelCommandGroup(
-            new IntakeTest(new Intake()), new DRLTestRun(new DualRollerLauncher())),
-        new DriveTest(new DriveTrainSubsystem(), null));
+    // addCommands(
+    //     new ParallelCommandGroup(
+    //         new IntakeTest(new Intake(), operator), new DRLTestRun(new DualRollerLauncher())),
+    //     new DriveTest(new DriveTrainSubsystem(), null));
   }
 }
