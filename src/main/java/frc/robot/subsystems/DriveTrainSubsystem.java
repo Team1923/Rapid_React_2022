@@ -4,8 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -17,8 +15,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private WPI_TalonFX l1 = new WPI_TalonFX(Constants.l1);
   private WPI_TalonFX l2 = new WPI_TalonFX(Constants.l2);
   private WPI_TalonFX l3 = new WPI_TalonFX(Constants.l3);
-
-  
 
   public DifferentialDrive kDrive = new DifferentialDrive(l1, r1);
 
@@ -60,7 +56,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double rightSpeed, double leftSpeed) {
-    
+
     r1.set(ControlMode.PercentOutput, rightSpeed);
     l1.set(ControlMode.PercentOutput, leftSpeed);
   }

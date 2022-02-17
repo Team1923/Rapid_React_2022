@@ -15,12 +15,15 @@ import frc.robot.Constants;
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
-  private WPI_TalonFX leftMotor = new WPI_TalonFX(Constants.leftClimberMotor);
+  public WPI_TalonFX leftMotor = new WPI_TalonFX(Constants.leftClimberMotor);
 
-  private WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
+  public WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
 
-  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
+  public SupplyCurrentLimitConfiguration supplyCurrentLimitConfigurationWhenClimbing =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
+
+  public SupplyCurrentLimitConfiguration supplyCurrentLimitConfigurationWhenNotClimbing =
+      new SupplyCurrentLimitConfiguration(true, 5, 10, 0.25);
 
   public ClimberSubsystem() {
     leftMotor.configFactoryDefault();
@@ -33,8 +36,8 @@ public class ClimberSubsystem extends SubsystemBase {
     rightMotor.follow(leftMotor);
     rightMotor.setInverted(InvertType.InvertMotorOutput);
 
-    leftMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
-    rightMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+    leftMotor.configSupplyCurrentLimit(supplyCurrentLimitConfigurationWhenNotClimbing);
+    rightMotor.configSupplyCurrentLimit(supplyCurrentLimitConfigurationWhenNotClimbing);
 
     // set up encoder logic.
     leftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);

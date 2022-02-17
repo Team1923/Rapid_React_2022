@@ -43,11 +43,6 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    
-      
-
-
-
     // intake in (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
         .whileHeld(new IntakeTest(intake, operator));
@@ -78,10 +73,7 @@ public class RobotContainer {
 
     // CLIMBER
 
-
-  
-
-      new SpectrumAxisButton(
+    new SpectrumAxisButton(
             driver,
             XboxController.Axis.kLeftTrigger.value,
             0.1,
@@ -94,9 +86,6 @@ public class RobotContainer {
             0.1,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ClimberTest(climber, driver));
-
-    
-    
   }
 
   public Command getAutonomousCommand() {

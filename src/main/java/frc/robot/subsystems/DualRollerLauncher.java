@@ -108,7 +108,6 @@ public class DualRollerLauncher extends SubsystemBase {
     // frontMotor.set(ControlMode.PercentOutput, 0.3);
 
     frontMotor.set(TalonFXControlMode.Velocity, vel);
-
   }
 
   public void setBack() {
