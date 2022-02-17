@@ -17,7 +17,7 @@ public class IntakeTest extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
     this.intake = intake;
-    this.controller = controller; 
+    this.controller = controller;
   }
 
   // Called when the command is initially scheduled.
@@ -27,10 +27,10 @@ public class IntakeTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(controller.getSquareButtonPressed()){
-      intake.runIntake(-1*this.intake.intakeValue.getDouble(0));
+    if (controller.getSquareButtonPressed()) {
+      intake.runIntake(-1 * this.intake.intakeValue.getDouble(0));
     }
-    if(controller.getCrossButtonPressed()){
+    if (controller.getCrossButtonPressed()) {
       intake.runIntake(this.intake.intakeValue.getDouble(0));
     }
   }

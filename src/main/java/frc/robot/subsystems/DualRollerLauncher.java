@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -48,9 +46,7 @@ public class DualRollerLauncher extends SubsystemBase {
 
     // this is for in the event the robot reboots we need to explicitly set configurations
     // to avoid a latent state breaking stuff.
-    
-    
-    
+
     frontMotor.configFactoryDefault();
     backMotor.configFactoryDefault();
 
@@ -60,25 +56,23 @@ public class DualRollerLauncher extends SubsystemBase {
     this.backMotor.setNeutralMode(NeutralMode.Coast);
     this.frontMotor.setNeutralMode(NeutralMode.Coast);
 
-
-    //#region Testing new PID CODE from 2/15/22
+    // #region Testing new PID CODE from 2/15/22
 
     frontMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
 
     backMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
 
     frontMotor.configNominalOutputForward(0, 30);
-		frontMotor.configNominalOutputReverse(0, 30);
-		frontMotor.configPeakOutputForward(1, 30);
-		frontMotor.configPeakOutputReverse(-1, 30);
+    frontMotor.configNominalOutputReverse(0, 30);
+    frontMotor.configPeakOutputForward(1, 30);
+    frontMotor.configPeakOutputReverse(-1, 30);
 
     backMotor.configNominalOutputForward(0, 30);
-		backMotor.configNominalOutputReverse(0, 30);
-		backMotor.configPeakOutputForward(1, 30);
-		backMotor.configPeakOutputReverse(-1, 30);
+    backMotor.configNominalOutputReverse(0, 30);
+    backMotor.configPeakOutputForward(1, 30);
+    backMotor.configPeakOutputReverse(-1, 30);
 
-
-    //#endregion
+    // #endregion
 
     // this tells the falcon 500 to use their integrated encoders for velocity.
     // we can also set this to be other things, like a CANcoder, for example.
@@ -86,21 +80,20 @@ public class DualRollerLauncher extends SubsystemBase {
     // frontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     // backMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
- 
     // configure P
-    this.frontMotor.config_kP(0, 0.2, 30);
-    this.backMotor.config_kP(0, 0.2, 30);
+    this.frontMotor.config_kP(0, 0.25, 30);
+    this.backMotor.config_kP(0, 0.18, 30);
 
     // configure I
     this.frontMotor.config_kI(0, 0, 30);
     this.backMotor.config_kI(0, 0, 30);
 
     // configure D
-    this.frontMotor.config_kD(0, 2, 30);
+    this.frontMotor.config_kD(0, 0, 30);
     this.backMotor.config_kD(0, 0, 30);
 
-    this.frontMotor.config_kF(0, 0.05, 30);
-    this.backMotor.config_kF(0,0.05, 30);
+    this.frontMotor.config_kF(0, .05, 30);
+    this.backMotor.config_kF(0, .057, 30);
 
     // setDefaultCommand(new DualRollerLauncherCommand(this, 0, 0)); // should stop it?
 
@@ -110,20 +103,18 @@ public class DualRollerLauncher extends SubsystemBase {
 
   public void setFront() {
     // DriverStation.reportWarning("Setting front roller to" + spd, false);
-    double vel = 1800 * 2048.0 / 600;
-    
-    
-    //frontMotor.set(ControlMode.PercentOutput, 0.3);
+    double vel = frontRPM.getDouble(0) * 2048.0 / 600;
 
+    // frontMotor.set(ControlMode.PercentOutput, 0.3);
 
     frontMotor.set(TalonFXControlMode.Velocity, vel);
-  
+
   }
 
   public void setBack() {
     // DriverStation.reportWarning("Setting back roller to" + spd, false);
-    double vel = 3800 * 2048.0 / 600;
-    //backMotor.set(ControlMode.PercentOutput, 0.45);
+    double vel = backRPM.getDouble(0) * 2048.0 / 600;
+    // backMotor.set(ControlMode.PercentOutput, 0.45);
 
     backMotor.set(TalonFXControlMode.Velocity, vel);
   }

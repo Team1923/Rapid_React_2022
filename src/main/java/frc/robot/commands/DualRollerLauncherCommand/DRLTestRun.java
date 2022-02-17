@@ -33,8 +33,10 @@ public class DRLTestRun extends CommandBase {
 
     this.drl.setFront();
     this.drl.setBack();
-
-    
+    System.out.println(
+        "Current Front RPM " + ((this.drl.frontMotor.getSelectedSensorVelocity() * 600) / 2048.0));
+    System.out.println(
+        "Current Back RPM " + ((this.drl.backMotor.getSelectedSensorVelocity() * 600) / 2048.0));
   }
 
   // Called once the command ends or is interrupted.

@@ -39,12 +39,20 @@ public class RobotContainer {
   public static Intake intake = new Intake();
   public static ClimberSubsystem climber = new ClimberSubsystem();
 
+  public static boolean enableClimber = false;
+
   public RobotContainer() {
+
+    
+      
+
+
+
     // intake in (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
         .whileHeld(new IntakeTest(intake, operator));
 
-        new JoystickButton(operator, PS4Controller.Button.kSquare.value)
+    new JoystickButton(operator, PS4Controller.Button.kSquare.value)
         .whileHeld(new IntakeTest(intake, operator));
 
     // intake, feeder, conveyor wheels IN (CIRCLE)
@@ -57,13 +65,9 @@ public class RobotContainer {
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
         .toggleWhenPressed(new DRLTestRun(drl));
 
-
-
-
     // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     //      .toggleWhenPressed(new DRLTEST2(drl2));
 
-    
     // drive (arcade)
     new SpectrumAxisButton(
             driver,
@@ -73,20 +77,27 @@ public class RobotContainer {
         .whileActiveOnce(new DriveTest(drive, driver));
 
     // CLIMBER
-//     new SpectrumAxisButton(
-//             driver,
-//             XboxController.Axis.kLeftTrigger.value,
-//             0.1,
-//             SpectrumAxisButton.ThresholdType.DEADBAND)
-//         .whileActiveOnce(new ClimberTest(climber, driver));
 
-//     new SpectrumAxisButton(
-//             driver,
-//             XboxController.Axis.kRightTrigger.value,
-//             0.1,
-//             SpectrumAxisButton.ThresholdType.DEADBAND)
-//         .whileActiveOnce(new ClimberTest(climber, driver));
-}
+
+  
+
+      new SpectrumAxisButton(
+            driver,
+            XboxController.Axis.kLeftTrigger.value,
+            0.1,
+            SpectrumAxisButton.ThresholdType.DEADBAND)
+        .whileActiveOnce(new ClimberTest(climber, driver));
+
+    new SpectrumAxisButton(
+            driver,
+            XboxController.Axis.kRightTrigger.value,
+            0.1,
+            SpectrumAxisButton.ThresholdType.DEADBAND)
+        .whileActiveOnce(new ClimberTest(climber, driver));
+
+    
+    
+  }
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

@@ -29,11 +29,11 @@ public class DriveTest extends CommandBase {
     return sp * sp * sp;
   }
 
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drive.kDrive.arcadeDrive(-1*this.driver.getLeftY(), this.driver.getRightX());
+    this.drive.kDrive.arcadeDrive(-1 * this.driver.getLeftY(), this.driver.getRightX());
+    //this.drive.kDrive.curvatureDrive(-1 * this.driver.getLeftY(), this.driver.getRightX(), true);
   }
 
   // Called once the command ends or is interrupted.

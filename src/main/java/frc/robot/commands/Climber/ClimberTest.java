@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Climber;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -28,6 +29,7 @@ public class ClimberTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     this.climber.runClimber(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
   }
 
