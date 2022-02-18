@@ -35,12 +35,12 @@ public final class Constants {
   // TODO CHANGE THESE IDs TO MATCH SPREADSHEET
   // BOTH IN CODE AND IN PHOENIX TUNER!
 
-  public static final int frontRollerMotor = 10;
-  public static final int backRollerMotor = 13;
+  public static final int wheels = 10;
+  public static final int rollers = 13;
 
   // conveyor motors
-  public static final int beltRollerMotor = 9;
-  public static final int wheelConveyorMotor = 7;
+  public static final int conveyor = 9;
+  public static final int feeder = 7;
   // TODO: Refactor name.
 
   // intake motor

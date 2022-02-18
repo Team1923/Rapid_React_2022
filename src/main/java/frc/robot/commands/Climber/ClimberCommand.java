@@ -6,19 +6,29 @@ package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ClimberSubsystem;
 
-public class ClimberTest extends CommandBase {
+public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberTest. */
   ClimberSubsystem climber = new ClimberSubsystem();
 
   XboxController xbox;
 
-  public ClimberTest(ClimberSubsystem climber, XboxController controller) {
+  double leftpt, rightpt = 0;
+
+  public ClimberCommand(ClimberSubsystem climber, XboxController controller) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(climber);
     this.climber = climber;
     this.xbox = controller;
+  }
+
+  public ClimberCommand(ClimberSubsystem climber, double leftpt, double rightpt) {
+    addRequirements(climber);
+    this.climber = climber;
+    this.leftpt = leftpt;
+    this.rightpt = rightpt;
   }
 
   // Called when the command is initially scheduled.
@@ -34,7 +44,11 @@ public class ClimberTest extends CommandBase {
   @Override
   public void execute() {
 
-    this.climber.runClimber(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
+    if (!RobotContainer.enableClimber) {
+      this.climber.runClimber(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
+    } else {
+      this.climber.runClimber(leftpt, rightpt);
+    }
   }
 
   // Called once the command ends or is interrupted.

@@ -15,8 +15,8 @@ import frc.robot.Constants;
 
 public class ConveyorSubsystem extends SubsystemBase {
 
-  private TalonFX backMotor = new TalonFX(Constants.beltRollerMotor);
-  private TalonFX frontMotor = new TalonFX(Constants.wheelConveyorMotor);
+  private TalonFX conveyor = new TalonFX(Constants.conveyor);
+  private TalonFX feeder = new TalonFX(Constants.feeder);
 
   ShuffleboardTab tuneDualRollerTab = Shuffleboard.getTab("tune dual roller");
 
@@ -24,18 +24,18 @@ public class ConveyorSubsystem extends SubsystemBase {
   public NetworkTableEntry wheels;
   /** Creates a new CoveyorSubsystem. */
   public ConveyorSubsystem() {
-    backMotor.configFactoryDefault();
-    frontMotor.configFactoryDefault();
-    backMotor.setInverted(InvertType.InvertMotorOutput);
-    frontMotor.setInverted(InvertType.InvertMotorOutput);
+    conveyor.configFactoryDefault();
+    feeder.configFactoryDefault();
+    conveyor.setInverted(InvertType.InvertMotorOutput);
+    feeder.setInverted(InvertType.InvertMotorOutput);
 
     belts = tuneDualRollerTab.add("Belts percentout", 0).getEntry();
     wheels = tuneDualRollerTab.add("Wheels percentout", 0).getEntry();
   }
 
   public void runConveyor(double backSpeed, double frontSpeed) {
-    backMotor.set(ControlMode.PercentOutput, backSpeed);
-    frontMotor.set(ControlMode.PercentOutput, frontSpeed);
+    conveyor.set(ControlMode.PercentOutput, backSpeed);
+    feeder.set(ControlMode.PercentOutput, frontSpeed);
   }
 
   @Override

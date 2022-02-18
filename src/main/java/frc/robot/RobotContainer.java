@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Climber.ClimberTest;
-import frc.robot.commands.Conveyor.ConveyorTest;
-import frc.robot.commands.DriveTrainCommands.DriveTest;
-import frc.robot.commands.DualRollerLauncherCommand.DRLTestRun;
-import frc.robot.commands.Intake.IntakeTest;
+import frc.robot.commands.Climber.ClimberCommand;
+import frc.robot.commands.Conveyor.ConveyorCommand;
+import frc.robot.commands.DriveTrainCommands.DriveCommand;
+import frc.robot.commands.DualRollerLauncherCommand.DRLCommand;
+import frc.robot.commands.Intake.IntakeCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -43,22 +43,44 @@ public class RobotContainer {
 
   public RobotContainer() {
 
+    new JoystickButton(driver, XboxController.Button.kStart.value)
+        .whenPressed(() -> enableClimber = true);
+
+    if (!enableClimber) {
+      new ClimberCommand(climber, -0.1, 0.1);
+    } else {
+      // CLIMBER
+      new SpectrumAxisButton(
+              driver,
+              XboxController.Axis.kLeftTrigger.value,
+              0.1,
+              SpectrumAxisButton.ThresholdType.DEADBAND)
+          .whileActiveOnce(new ClimberCommand(climber, driver));
+
+      new SpectrumAxisButton(
+              driver,
+              XboxController.Axis.kRightTrigger.value,
+              0.1,
+              SpectrumAxisButton.ThresholdType.DEADBAND)
+          .whileActiveOnce(new ClimberCommand(climber, driver));
+    }
+
     // intake in (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
-        .whileHeld(new IntakeTest(intake, operator));
+        .whileHeld(new IntakeCommand(intake, operator));
 
     new JoystickButton(operator, PS4Controller.Button.kSquare.value)
-        .whileHeld(new IntakeTest(intake, operator));
+        .whileHeld(new IntakeCommand(intake, operator));
 
     // intake, feeder, conveyor wheels IN (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new IntakeTest(intake, operator));
+        .whileHeld(new IntakeCommand(intake, operator));
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new ConveyorTest(conveyor));
+        .whileHeld(new ConveyorCommand(conveyor));
 
     // shoot ball (TRIANGLE)
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new DRLTestRun(drl));
+        .toggleWhenPressed(new DRLCommand(drl));
 
     // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     //      .toggleWhenPressed(new DRLTEST2(drl2));
@@ -69,23 +91,7 @@ public class RobotContainer {
             XboxController.Axis.kLeftY.value,
             0.05,
             SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new DriveTest(drive, driver));
-
-    // CLIMBER
-
-    new SpectrumAxisButton(
-            driver,
-            XboxController.Axis.kLeftTrigger.value,
-            0.1,
-            SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new ClimberTest(climber, driver));
-
-    new SpectrumAxisButton(
-            driver,
-            XboxController.Axis.kRightTrigger.value,
-            0.1,
-            SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new ClimberTest(climber, driver));
+        .whileActiveOnce(new DriveCommand(drive, driver));
   }
 
   public Command getAutonomousCommand() {

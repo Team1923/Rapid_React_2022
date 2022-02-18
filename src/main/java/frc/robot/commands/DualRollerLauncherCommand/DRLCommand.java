@@ -7,11 +7,11 @@ package frc.robot.commands.DualRollerLauncherCommand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualRollerLauncher;
 
-public class DRLTestRun extends CommandBase {
+public class DRLCommand extends CommandBase {
 
   public DualRollerLauncher drl;
   /** Creates a new DRLTestRun. */
-  public DRLTestRun(DualRollerLauncher drl) {
+  public DRLCommand(DualRollerLauncher drl) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
 
@@ -31,12 +31,12 @@ public class DRLTestRun extends CommandBase {
     // front 0.48 back 0.55 (Shoot other ball)
     // (kMaxRPM / 600) * (kSensorUnitsPerRotation / kGearRatio)
 
-    this.drl.setFront();
-    this.drl.setBack();
+    this.drl.setWheels();
+    this.drl.setRollers();
     System.out.println(
-        "Current Front RPM " + ((this.drl.frontMotor.getSelectedSensorVelocity() * 600) / 2048.0));
+        "Current Front RPM " + ((this.drl.wheels.getSelectedSensorVelocity() * 600) / 2048.0));
     System.out.println(
-        "Current Back RPM " + ((this.drl.backMotor.getSelectedSensorVelocity() * 600) / 2048.0));
+        "Current Back RPM " + ((this.drl.rollers.getSelectedSensorVelocity() * 600) / 2048.0));
   }
 
   // Called once the command ends or is interrupted.

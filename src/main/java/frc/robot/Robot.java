@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.utilities.TalonFXUnits;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,6 +16,7 @@ import frc.robot.utilities.TalonFXUnits;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+
   private RobotContainer m_robotContainer;
 
   /**
@@ -27,7 +27,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    System.out.println(TalonFXUnits.NativeUnitsToRpm(100));
 
     this.m_robotContainer = new RobotContainer();
   }
