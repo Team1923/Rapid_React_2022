@@ -38,9 +38,6 @@ public class DualRollerLauncher extends SubsystemBase {
   double back_integral, back_error, back_derivative, back_previous_error, back_velocity = 0;
   public NetworkTableEntry backRPM = tuneDualRollerTab.add("Back RPM", 0).getEntry();
 
-  public NetworkTableEntry frontnt;
-  public NetworkTableEntry backnt;
-
   /** Creates a new DualRollerLauncher. */
   public DualRollerLauncher() {
 
@@ -96,16 +93,11 @@ public class DualRollerLauncher extends SubsystemBase {
     this.backMotor.config_kF(0, .057, 30);
 
     // setDefaultCommand(new DualRollerLauncherCommand(this, 0, 0)); // should stop it?
-
-    frontnt = tuneDualRollerTab.add("front percent", 0).getEntry();
-    backnt = tuneDualRollerTab.add("back percentout", 0).getEntry();
   }
 
   public void setFront() {
     // DriverStation.reportWarning("Setting front roller to" + spd, false);
     double vel = frontRPM.getDouble(0) * 2048.0 / 600;
-
-    // frontMotor.set(ControlMode.PercentOutput, 0.3);
 
     frontMotor.set(TalonFXControlMode.Velocity, vel);
   }
@@ -113,7 +105,6 @@ public class DualRollerLauncher extends SubsystemBase {
   public void setBack() {
     // DriverStation.reportWarning("Setting back roller to" + spd, false);
     double vel = backRPM.getDouble(0) * 2048.0 / 600;
-    // backMotor.set(ControlMode.PercentOutput, 0.45);
 
     backMotor.set(TalonFXControlMode.Velocity, vel);
   }
