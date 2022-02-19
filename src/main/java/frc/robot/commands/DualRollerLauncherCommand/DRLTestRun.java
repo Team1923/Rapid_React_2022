@@ -6,12 +6,14 @@ package frc.robot.commands.DualRollerLauncherCommand;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualRollerLauncher;
+import frc.robot.utilities.UnitConversion;
 
-public class DRLCommand extends CommandBase {
+public class DRLTestRun extends CommandBase {
 
   public DualRollerLauncher drl;
+
   /** Creates a new DRLTestRun. */
-  public DRLCommand(DualRollerLauncher drl) {
+  public DRLTestRun(DualRollerLauncher drl) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
 
@@ -25,18 +27,17 @@ public class DRLCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // this.drl.setFront(0.45);
-    // this.drl.setBack(0.45);
 
-    // front 0.48 back 0.55 (Shoot other ball)
-    // (kMaxRPM / 600) * (kSensorUnitsPerRotation / kGearRatio)
+    this.drl.setFront();
+    this.drl.setBack();
 
-    this.drl.setWheels();
-    this.drl.setRollers();
-    System.out.println(
-        "Current Front RPM " + ((this.drl.wheels.getSelectedSensorVelocity() * 600) / 2048.0));
-    System.out.println(
-        "Current Back RPM " + ((this.drl.rollers.getSelectedSensorVelocity() * 600) / 2048.0));
+    System.out.print(
+        "Current Front RPM "
+            + UnitConversion.nativeUnitstoRPM(this.drl.frontMotor.getSelectedSensorVelocity())
+            + "\t");
+    System.out.print(
+        "Current Back RPM "
+            + UnitConversion.nativeUnitstoRPM(this.drl.backMotor.getSelectedSensorVelocity()));
   }
 
   // Called once the command ends or is interrupted.

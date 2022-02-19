@@ -12,18 +12,16 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.Climber.ClimberKeepDown;
 
 public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
   public WPI_TalonFX leftMotor = new WPI_TalonFX(Constants.leftClimberMotor);
 
-  public WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
+  private WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
 
-  public SupplyCurrentLimitConfiguration supplyCurrentLimitConfigurationWhenClimbing =
+  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
-
-  public SupplyCurrentLimitConfiguration supplyCurrentLimitConfigurationWhenNotClimbing =
-      new SupplyCurrentLimitConfiguration(true, 5, 10, 0.25);
 
   public ClimberSubsystem() {
     leftMotor.configFactoryDefault();
@@ -36,8 +34,8 @@ public class ClimberSubsystem extends SubsystemBase {
     rightMotor.follow(leftMotor);
     rightMotor.setInverted(InvertType.InvertMotorOutput);
 
-    leftMotor.configSupplyCurrentLimit(supplyCurrentLimitConfigurationWhenNotClimbing);
-    rightMotor.configSupplyCurrentLimit(supplyCurrentLimitConfigurationWhenNotClimbing);
+    leftMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+    rightMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
 
     // set up encoder logic.
     leftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);
@@ -48,6 +46,8 @@ public class ClimberSubsystem extends SubsystemBase {
     leftMotor.config_kP(Constants.kIdx, Constants.kP, Constants.kTimeoutMs);
     leftMotor.config_kI(Constants.kIdx, Constants.kI, Constants.kTimeoutMs);
     leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
+
+    setDefaultCommand(new ClimberKeepDown(this));
   }
 
   public void runClimber(double leftSpeed, double rightSpeed) {
