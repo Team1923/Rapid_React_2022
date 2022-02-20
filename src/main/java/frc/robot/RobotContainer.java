@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Climber.ClimberTest;
 import frc.robot.commands.Conveyor.ConveyorTest;
-import frc.robot.commands.DriveTrainCommands.DriveTest;
+import frc.robot.commands.DriveTrainCommands.ArcadeDrive;
 import frc.robot.commands.DualRollerLauncherCommand.RunDRL;
 import frc.robot.commands.Intake.RunIntake;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -69,7 +69,7 @@ public class RobotContainer {
             XboxController.Axis.kLeftY.value,
             0.05,
             SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new DriveTest(drive, driver));
+        .whileActiveOnce(new ArcadeDrive(drive, driver));
 
     // CLIMBER
 

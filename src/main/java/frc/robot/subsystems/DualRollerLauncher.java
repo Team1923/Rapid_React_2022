@@ -88,6 +88,15 @@ public class DualRollerLauncher extends SubsystemBase {
     double vel = UnitConversion.nativeUnitstoRPM(frontRPM.getDouble(0));
     frontMotor.set(TalonFXControlMode.Velocity, vel);
   }
+  // this is for autos.
+  public void setFront(double spd) {
+    frontMotor.set(TalonFXControlMode.Velocity, spd);
+  }
+
+  // this is for autos.
+  public void setBack(double spd) {
+    backMotor.set(TalonFXControlMode.Velocity, spd);
+  }
 
   public boolean inRange(double currentRPM, double targetRPM, double threshold) {
     boolean weGood = currentRPM < (targetRPM + threshold) && currentRPM > (targetRPM - threshold);
