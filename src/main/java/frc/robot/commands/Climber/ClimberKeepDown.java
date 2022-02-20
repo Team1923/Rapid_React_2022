@@ -27,7 +27,7 @@ public class ClimberKeepDown extends CommandBase {
   public void execute() {
     // this.climber.runClimber(0.01, 0);
 
-    //TODO change current value 
+    // TODO change current value
     this.climber.leftMotor.set(ControlMode.Current, 2);
   }
 

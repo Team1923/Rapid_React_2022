@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Climber.ClimberTest;
 import frc.robot.commands.Conveyor.ConveyorTest;
 import frc.robot.commands.DriveTrainCommands.DriveTest;
-import frc.robot.commands.DualRollerLauncherCommand.DRLTestRun;
+import frc.robot.commands.DualRollerLauncherCommand.RunDRL;
 import frc.robot.commands.Intake.IntakeTest;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -58,7 +58,7 @@ public class RobotContainer {
 
     // shoot ball (TRIANGLE)
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new DRLTestRun(drl));
+        .toggleWhenPressed(new RunDRL(drl));
 
     // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     //      .toggleWhenPressed(new DRLTEST2(drl2));
@@ -73,19 +73,19 @@ public class RobotContainer {
 
     // CLIMBER
 
-        new SpectrumAxisButton(
-                driver,
-                XboxController.Axis.kLeftTrigger.value,
-                0.1,
-                SpectrumAxisButton.ThresholdType.DEADBAND)
-            .whileActiveOnce(new ClimberTest(climber, driver));
+    new SpectrumAxisButton(
+            driver,
+            XboxController.Axis.kLeftTrigger.value,
+            0.1,
+            SpectrumAxisButton.ThresholdType.DEADBAND)
+        .whileActiveOnce(new ClimberTest(climber, driver));
 
-        new SpectrumAxisButton(
-                driver,
-                XboxController.Axis.kRightTrigger.value,
-                0.1,
-                SpectrumAxisButton.ThresholdType.DEADBAND)
-            .whileActiveOnce(new ClimberTest(climber, driver));
+    new SpectrumAxisButton(
+            driver,
+            XboxController.Axis.kRightTrigger.value,
+            0.1,
+            SpectrumAxisButton.ThresholdType.DEADBAND)
+        .whileActiveOnce(new ClimberTest(climber, driver));
   }
 
   public Command getAutonomousCommand() {

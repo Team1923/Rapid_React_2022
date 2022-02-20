@@ -39,9 +39,6 @@ public class DualRollerLauncher extends SubsystemBase {
   double back_integral, back_error, back_derivative, back_previous_error, back_velocity = 0;
   public NetworkTableEntry backRPM = tuneDualRollerTab.add("Back RPM", 0).getEntry();
 
-  public NetworkTableEntry frontnt;
-  public NetworkTableEntry backnt;
-
   /** Creates a new DualRollerLauncher. */
   public DualRollerLauncher() {
 
@@ -57,12 +54,10 @@ public class DualRollerLauncher extends SubsystemBase {
     this.backMotor.setNeutralMode(NeutralMode.Coast);
     this.frontMotor.setNeutralMode(NeutralMode.Coast);
 
-    // #region Testing new PID CODE from 2/15/22
-
     frontMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
-
     backMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
 
+    // copies the output range of (-1,1) from the examples, a nominal output of zero.
     frontMotor.configNominalOutputForward(0, 30);
     frontMotor.configNominalOutputReverse(0, 30);
     frontMotor.configPeakOutputForward(1, 30);
@@ -72,14 +67,6 @@ public class DualRollerLauncher extends SubsystemBase {
     backMotor.configNominalOutputReverse(0, 30);
     backMotor.configPeakOutputForward(1, 30);
     backMotor.configPeakOutputReverse(-1, 30);
-
-    // #endregion
-
-    // this tells the falcon 500 to use their integrated encoders for velocity.
-    // we can also set this to be other things, like a CANcoder, for example.
-
-    // frontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-    // backMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     // configure P
     this.frontMotor.config_kP(0, 0.25, 30);
@@ -95,47 +82,32 @@ public class DualRollerLauncher extends SubsystemBase {
 
     this.frontMotor.config_kF(0, .05, 30);
     this.backMotor.config_kF(0, .057, 30);
-
-    // setDefaultCommand(new DualRollerLauncherCommand(this, 0, 0)); // should stop it?
-
-    frontnt = tuneDualRollerTab.add("front percent", 0).getEntry();
-    backnt = tuneDualRollerTab.add("back percentout", 0).getEntry();
   }
 
   public void setFront() {
-    // DriverStation.reportWarning("Setting front roller to" + spd, false);
-    double vel = frontRPM.getDouble(0) * 2048.0 / 600;
-
-    // frontMotor.set(ControlMode.PercentOutput, 0.3);
-
+    double vel = UnitConversion.nativeUnitstoRPM(frontRPM.getDouble(0));
     frontMotor.set(TalonFXControlMode.Velocity, vel);
   }
 
-  public boolean frontInrange() {
-    double currentRPM = UnitConversion.nativeUnitstoRPM(frontMotor.getSelectedSensorVelocity());
-    double target = frontRPM.getDouble(0);
-    boolean weGood = currentRPM < (target + 50) && currentRPM > (target - 50);
-    if (weGood) {
-      System.out.println("We good for front");
-    }
+  public boolean inRange(double currentRPM, double targetRPM, double threshold) {
+    boolean weGood = currentRPM < (targetRPM + threshold) && currentRPM > (targetRPM - threshold);
     return weGood;
   }
 
-  public boolean backInrange() {
+  public boolean frontInRange() {
+    double currentRPM = UnitConversion.nativeUnitstoRPM(frontMotor.getSelectedSensorVelocity());
+    double target = frontRPM.getDouble(0);
+    return inRange(currentRPM, target, 50);
+  }
+
+  public boolean backInRange() {
     double currentRPM = UnitConversion.nativeUnitstoRPM(backMotor.getSelectedSensorVelocity());
     double target = backRPM.getDouble(0);
-    boolean weGood = currentRPM < (target + 50) && currentRPM > (target - 50);
-    if (weGood) {
-      System.out.println("We good for Back");
-    }
-    return weGood;
+    return inRange(currentRPM, target, 50);
   }
 
   public void setBack() {
-    // DriverStation.reportWarning("Setting back roller to" + spd, false);
-    double vel = backRPM.getDouble(0) * 2048.0 / 600;
-    // backMotor.set(ControlMode.PercentOutput, 0.45);
-
+    double vel = UnitConversion.RPMtoNativeUnits(backRPM.getDouble(0));
     backMotor.set(TalonFXControlMode.Velocity, vel);
   }
 
