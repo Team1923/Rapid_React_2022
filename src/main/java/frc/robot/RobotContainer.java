@@ -12,7 +12,7 @@ import frc.robot.commands.Climber.ClimberTest;
 import frc.robot.commands.Conveyor.ConveyorTest;
 import frc.robot.commands.DriveTrainCommands.DriveTest;
 import frc.robot.commands.DualRollerLauncherCommand.RunDRL;
-import frc.robot.commands.Intake.IntakeTest;
+import frc.robot.commands.Intake.RunIntake;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -45,14 +45,14 @@ public class RobotContainer {
 
     // intake in (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
-        .whileHeld(new IntakeTest(intake, operator));
+        .whileHeld(new RunIntake(intake, operator));
 
     new JoystickButton(operator, PS4Controller.Button.kSquare.value)
-        .whileHeld(new IntakeTest(intake, operator));
+        .whileHeld(new RunIntake(intake, operator));
 
     // intake, feeder, conveyor wheels IN (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new IntakeTest(intake, operator));
+        .whileHeld(new RunIntake(intake, operator));
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
         .whileHeld(new ConveyorTest(conveyor, drl));
 

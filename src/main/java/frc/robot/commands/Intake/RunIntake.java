@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class IntakeTest extends CommandBase {
+public class RunIntake extends CommandBase {
 
   Intake intake;
   PS4Controller controller;
   /** Creates a new IntakeTest. */
-  public IntakeTest(Intake intake, PS4Controller controller) {
+  public RunIntake(Intake intake, PS4Controller controller) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
     this.intake = intake;
