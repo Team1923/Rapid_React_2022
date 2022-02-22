@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.OneBallLowAuto;
@@ -45,6 +47,8 @@ public class RobotContainer {
 
   public static TwoBallHighAuto twoBallHighAuto = new TwoBallHighAuto(intake, drl, drive, conveyor);
   public static OneBallLowAuto oneBallLowAuto = new OneBallLowAuto(intake, drive, conveyor, drl);
+
+  public SendableChooser<Command> chooser = new SendableChooser<>();
 
   public RobotContainer() {
 
@@ -91,10 +95,16 @@ public class RobotContainer {
             0.1,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ClimberTest(climber, driver));
+
+        chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
+        chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
+        SmartDashboard.putData(chooser);
   }
+
+
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return twoBallHighAuto;
+    return chooser.getSelected();
   }
 }

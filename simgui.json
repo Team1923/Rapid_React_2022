@@ -11,6 +11,11 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ClimberSubsystem": "Subsystem",
+      "/LiveWindow/ConveyorSubsystem": "Subsystem",
+      "/LiveWindow/DriveTrainSubsystem": "Subsystem",
+      "/LiveWindow/DualRollerLauncher": "Subsystem",
+      "/LiveWindow/Intake": "Subsystem",
       "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Ungrouped/Talon FX [10]": "Motor Controller",

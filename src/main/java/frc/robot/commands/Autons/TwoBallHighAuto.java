@@ -29,7 +29,7 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ParallelCommandGroup(
+        new SequentialCommandGroup(
             // drop intake
             new AutoIntake(intake, 0.5).withTimeout(.2), // drop intake
             new ParallelCommandGroup(
