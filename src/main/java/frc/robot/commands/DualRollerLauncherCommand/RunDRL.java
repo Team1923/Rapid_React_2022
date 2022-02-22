@@ -4,6 +4,7 @@
 
 package frc.robot.commands.DualRollerLauncherCommand;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.UnitConversion;
@@ -30,6 +31,11 @@ public class RunDRL extends CommandBase {
 
     this.drl.setFront();
     this.drl.setBack();
+
+    SmartDashboard.putNumber("Front RPM", UnitConversion.nativeUnitstoRPM(this.drl.frontMotor.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("Back RPM", UnitConversion.nativeUnitstoRPM(this.drl.backMotor.getSelectedSensorVelocity()));
+    SmartDashboard.putNumber("Front setpt", this.drl.front_setpt.getDouble(0));
+    SmartDashboard.putNumber("Back setpt", this.drl.back_setpt.getDouble(0));
 
     System.out.print(
         "Current Front RPM "
