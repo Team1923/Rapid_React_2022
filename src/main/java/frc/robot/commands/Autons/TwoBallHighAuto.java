@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Conveyor.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
-import frc.robot.commands.DualRollerLauncherCommand.SpinUpLowOnce;
 import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -19,32 +18,26 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class OneBallLowAuto extends SequentialCommandGroup {
-  /** Creates a new OneBallAuto. */
-  public OneBallLowAuto(
+public class TwoBallHighAuto extends SequentialCommandGroup {
+  /** Creates a new TwoBallHighAuto. */
+  public TwoBallHighAuto(
       Intake intake,
+      DualRollerLauncher drl,
       DriveTrainSubsystem drive,
-      ConveyorSubsystem conveyor,
-      DualRollerLauncher drl) {
+      ConveyorSubsystem conveyor) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new SequentialCommandGroup(
             new ParallelCommandGroup(
-                new AutoIntake(intake, 0.5)
-                    .withTimeout(.2), // runs the drop intake command for 1/5th of a second.
-                // new WaitCommand(1);
-                new AutoDrive(drive, .15).withTimeout(2) // drives us forward at 15% speed for 2s.
-                ),
-            new SequentialCommandGroup(
-                new SpinUpLowOnce(drl),
-                // this has no timeout because I defined an end condition.  We may still want to add
-                // a "maintain velocity" command.
-                new ParallelCommandGroup(
-                    new MaintainVelocity(drl, 1600, 800).withTimeout(3),
-
-                    // this run command does not have the driver pause logic we use.  We may need to
-                    // port it.
-                    new AutoConveyor(conveyor, 0.5, 0.5).withTimeout(3)))));
+                new AutoIntake(intake, 0.5).withTimeout(0.5), new MaintainVelocity(drl, 2600, 900)),
+            new AutoConveyor(conveyor, 0.9, 0.9).withTimeout(2),
+            new MaintainVelocity(drl, 0, 0), // Turns off the shooter after we shoot
+            new ParallelCommandGroup(
+                new AutoDrive(drive, 0.15).withTimeout(3),
+                new AutoIntake(intake, 0.7).withTimeout(3)),
+            new ParallelCommandGroup(
+                new AutoDrive(drive, -0.15).withTimeout(3), new MaintainVelocity(drl, 2600, 900)),
+            new AutoConveyor(conveyor, 0.9, 0.9)));
   }
 }

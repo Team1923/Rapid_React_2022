@@ -7,12 +7,14 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class DropIntake extends CommandBase {
+public class AutoIntake extends CommandBase {
   private Intake intake;
+  private double speed;
   /** Creates a new DropIntake. */
-  public DropIntake(Intake intake) {
+  public AutoIntake(Intake intake, double spd) {
     addRequirements(intake);
     this.intake = intake;
+    speed = spd;
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +24,7 @@ public class DropIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.intake.runIntake(.5);
+    this.intake.runIntake(speed);
   }
 
   // Called once the command ends or is interrupted.

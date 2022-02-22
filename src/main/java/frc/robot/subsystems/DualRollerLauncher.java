@@ -120,8 +120,6 @@ public class DualRollerLauncher extends SubsystemBase {
     return inRange(currentRPM, target, 50);
   }
 
-  
-
   public void setZero() {
     frontMotor.set(TalonFXControlMode.PercentOutput, 0);
     backMotor.set(TalonFXControlMode.PercentOutput, 0);

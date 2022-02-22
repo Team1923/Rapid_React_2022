@@ -5,19 +5,18 @@
 package frc.robot.commands.Conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
-
 
 public class AutoConveyor extends CommandBase {
   /** Creates a new ConveyorTest. */
   public ConveyorSubsystem conveyor;
 
+  private double belts, wheels;
 
-    private double belts, wheels;
-    boolean finished = false;
   public AutoConveyor(
-      ConveyorSubsystem conveyor, double belts, double wheels) { // ,double frontSpeed, double backSpeed
+      ConveyorSubsystem conveyor,
+      double belts,
+      double wheels) { // ,double frontSpeed, double backSpeed
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);
     this.conveyor = conveyor;
@@ -34,10 +33,7 @@ public class AutoConveyor extends CommandBase {
   @Override
   public void execute() {
 
-      this.conveyor.runConveyor(belts, wheels);
-      new WaitCommand(1);
-      finished = true;
-    
+    this.conveyor.runConveyor(belts, wheels);
   }
 
   // Called once the command ends or is interrupted.
@@ -49,6 +45,6 @@ public class AutoConveyor extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return false;
   }
 }

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Autons.OneBallLowAuto;
+import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Climber.ClimberTest;
 import frc.robot.commands.Conveyor.ConveyorTest;
 import frc.robot.commands.DriveTrainCommands.ArcadeDrive;
@@ -40,6 +42,9 @@ public class RobotContainer {
   public static ClimberSubsystem climber = new ClimberSubsystem();
 
   public static boolean enableClimber = false;
+
+  public static TwoBallHighAuto twoBallHighAuto = new TwoBallHighAuto(intake, drl, drive, conveyor);
+  public static OneBallLowAuto oneBallLowAuto = new OneBallLowAuto(intake, drive, conveyor, drl);
 
   public RobotContainer() {
 
@@ -90,6 +95,6 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return twoBallHighAuto;
   }
 }
