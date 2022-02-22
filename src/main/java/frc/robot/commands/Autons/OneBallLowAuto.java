@@ -7,6 +7,8 @@ package frc.robot.commands.Autons;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.Conveyor.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
 import frc.robot.commands.DualRollerLauncherCommand.SpinUpLowOnce;
@@ -31,8 +33,10 @@ public class OneBallLowAuto extends SequentialCommandGroup {
     addCommands(
         new SequentialCommandGroup(
             new ParallelCommandGroup(
+                
                 new DropIntake(intake)
                     .withTimeout(.2), // runs the drop intake command for 1/5th of a second.
+                    //new WaitCommand(1);
                 new AutoDrive(drive, .15).withTimeout(2) // drives us forward at 15% speed for 2s.
                 ),
             new SequentialCommandGroup(
@@ -44,6 +48,7 @@ public class OneBallLowAuto extends SequentialCommandGroup {
 
                     // this run command does not have the driver pause logic we use.  We may need to
                     // port it.
-                    new RunCommand(() -> conveyor.runConveyor(.5, .5)).withTimeout(3)))));
+                    new AutoConveyor(conveyor, 0.5, 0.5).withTimeout(3)
+    ))));
   }
 }

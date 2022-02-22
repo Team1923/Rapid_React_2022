@@ -88,6 +88,11 @@ public class DualRollerLauncher extends SubsystemBase {
     double vel = UnitConversion.nativeUnitstoRPM(frontRPM.getDouble(0));
     frontMotor.set(TalonFXControlMode.Velocity, vel);
   }
+
+  public void setBack() {
+    double vel = UnitConversion.RPMtoNativeUnits(backRPM.getDouble(0));
+    backMotor.set(TalonFXControlMode.Velocity, vel);
+  }
   // this is for autos.
   public void setFront(double spd) {
     frontMotor.set(TalonFXControlMode.Velocity, spd);
@@ -103,22 +108,19 @@ public class DualRollerLauncher extends SubsystemBase {
     return weGood;
   }
 
-  public boolean frontInRange() {
+  public boolean frontInRange(double targetRPM) {
     double currentRPM = UnitConversion.nativeUnitstoRPM(frontMotor.getSelectedSensorVelocity());
-    double target = frontRPM.getDouble(0);
+    double target = targetRPM;
     return inRange(currentRPM, target, 50);
   }
 
-  public boolean backInRange() {
+  public boolean backInRange(double targetRPM) {
     double currentRPM = UnitConversion.nativeUnitstoRPM(backMotor.getSelectedSensorVelocity());
-    double target = backRPM.getDouble(0);
+    double target = targetRPM;
     return inRange(currentRPM, target, 50);
   }
 
-  public void setBack() {
-    double vel = UnitConversion.RPMtoNativeUnits(backRPM.getDouble(0));
-    backMotor.set(TalonFXControlMode.Velocity, vel);
-  }
+  
 
   public void setZero() {
     frontMotor.set(TalonFXControlMode.PercentOutput, 0);

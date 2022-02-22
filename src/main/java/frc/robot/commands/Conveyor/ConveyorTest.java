@@ -33,7 +33,7 @@ public class ConveyorTest extends CommandBase {
   public void execute() {
 
     // checking if the shooter is range of the rpm
-    if (this.drl.backInRange() && this.drl.frontInRange()) {
+    if (this.drl.backInRange(this.drl.backRPM.getDouble(0)) && this.drl.frontInRange(this.drl.frontRPM.getDouble(0))) {
       this.conveyor.runConveyor(
           this.conveyor.belts.getDouble(0), this.conveyor.wheels.getDouble(0));
     }

@@ -44,6 +44,6 @@ public class MaintainVelocity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.frontInRange() && this.drl.backInRange());
+    return (this.drl.frontInRange(front) && this.drl.backInRange(back));
   }
 }

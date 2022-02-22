@@ -26,6 +26,7 @@ public class AutoDrive extends CommandBase {
   @Override
   public void execute() {
     this.drive.kDrive.arcadeDrive(spd, 0);
+    
   }
 
   // Called once the command ends or is interrupted.

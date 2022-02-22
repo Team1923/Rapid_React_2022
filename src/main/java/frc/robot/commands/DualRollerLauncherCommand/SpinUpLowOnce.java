@@ -39,6 +39,6 @@ public class SpinUpLowOnce extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.frontInRange() && this.drl.backInRange());
+    return (this.drl.frontInRange(1600) && this.drl.backInRange(800));
   }
 }

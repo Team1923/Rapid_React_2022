@@ -5,19 +5,25 @@
 package frc.robot.commands.Conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 
-public class ConveyorTest3 extends CommandBase {
+
+public class AutoConveyor extends CommandBase {
   /** Creates a new ConveyorTest. */
   public ConveyorSubsystem conveyor;
-  // public double frontSpeed;
-  // public double backSpeed;
-  public ConveyorTest3(ConveyorSubsystem conveyor) { // ,double frontSpeed, double backSpeed
+
+
+    private double belts, wheels;
+    boolean finished = false;
+  public AutoConveyor(
+      ConveyorSubsystem conveyor, double belts, double wheels) { // ,double frontSpeed, double backSpeed
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);
     this.conveyor = conveyor;
-    // this.frontSpeed = frontSpeed;
-    // this.backSpeed = backSpeed;
+
+    this.belts = belts;
+    this.wheels = wheels;
   }
 
   // Called when the command is initially scheduled.
@@ -27,8 +33,11 @@ public class ConveyorTest3 extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    conveyor.runConveyor(
-        -1 * this.conveyor.belts.getDouble(0), -1 * this.conveyor.wheels.getDouble(0));
+
+      this.conveyor.runConveyor(belts, wheels);
+      new WaitCommand(1);
+      finished = true;
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +49,6 @@ public class ConveyorTest3 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

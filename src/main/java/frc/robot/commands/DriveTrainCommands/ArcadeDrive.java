@@ -25,9 +25,6 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void initialize() {}
 
-  public double cubic(double sp) {
-    return sp * sp * sp;
-  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
