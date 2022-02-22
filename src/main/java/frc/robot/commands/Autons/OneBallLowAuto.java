@@ -37,7 +37,7 @@ public class OneBallLowAuto extends SequentialCommandGroup {
                 new AutoDrive(drive, .15).withTimeout(2) // drives us forward at 15% speed for 2s.
                 ),
             new SequentialCommandGroup(
-                new SpinUpLowOnce(drl),
+                new SpinUpLowOnce(drl, 1600, 800), // 1600 and 800
                 // this has no timeout because I defined an end condition.  We may still want to add
                 // a "maintain velocity" command.
                 new ParallelCommandGroup(

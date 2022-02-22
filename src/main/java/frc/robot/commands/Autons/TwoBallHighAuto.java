@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Conveyor.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
+import frc.robot.commands.DualRollerLauncherCommand.SpinUpLowOnce;
 import frc.robot.commands.Intake.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -28,16 +29,17 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new SequentialCommandGroup(
+        new ParallelCommandGroup(
+            // drop intake
+            new AutoIntake(intake, 0.5).withTimeout(.2), // drop intake
             new ParallelCommandGroup(
-                new AutoIntake(intake, 0.5).withTimeout(0.5), new MaintainVelocity(drl, 2600, 900)),
-            new AutoConveyor(conveyor, 0.9, 0.9).withTimeout(2),
-            new MaintainVelocity(drl, 0, 0), // Turns off the shooter after we shoot
-            new ParallelCommandGroup(
-                new AutoDrive(drive, 0.15).withTimeout(3),
-                new AutoIntake(intake, 0.7).withTimeout(3)),
-            new ParallelCommandGroup(
-                new AutoDrive(drive, -0.15).withTimeout(3), new MaintainVelocity(drl, 2600, 900)),
-            new AutoConveyor(conveyor, 0.9, 0.9)));
+                new AutoIntake(intake, 0.5), // run intake for entire auto
+                new SequentialCommandGroup(
+                    new AutoDrive(drive, 0.15).withTimeout(.2), // fix time later
+                    new AutoDrive(drive, -0.15).withTimeout(.2), // fix time later
+                    new SpinUpLowOnce(drl, 2600, 900),
+                    new ParallelCommandGroup(
+                        new MaintainVelocity(drl, 2600, 900).withTimeout(10),
+                        new AutoConveyor(conveyor, 0.9, 0.9).withTimeout(5))))));
   }
 }
