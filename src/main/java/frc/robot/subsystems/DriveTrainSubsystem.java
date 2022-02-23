@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -38,8 +38,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
     r1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
     l1.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
 
-    // r1.setNeutralMode(NeutralMode.Brake);
-    // l1.setNeutralMode(NeutralMode.Brake);
+    r1.setNeutralMode(NeutralMode.Coast);
+    l1.setNeutralMode(NeutralMode.Coast);
+    r2.setNeutralMode(NeutralMode.Coast);
+    l2.setNeutralMode(NeutralMode.Coast);
+    r3.setNeutralMode(NeutralMode.Brake);
+    l3.setNeutralMode(NeutralMode.Brake);
 
     r2.follow(r1);
     r3.follow(r1);
@@ -55,11 +59,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // setDefaultCommand(new StopDT(this));
   }
 
-  public void setSpeed(double rightSpeed, double leftSpeed) {
+  // public void setSpeed(double rightSpeed, double leftSpeed) {
 
-    r1.set(ControlMode.PercentOutput, rightSpeed);
-    l1.set(ControlMode.PercentOutput, leftSpeed);
-  }
+  //   r1.set(ControlMode.PercentOutput, rightSpeed);
+  //   l1.set(ControlMode.PercentOutput, leftSpeed);
+  // }
 
   // arcade drive function to the subsystem, not the command.  called with an external command.
   // taken from 3847:

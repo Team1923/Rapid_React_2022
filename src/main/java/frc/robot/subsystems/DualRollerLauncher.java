@@ -25,17 +25,23 @@ public class DualRollerLauncher extends SubsystemBase {
 
   public NetworkTableEntry front_setpt =
       tuneDualRollerTab.add("Launcher front set point", 0).getEntry();
-  public NetworkTableEntry front_kp = tuneDualRollerTab.add("Launcher front P value", 0).getEntry();
-  public NetworkTableEntry front_ki = tuneDualRollerTab.add("Launcher front I value", 0).getEntry();
-  public NetworkTableEntry front_kd = tuneDualRollerTab.add("Launcher front D value", 0).getEntry();
+  // public NetworkTableEntry front_kp = tuneDualRollerTab.add("Launcher front P value",
+  // 0).getEntry();
+  // public NetworkTableEntry front_ki = tuneDualRollerTab.add("Launcher front I value",
+  // 0).getEntry();
+  // public NetworkTableEntry front_kd = tuneDualRollerTab.add("Launcher front D value",
+  // 0).getEntry();
   double front_integral, front_error, front_derivative, front_previous_error, front_velocity = 0;
   public NetworkTableEntry frontRPM = tuneDualRollerTab.add("Front RPM", 0).getEntry();
 
   public NetworkTableEntry back_setpt =
       tuneDualRollerTab.add("Launcher back set point", 0).getEntry();
-  public NetworkTableEntry back_kp = tuneDualRollerTab.add("Launcher back P value", 0).getEntry();
-  public NetworkTableEntry back_ki = tuneDualRollerTab.add("Launcher back I value", 0).getEntry();
-  public NetworkTableEntry back_kd = tuneDualRollerTab.add("Launcher back D value", 0).getEntry();
+  // public NetworkTableEntry back_kp = tuneDualRollerTab.add("Launcher back P value",
+  // 0).getEntry();
+  // public NetworkTableEntry back_ki = tuneDualRollerTab.add("Launcher back I value",
+  // 0).getEntry();
+  // public NetworkTableEntry back_kd = tuneDualRollerTab.add("Launcher back D value",
+  // 0).getEntry();
   double back_integral, back_error, back_derivative, back_previous_error, back_velocity = 0;
   public NetworkTableEntry backRPM = tuneDualRollerTab.add("Back RPM", 0).getEntry();
 
@@ -85,7 +91,7 @@ public class DualRollerLauncher extends SubsystemBase {
   }
 
   public void setFront() {
-    double vel = UnitConversion.nativeUnitstoRPM(frontRPM.getDouble(0));
+    double vel = UnitConversion.RPMtoNativeUnits(frontRPM.getDouble(0));
     frontMotor.set(TalonFXControlMode.Velocity, vel);
   }
 
