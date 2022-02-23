@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.UnitConversion;
 
-public class RunDRL extends CommandBase {
+public class RunDRLCommand extends CommandBase {
 
   public DualRollerLauncher drl;
 
   /** Creates a new DRLTestRun. */
-  public RunDRL(DualRollerLauncher drl) {
+  public RunDRLCommand(DualRollerLauncher drl) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
 
