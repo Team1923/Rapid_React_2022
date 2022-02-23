@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Autons.DriveForwardAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
-import frc.robot.commands.Climber.ClimberTest;
 import frc.robot.commands.Conveyor.ConveyorTest;
 import frc.robot.commands.DriveTrainCommands.ArcadeDrive;
 import frc.robot.commands.DualRollerLauncherCommand.RunDRL;
@@ -47,6 +47,8 @@ public class RobotContainer {
 
   public static TwoBallHighAuto twoBallHighAuto = new TwoBallHighAuto(intake, drl, drive, conveyor);
   public static OneBallLowAuto oneBallLowAuto = new OneBallLowAuto(intake, drive, conveyor, drl);
+  public static DriveForwardAuto driveForwardAuto =
+      new DriveForwardAuto(intake, drive, conveyor, drl);
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -82,29 +84,29 @@ public class RobotContainer {
 
     // CLIMBER
 
-    new SpectrumAxisButton(
-            driver,
-            XboxController.Axis.kLeftTrigger.value,
-            0.1,
-            SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new ClimberTest(climber, driver));
+    // new SpectrumAxisButton(
+    //         driver,
+    //         XboxController.Axis.kLeftTrigger.value,
+    //         0.1,
+    //         SpectrumAxisButton.ThresholdType.DEADBAND)
+    //     .whileActiveOnce(new ClimberTest(climber, driver));
 
-    new SpectrumAxisButton(
-            driver,
-            XboxController.Axis.kRightTrigger.value,
-            0.1,
-            SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new ClimberTest(climber, driver));
+    // new SpectrumAxisButton(
+    //         driver,
+    //         XboxController.Axis.kRightTrigger.value,
+    //         0.1,
+    //         SpectrumAxisButton.ThresholdType.DEADBAND)
+    //     .whileActiveOnce(new ClimberTest(climber, driver));
 
-        chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
-        chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
-        SmartDashboard.putData(chooser);
+    chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
+    chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
+    chooser.addOption("Drive Forward Auto", driveForwardAuto);
+    SmartDashboard.putData(chooser);
   }
-
-
 
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return chooser.getSelected();
+    // return null;
   }
 }

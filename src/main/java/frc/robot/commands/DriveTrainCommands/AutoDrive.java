@@ -31,7 +31,7 @@ public class AutoDrive extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.setSpeed(0, 0);
+    this.drive.kDrive.arcadeDrive(0, 0);
   }
 
   // Returns true when the command should end.
