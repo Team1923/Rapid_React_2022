@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Conveyor;
+package frc.robot.commands.ConveyorCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 
-public class ConveyorTest extends CommandBase {
+public class ConveyorCommand extends CommandBase {
   /** Creates a new ConveyorTest. */
   public ConveyorSubsystem conveyor;
 
   private DualRollerLauncher drl;
 
-  public ConveyorTest(
+  public ConveyorCommand(
       ConveyorSubsystem conveyor, DualRollerLauncher drl) { // ,double frontSpeed, double backSpeed
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);

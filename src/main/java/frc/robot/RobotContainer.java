@@ -13,15 +13,15 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.DriveForwardAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
-import frc.robot.commands.Conveyor.ConveyorTest;
-import frc.robot.commands.DriveTrainCommands.ArcadeDrive;
-import frc.robot.commands.DualRollerLauncherCommand.RunDRL;
-import frc.robot.commands.Intake.RunIntake;
+import frc.robot.commands.ConveyorCommands.ConveyorCommand;
+import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
+import frc.robot.commands.DualRollerLauncherCommand.RunDRLCommand;
+import frc.robot.commands.IntakeCommands.RunIntakeCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
 
 /**
@@ -40,7 +40,7 @@ public class RobotContainer {
   public static final DualRollerLauncher drl = new DualRollerLauncher();
 
   public static final ConveyorSubsystem conveyor = new ConveyorSubsystem();
-  public static Intake intake = new Intake();
+  public static IntakeSubsystem intake = new IntakeSubsystem();
   public static ClimberSubsystem climber = new ClimberSubsystem();
 
   public static boolean enableClimber = false;
@@ -56,20 +56,20 @@ public class RobotContainer {
 
     // intake in (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
-        .whileHeld(new RunIntake(intake, operator));
+        .whileHeld(new RunIntakeCommand(intake, operator));
 
     new JoystickButton(operator, PS4Controller.Button.kSquare.value)
-        .whileHeld(new RunIntake(intake, operator));
+        .whileHeld(new RunIntakeCommand(intake, operator));
 
     // intake, feeder, conveyor wheels IN (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new RunIntake(intake, operator));
+        .whileHeld(new RunIntakeCommand(intake, operator));
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new ConveyorTest(conveyor, drl));
+        .whileHeld(new ConveyorCommand(conveyor, drl));
 
     // shoot ball (TRIANGLE)
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new RunDRL(drl));
+        .toggleWhenPressed(new RunDRLCommand(drl));
 
     // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     //      .toggleWhenPressed(new DRLTEST2(drl2));
@@ -80,7 +80,7 @@ public class RobotContainer {
             XboxController.Axis.kLeftY.value,
             0.05,
             SpectrumAxisButton.ThresholdType.DEADBAND)
-        .whileActiveOnce(new ArcadeDrive(drive, driver));
+        .whileActiveOnce(new ArcadeDriveCommand(drive, driver));
 
     // CLIMBER
 

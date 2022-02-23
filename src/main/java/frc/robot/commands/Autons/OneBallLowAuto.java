@@ -7,15 +7,15 @@ package frc.robot.commands.Autons;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Conveyor.AutoConveyor;
+import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
 import frc.robot.commands.DualRollerLauncherCommand.SpinUpLowOnce;
-import frc.robot.commands.Intake.AutoIntake;
+import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -23,7 +23,7 @@ import frc.robot.subsystems.Intake;
 public class OneBallLowAuto extends SequentialCommandGroup {
   /** Creates a new OneBallAuto. */
   public OneBallLowAuto(
-      Intake intake,
+      IntakeSubsystem intake,
       DriveTrainSubsystem drive,
       ConveyorSubsystem conveyor,
       DualRollerLauncher drl) {

@@ -2,18 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Intake;
+package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class RunIntake extends CommandBase {
+public class RunIntakeCommand extends CommandBase {
 
-  Intake intake;
+  IntakeSubsystem intake;
   PS4Controller controller;
   /** Creates a new IntakeTest. */
-  public RunIntake(Intake intake, PS4Controller controller) {
+  public RunIntakeCommand(IntakeSubsystem intake, PS4Controller controller) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
     this.intake = intake;

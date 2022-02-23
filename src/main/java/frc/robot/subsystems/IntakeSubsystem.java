@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Intake extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
 
   private WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.intakeMotor);
 
@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
   public NetworkTableEntry intakeValue;
 
   /** Creates a new Intake. */
-  public Intake() {
+  public IntakeSubsystem() {
     intakeMotor.configFactoryDefault();
     intakeMotor.configSupplyCurrentLimit(supplyCurrentLimit);
     // todo, set invert?
