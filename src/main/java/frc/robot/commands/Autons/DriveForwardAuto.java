@@ -25,10 +25,9 @@ public class DriveForwardAuto extends SequentialCommandGroup {
       DualRollerLauncher drl) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new AutoConveyor(conveyor, -.5, -.5).withTimeout(3), 
-    new RunCommand(() -> {}).withTimeout(1),
-    new SequentialCommandGroup(new AutoDrive(drive, .50).withTimeout(2))
-        
-    );
+    addCommands(
+        new AutoConveyor(conveyor, -.5, -.5).withTimeout(3),
+        new RunCommand(() -> {}).withTimeout(1),
+        new SequentialCommandGroup(new AutoDrive(drive, .50).withTimeout(2)));
   }
 }

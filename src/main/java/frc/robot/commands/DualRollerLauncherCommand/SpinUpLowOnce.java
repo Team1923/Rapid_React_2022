@@ -10,15 +10,15 @@ import frc.robot.utilities.UnitConversion;
 
 public class SpinUpLowOnce extends CommandBase {
 
-  private double fRPM, bRPM;
+  private double ShooterWheelsRPM, ShooterRollersRPM;
   private DualRollerLauncher drl;
   /** Creates a new LowScore. */
-  public SpinUpLowOnce(DualRollerLauncher drl, double front, double back) {
+  public SpinUpLowOnce(DualRollerLauncher drl, double ShooterWheels, double ShooterRollers) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
     this.drl = drl;
-    fRPM = front;
-    bRPM = back;
+    ShooterWheelsRPM = ShooterWheels;
+    ShooterRollersRPM = ShooterRollers;
   }
 
   // Called when the command is initially scheduled.
@@ -32,8 +32,8 @@ public class SpinUpLowOnce extends CommandBase {
     // these were done on Saturday 2/19/2022 with Sarath and Kim.
     // they may not be 100% good, or may need to be changed for comp low
     // goal.
-    this.drl.setBack(UnitConversion.RPMtoNativeUnits(bRPM));
-    this.drl.setFront(UnitConversion.RPMtoNativeUnits(fRPM));
+    this.drl.setShooterRollers(UnitConversion.RPMtoNativeUnits(ShooterRollersRPM));
+    this.drl.setShooterWheels(UnitConversion.RPMtoNativeUnits(ShooterWheelsRPM));
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +43,6 @@ public class SpinUpLowOnce extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.frontInRange(fRPM) && this.drl.backInRange(bRPM));
+    return (this.drl.ShooterWheelsInRange(ShooterWheelsRPM) && this.drl.ShooterRollersInRange(ShooterRollersRPM));
   }
 }

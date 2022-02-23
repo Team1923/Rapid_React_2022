@@ -28,8 +28,8 @@ public class RunDRL extends CommandBase {
   @Override
   public void execute() {
 
-    this.drl.setFront();
-    this.drl.setBack();
+    this.drl.setShooterWheels();
+    this.drl.setShooterRollers();
 
     // SmartDashboard.putNumber("Front RPM",
     // UnitConversion.nativeUnitstoRPM(this.drl.frontMotor.getSelectedSensorVelocity()));
@@ -39,12 +39,12 @@ public class RunDRL extends CommandBase {
     // SmartDashboard.putNumber("Back setpt", this.drl.back_setpt.getDouble(0));
 
     System.out.print(
-        "Current Front RPM "
-            + UnitConversion.nativeUnitstoRPM(this.drl.frontMotor.getSelectedSensorVelocity())
+        "Current Shooter Wheels RPM "
+            + UnitConversion.nativeUnitstoRPM(this.drl.ShooterWheels.getSelectedSensorVelocity())
             + "\t");
     System.out.print(
-        "Current Back RPM "
-            + UnitConversion.nativeUnitstoRPM(this.drl.backMotor.getSelectedSensorVelocity()));
+        "Current Shooter Rollers RPM "
+            + UnitConversion.nativeUnitstoRPM(this.drl.ShooterRollers.getSelectedSensorVelocity()));
   }
 
   // Called once the command ends or is interrupted.

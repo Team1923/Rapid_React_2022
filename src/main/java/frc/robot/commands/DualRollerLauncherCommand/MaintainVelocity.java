@@ -10,16 +10,16 @@ import frc.robot.utilities.UnitConversion;
 
 public class MaintainVelocity extends CommandBase {
   private DualRollerLauncher drl;
-  private double front;
-  private double back;
+  private double ShooterWheels;
+  private double ShooterRoller;
 
   /** Creates a new LowScore. */
-  public MaintainVelocity(DualRollerLauncher drl, double frontVel, double backVel) {
+  public MaintainVelocity(DualRollerLauncher drl, double ShooterWheelsVel, double ShooterRollerVel) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
     this.drl = drl;
-    this.front = frontVel;
-    this.back = backVel;
+    this.ShooterWheels = ShooterWheelsVel;
+    this.ShooterRoller = ShooterRollerVel;
   }
 
   // Called when the command is initially scheduled.
@@ -33,8 +33,8 @@ public class MaintainVelocity extends CommandBase {
     // these were done on Saturday 2/19/2022 with Sarath and Kim.
     // they may not be 100% good, or may need to be changed for comp low
     // goal.
-    this.drl.setBack(UnitConversion.RPMtoNativeUnits(this.back));
-    this.drl.setFront(UnitConversion.RPMtoNativeUnits(this.front));
+    this.drl.setShooterRollers(UnitConversion.RPMtoNativeUnits(this.ShooterRoller));
+    this.drl.setShooterWheels(UnitConversion.RPMtoNativeUnits(this.ShooterWheels));
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +44,6 @@ public class MaintainVelocity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.frontInRange(front) && this.drl.backInRange(back));
+    return (this.drl.ShooterWheelsInRange(ShooterWheels) && this.drl.ShooterRollersInRange(ShooterRoller));
   }
 }

@@ -26,7 +26,8 @@ public class Networking {
     try {
       NetworkInterface neti = NetworkInterface.getByName("eth0");
       Enumeration<InetAddress> addresses = neti.getInetAddresses();
-      // a network interface can have multiple addresses, even if ours doesn't, so we traverse all of them.
+      // a network interface can have multiple addresses, even if ours doesn't, so we traverse all
+      // of them.
 
       while (addresses.hasMoreElements()) {
         InetAddress addr = addresses.nextElement();
