@@ -21,19 +21,24 @@ public class DualRollerLauncher extends SubsystemBase {
   public WPI_TalonFX ShooterWheels = new WPI_TalonFX(Constants.ShooterWheelsMotor);
   public WPI_TalonFX ShooterRollers = new WPI_TalonFX(Constants.ShooterRollersMotor);
 
-  ShuffleboardTab tuneDualRollerTab = Shuffleboard.getTab("tune dual roller");
+  ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
   public NetworkTableEntry ShooterWheelsRPM =
-      tuneDualRollerTab.add("Shooter Wheels RPM", 0).getEntry();
+      tuningTab.add("Shooter Wheels RPM", 0).getEntry();
 
   public NetworkTableEntry ShooterRollersRPM =
-      tuneDualRollerTab.add("Shooter Rollers RPM", 0).getEntry();
+      tuningTab.add("Shooter Rollers RPM", 0).getEntry();
+  
+      public NetworkTableEntry CURRENTShooterWheelsRPM =
+      tuningTab.add("CURRENT Shooter Wheels RPM", 0).getEntry();
+
+  public NetworkTableEntry CURRENTShooterRollersRPM =
+      tuningTab.add("CURRENT Shooter Rollers RPM", 0).getEntry();
+
+      
 
   /** Creates a new DualRollerLauncher. */
   public DualRollerLauncher() {
-
-    // this is for in the event the robot reboots we need to explicitly set configurations
-    // to avoid a latent state breaking stuff.
 
     ShooterWheels.configFactoryDefault();
     ShooterRollers.configFactoryDefault();
@@ -47,7 +52,7 @@ public class DualRollerLauncher extends SubsystemBase {
     ShooterWheels.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
     ShooterRollers.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
 
-    // copies the output range of (-1,1) from the examples, a nominal output of zero.
+
     ShooterWheels.configNominalOutputForward(0, 30);
     ShooterWheels.configNominalOutputReverse(0, 30);
     ShooterWheels.configPeakOutputForward(1, 30);
@@ -77,20 +82,24 @@ public class DualRollerLauncher extends SubsystemBase {
   public void setShooterWheels() {
     double vel = UnitConversion.RPMtoNativeUnits(ShooterWheelsRPM.getDouble(0));
     ShooterWheels.set(TalonFXControlMode.Velocity, vel);
+    updateRPM();
   }
 
   public void setShooterRollers() {
     double vel = UnitConversion.RPMtoNativeUnits(ShooterRollersRPM.getDouble(0));
     ShooterRollers.set(TalonFXControlMode.Velocity, vel);
+    updateRPM();
   }
   // this is for autos.
   public void setShooterWheels(double spd) {
     ShooterWheels.set(TalonFXControlMode.Velocity, spd);
+    updateRPM();
   }
 
   // this is for autos.
   public void setShooterRollers(double spd) {
     ShooterRollers.set(TalonFXControlMode.Velocity, spd);
+    updateRPM();
   }
 
   public boolean inRange(double currentRPM, double targetRPM, double threshold) {
@@ -108,6 +117,11 @@ public class DualRollerLauncher extends SubsystemBase {
     double currentRPM = UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity());
     double target = targetRPM;
     return inRange(currentRPM, target, 50);
+  }
+
+  public void updateRPM(){
+    CURRENTShooterWheelsRPM.setDouble(UnitConversion.nativeUnitstoRPM(ShooterWheels.getSelectedSensorVelocity())); 
+    CURRENTShooterRollersRPM.setDouble(UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity()));
   }
 
   public void setZero() {

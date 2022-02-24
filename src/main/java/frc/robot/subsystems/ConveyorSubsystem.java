@@ -18,7 +18,7 @@ public class ConveyorSubsystem extends SubsystemBase {
   private TalonFX ConveyorMotor = new TalonFX(Constants.ConveyorMotor);
   private TalonFX FeederWheelMotor = new TalonFX(Constants.FeederWheelMoter);
 
-  ShuffleboardTab tuneDualRollerTab = Shuffleboard.getTab("tune dual roller");
+  ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
   public NetworkTableEntry Conveyor;
   public NetworkTableEntry FeederWheels;
@@ -29,8 +29,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     ConveyorMotor.setInverted(InvertType.InvertMotorOutput);
     FeederWheelMotor.setInverted(InvertType.InvertMotorOutput);
 
-    Conveyor = tuneDualRollerTab.add("Conveyor percentout", 0).getEntry();
-    FeederWheels = tuneDualRollerTab.add("FeederWheels percentout", 0).getEntry();
+    Conveyor = tuningTab.add("Conveyor percentout", 0).getEntry();
+    FeederWheels = tuningTab.add("FeederWheels percentout", 0).getEntry();
   }
 
   public void runConveyor(double ConveyorSpd, double FeederWheelSpd) {

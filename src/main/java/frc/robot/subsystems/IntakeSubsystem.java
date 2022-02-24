@@ -21,7 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
   SupplyCurrentLimitConfiguration supplyCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
-  ShuffleboardTab tuneDualRollerTab = Shuffleboard.getTab("tune dual roller");
+  ShuffleboardTab tuningTab = Shuffleboard.getTab("tune dual roller");
 
   public NetworkTableEntry intakeValue;
 
@@ -34,7 +34,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     intakeMotor.setInverted(InvertType.InvertMotorOutput);
 
-    intakeValue = tuneDualRollerTab.add("Intake Percentout", 0).getEntry();
+    intakeValue = tuningTab.add("Intake Percentout", 0).getEntry();
 
     // The default command may want to be running.
     // Not 100% sure if we want that or not, until then it'll be disabled.

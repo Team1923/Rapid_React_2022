@@ -31,13 +31,6 @@ public class RunDRLCommand extends CommandBase {
     this.drl.setShooterWheels();
     this.drl.setShooterRollers();
 
-    // SmartDashboard.putNumber("Front RPM",
-    // UnitConversion.nativeUnitstoRPM(this.drl.frontMotor.getSelectedSensorVelocity()));
-    // SmartDashboard.putNumber("Back RPM",
-    // UnitConversion.nativeUnitstoRPM(this.drl.backMotor.getSelectedSensorVelocity()));
-    // SmartDashboard.putNumber("Front setpt", this.drl.front_setpt.getDouble(0));
-    // SmartDashboard.putNumber("Back setpt", this.drl.back_setpt.getDouble(0));
-
     System.out.print(
         "Current Shooter Wheels RPM "
             + UnitConversion.nativeUnitstoRPM(this.drl.ShooterWheels.getSelectedSensorVelocity())

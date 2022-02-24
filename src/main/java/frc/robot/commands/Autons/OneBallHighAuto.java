@@ -20,9 +20,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class OneBallLowAuto extends SequentialCommandGroup {
+public class OneBallHighAuto extends SequentialCommandGroup {
   /** Creates a new OneBallAuto. */
-  public OneBallLowAuto(
+  public OneBallHighAuto(
       IntakeSubsystem intake,
       DriveTrainSubsystem drive,
       ConveyorSubsystem conveyor,
@@ -34,7 +34,7 @@ public class OneBallLowAuto extends SequentialCommandGroup {
                     .withTimeout(.2) 
                 ),
             new SequentialCommandGroup(
-                new SpinUpLowOnce(drl, 1600, 800),
+                new SpinUpLowOnce(drl, 2700, 900), 
                 new ParallelCommandGroup(
                     new MaintainVelocity(drl, 2700, 900).withTimeout(3),
                     new SequentialCommandGroup(

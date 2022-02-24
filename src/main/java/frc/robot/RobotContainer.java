@@ -9,27 +9,22 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.DriveForwardAuto;
-import frc.robot.commands.Autons.OneBallLowAuto;
+import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.RunDRLCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
-import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
 
   // controllers
@@ -46,7 +41,7 @@ public class RobotContainer {
   public static boolean enableClimber = false;
 
   public static TwoBallHighAuto twoBallHighAuto = new TwoBallHighAuto(intake, drl, drive, conveyor);
-  public static OneBallLowAuto oneBallLowAuto = new OneBallLowAuto(intake, drive, conveyor, drl);
+  public static OneBallHighAuto oneBallLowAuto = new OneBallHighAuto(intake, drive, conveyor, drl);
   public static DriveForwardAuto driveForwardAuto =
       new DriveForwardAuto(intake, drive, conveyor, drl);
 
@@ -54,25 +49,30 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    // intake in (CIRCLE)
+    // intake in (CROSS)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
         .whileHeld(new RunIntakeCommand(intake, operator));
 
+    //INTAKE OUT (SQUARE)
+    //check about flipped values
     new JoystickButton(operator, PS4Controller.Button.kSquare.value)
         .whileHeld(new RunIntakeCommand(intake, operator));
 
     // intake, feeder, conveyor wheels IN (CIRCLE)
+    // new JoystickButton(operator, PS4Controller.Button.kCircle.value)
+    //     .whileHeld(new RunIntakeCommand(intake, operator));
+    // new JoystickButton(operator, PS4Controller.Button.kCircle.value)
+    //     .whileHeld(new ConveyorCommand(conveyor, drl));
+
+    //new method of doing it?
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new RunIntakeCommand(intake, operator));
-    new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new ConveyorCommand(conveyor, drl));
+        .whileHeld(
+            new ParallelCommandGroup(
+                new RunIntakeCommand(intake, operator), new ConveyorCommand(conveyor, drl)));
 
     // shoot ball (TRIANGLE)
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
         .toggleWhenPressed(new RunDRLCommand(drl));
-
-    // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-    //      .toggleWhenPressed(new DRLTEST2(drl2));
 
     // drive (arcade)
     new SpectrumAxisButton(

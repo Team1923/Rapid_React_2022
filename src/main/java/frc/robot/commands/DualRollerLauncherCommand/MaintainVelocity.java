@@ -30,10 +30,6 @@ public class MaintainVelocity extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO verify again these values.
-    // these were done on Saturday 2/19/2022 with Sarath and Kim.
-    // they may not be 100% good, or may need to be changed for comp low
-    // goal.
     this.drl.setShooterRollers(UnitConversion.RPMtoNativeUnits(this.ShooterRoller));
     this.drl.setShooterWheels(UnitConversion.RPMtoNativeUnits(this.ShooterWheels));
   }
