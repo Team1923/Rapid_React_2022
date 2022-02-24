@@ -2,23 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.ClimberCommands;
+package frc.robot.commands.ElevatorCommands;
 
-import edu.wpi.first.wpilibj.XboxController;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
-public class ClimberCommand extends CommandBase {
-  /** Creates a new ClimberTest. */
-  ClimberSubsystem climber = new ClimberSubsystem();
+public class ElevatorKeepDown extends CommandBase {
+  /** Creates a new elevatorKeepDown. */
+  ElevatorSubsystem elevator;
 
-  XboxController xbox;
-
-  public ClimberCommand(ClimberSubsystem climber, XboxController controller) {
+  public ElevatorKeepDown(ElevatorSubsystem elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
-    this.climber = climber;
-    this.xbox = controller;
+    addRequirements(elevator);
+    this.elevator = elevator;
   }
 
   // Called when the command is initially scheduled.
@@ -28,15 +25,15 @@ public class ClimberCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // this.elevator.runelevator(0.01, 0);
 
-    this.climber.runClimber(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
+    // TODO change current value
+    this.elevator.leftMotor.set(ControlMode.Current, 2);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    // this.climber.setZero();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

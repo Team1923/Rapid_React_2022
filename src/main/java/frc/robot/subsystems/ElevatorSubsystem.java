@@ -12,9 +12,9 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.ClimberCommands.ClimberKeepDown;
+import frc.robot.commands.ElevatorCommands.ElevatorKeepDown;
 
-public class ClimberSubsystem extends SubsystemBase {
+public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
   public WPI_TalonFX leftMotor = new WPI_TalonFX(Constants.leftClimberMotor);
 
@@ -23,7 +23,7 @@ public class ClimberSubsystem extends SubsystemBase {
   SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
-  public ClimberSubsystem() {
+  public ElevatorSubsystem() {
     leftMotor.configFactoryDefault();
     rightMotor.configFactoryDefault();
 
@@ -47,10 +47,10 @@ public class ClimberSubsystem extends SubsystemBase {
     leftMotor.config_kI(Constants.kIdx, Constants.kI, Constants.kTimeoutMs);
     leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
 
-    setDefaultCommand(new ClimberKeepDown(this));
+    setDefaultCommand(new ElevatorKeepDown(this));
   }
 
-  public void runClimber(double leftSpeed, double rightSpeed) {
+  public void runElevator(double leftSpeed, double rightSpeed) {
     // double target = driver.getRightTriggerAxis() * 2048 * 10;
     // leftMotor.set(ControlMode.MotionMagic, target);
     if (rightSpeed > 0.1) {

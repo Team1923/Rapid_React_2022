@@ -14,7 +14,8 @@ public class MaintainVelocity extends CommandBase {
   private double ShooterRoller;
 
   /** Creates a new LowScore. */
-  public MaintainVelocity(DualRollerLauncher drl, double ShooterWheelsVel, double ShooterRollerVel) {
+  public MaintainVelocity(
+      DualRollerLauncher drl, double ShooterWheelsVel, double ShooterRollerVel) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
     this.drl = drl;
@@ -44,6 +45,7 @@ public class MaintainVelocity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.ShooterWheelsInRange(ShooterWheels) && this.drl.ShooterRollersInRange(ShooterRoller));
+    return (this.drl.ShooterWheelsInRange(ShooterWheels)
+        && this.drl.ShooterRollersInRange(ShooterRoller));
   }
 }

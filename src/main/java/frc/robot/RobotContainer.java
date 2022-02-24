@@ -17,7 +17,7 @@ import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.RunDRLCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
@@ -41,7 +41,7 @@ public class RobotContainer {
 
   public static final ConveyorSubsystem conveyor = new ConveyorSubsystem();
   public static IntakeSubsystem intake = new IntakeSubsystem();
-  public static ClimberSubsystem climber = new ClimberSubsystem();
+  public static ElevatorSubsystem climber = new ElevatorSubsystem();
 
   public static boolean enableClimber = false;
 

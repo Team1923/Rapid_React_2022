@@ -23,9 +23,11 @@ public class DualRollerLauncher extends SubsystemBase {
 
   ShuffleboardTab tuneDualRollerTab = Shuffleboard.getTab("tune dual roller");
 
-  public NetworkTableEntry ShooterWheelsRPM = tuneDualRollerTab.add("Shooter Wheels RPM", 0).getEntry();
-  
-  public NetworkTableEntry ShooterRollersRPM = tuneDualRollerTab.add("Shooter Rollers RPM", 0).getEntry();
+  public NetworkTableEntry ShooterWheelsRPM =
+      tuneDualRollerTab.add("Shooter Wheels RPM", 0).getEntry();
+
+  public NetworkTableEntry ShooterRollersRPM =
+      tuneDualRollerTab.add("Shooter Rollers RPM", 0).getEntry();
 
   /** Creates a new DualRollerLauncher. */
   public DualRollerLauncher() {

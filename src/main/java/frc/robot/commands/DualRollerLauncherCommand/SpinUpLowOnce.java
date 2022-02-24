@@ -43,6 +43,7 @@ public class SpinUpLowOnce extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.ShooterWheelsInRange(ShooterWheelsRPM) && this.drl.ShooterRollersInRange(ShooterRollersRPM));
+    return (this.drl.ShooterWheelsInRange(ShooterWheelsRPM)
+        && this.drl.ShooterRollersInRange(ShooterRollersRPM));
   }
 }
