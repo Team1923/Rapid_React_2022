@@ -5,7 +5,9 @@
 package frc.robot.commands.DualRollerLauncherCommand;
 
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DualRollerLauncher;
 
 public class RunDRLCommand extends CommandBase {
@@ -31,6 +33,10 @@ public class RunDRLCommand extends CommandBase {
 
     this.drl.setShooterWheels();
     this.drl.setShooterRollers();
+
+    if(drl.ShooterRollersInRange(Constants.shooterRollerRPM) && drl.ShooterWheelsInRange(Constants.shooterWheelsRPM)){
+        operator.setRumble(RumbleType.kRightRumble, 1);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +44,7 @@ public class RunDRLCommand extends CommandBase {
   public void end(boolean interrupted) {
 
     this.drl.setZero();
+    operator.setRumble(RumbleType.kRightRumble, 0);
   }
 
   // Returns true when the command should end.
