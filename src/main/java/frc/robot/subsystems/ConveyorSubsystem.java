@@ -16,7 +16,7 @@ import frc.robot.Constants;
 public class ConveyorSubsystem extends SubsystemBase {
 
   private TalonFX ConveyorMotor = new TalonFX(Constants.ConveyorMotor);
-  private TalonFX FeederWheelMotor = new TalonFX(Constants.FeederWheelMoter);
+  private TalonFX FeederWheelMotor = new TalonFX(Constants.FeederWheelMotor);
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 

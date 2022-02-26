@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.ElevatorCommands.ElevatorKeepDown;
+import frc.robot.commands.ElevatorCommands.ElevatorSetZero;
 
 public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
@@ -47,7 +47,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     leftMotor.config_kI(Constants.kIdx, Constants.kI, Constants.kTimeoutMs);
     leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
 
-    setDefaultCommand(new ElevatorKeepDown(this));
+    //setDefaultCommand(new ElevatorKeepDown(this));
   }
 
   public void runElevator(double leftSpeed, double rightSpeed) {

@@ -16,7 +16,7 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  private WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.intakeMotor);
+  private WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.intakeMotor, Constants.canivoreBus);
 
   SupplyCurrentLimitConfiguration supplyCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
