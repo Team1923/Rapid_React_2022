@@ -46,13 +46,13 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
                         new MaintainVelocity(drl, 2700, 900).withTimeout(10),
                         new SequentialCommandGroup(
                             new AutoDrive(drive, -0.5, 0).withTimeout(0.9),
-                            new AutoConveyor(conveyor, -0.9, -0.9).withTimeout(.3),
+                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
                             new RunCommand(() -> {}).withTimeout(0.5),
-                            new AutoConveyor(conveyor, -0.9, -0.9).withTimeout(.3),
+                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
                             new RunCommand(() -> {}).withTimeout(0.5),
-                            new AutoConveyor(conveyor, -0.9, -0.9).withTimeout(.3),
+                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
                             new RunCommand(() -> {}).withTimeout(0.5),
-                            new AutoConveyor(conveyor, -0.9, -0.9).withTimeout(.3),
+                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
                             new RunCommand(() -> {}).withTimeout(0.5)))))));
   }
 }

@@ -4,10 +4,7 @@
 
 package frc.robot.commands.ConveyorCommands;
 
-import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 
@@ -16,8 +13,6 @@ public class ConveyorCommand extends CommandBase {
   public ConveyorSubsystem conveyor;
 
   private DualRollerLauncher drl;
-
-  
 
   public ConveyorCommand(
       ConveyorSubsystem conveyor, DualRollerLauncher drl) { // ,double frontSpeed, double backSpeed
@@ -42,7 +37,6 @@ public class ConveyorCommand extends CommandBase {
         && this.drl.ShooterWheelsInRange(this.drl.ShooterWheelsRPM.getDouble(0))) {
       this.conveyor.runConveyor(
           this.conveyor.Conveyor.getDouble(0), this.conveyor.FeederWheels.getDouble(0));
-          RobotContainer.operator.setRumble(RumbleType.kRightRumble, 1);
     }
   }
 

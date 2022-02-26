@@ -28,7 +28,7 @@ public final class Constants {
 
   // Intake ID
   public static final int intakeMotor = 11;
-  public static final String canivoreBus = "canivore";
+  public static final String canivoreBus = "Default Name";
 
   // Climber IDs
   public static final int leftClimberMotor = 8;

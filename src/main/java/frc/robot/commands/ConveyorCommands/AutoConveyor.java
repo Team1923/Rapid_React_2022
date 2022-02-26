@@ -6,6 +6,7 @@ package frc.robot.commands.ConveyorCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.subsystems.DualRollerLauncher;
 
 public class AutoConveyor extends CommandBase {
   /** Creates a new ConveyorTest. */
@@ -13,16 +14,22 @@ public class AutoConveyor extends CommandBase {
 
   private double belts, wheels;
 
+  public DualRollerLauncher drl;
+
+  private boolean shoot = false;
+
   public AutoConveyor(
       ConveyorSubsystem conveyor,
       double belts,
-      double wheels) { // ,double frontSpeed, double backSpeed
+      double wheels,
+      DualRollerLauncher d) { // ,double frontSpeed, double backSpeed
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);
     this.conveyor = conveyor;
 
     this.belts = belts;
     this.wheels = wheels;
+    this.drl = d;
   }
 
   // Called when the command is initially scheduled.
@@ -32,7 +39,6 @@ public class AutoConveyor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     this.conveyor.runConveyor(belts, wheels);
   }
 

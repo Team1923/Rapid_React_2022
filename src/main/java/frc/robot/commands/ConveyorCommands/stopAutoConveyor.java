@@ -11,6 +11,7 @@ import frc.robot.subsystems.DualRollerLauncher;
 public class stopAutoConveyor extends CommandBase {
   /** Creates a new ConveyorTest. */
   public ConveyorSubsystem conveyor;
+
   public DualRollerLauncher drl;
 
   private double belts, wheels;

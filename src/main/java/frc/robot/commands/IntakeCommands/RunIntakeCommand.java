@@ -32,6 +32,9 @@ public class RunIntakeCommand extends CommandBase {
     if (controller.getCrossButtonPressed()) {
       intake.runIntake(this.intake.intakeValue.getDouble(0));
     }
+    if (controller.getCircleButtonPressed()) {
+      intake.runIntake(-1 * this.intake.intakeValue.getDouble(0));
+    }
   }
 
   @Override

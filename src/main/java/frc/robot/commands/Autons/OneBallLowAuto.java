@@ -35,7 +35,7 @@ public class OneBallLowAuto extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                     new MaintainVelocity(drl, 2700, 900).withTimeout(3),
                     new SequentialCommandGroup(
-                        new AutoConveyor(conveyor, -0.5, -0.5).withTimeout(3)),
+                        new AutoConveyor(conveyor, -0.5, -0.5, drl).withTimeout(3)),
                     new RunCommand(() -> {}).withTimeout(1.5)),
                 new AutoDrive(drive, .50, 0).withTimeout(2))));
   }

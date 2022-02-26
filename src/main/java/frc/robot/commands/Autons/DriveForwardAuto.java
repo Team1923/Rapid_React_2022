@@ -26,7 +26,7 @@ public class DriveForwardAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new AutoConveyor(conveyor, -.5, -.5).withTimeout(3),
+        new AutoConveyor(conveyor, -.5, -.5, drl).withTimeout(3),
         new RunCommand(() -> {}).withTimeout(1),
         new SequentialCommandGroup(new AutoDrive(drive, .50, 0.5).withTimeout(2)));
   }

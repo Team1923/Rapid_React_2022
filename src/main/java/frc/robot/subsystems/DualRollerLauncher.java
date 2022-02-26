@@ -107,13 +107,13 @@ public class DualRollerLauncher extends SubsystemBase {
   public boolean ShooterWheelsInRange(double targetRPM) {
     double currentRPM = UnitConversion.nativeUnitstoRPM(ShooterWheels.getSelectedSensorVelocity());
     double target = targetRPM;
-    return inRange(currentRPM, target, 50);
+    return inRange(currentRPM, target, 75);
   }
 
   public boolean ShooterRollersInRange(double targetRPM) {
     double currentRPM = UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity());
     double target = targetRPM;
-    return inRange(currentRPM, target, 50);
+    return inRange(currentRPM, target, 75);
   }
 
   public void updateRPM() {

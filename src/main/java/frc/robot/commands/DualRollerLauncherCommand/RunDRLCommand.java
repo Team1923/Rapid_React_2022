@@ -4,13 +4,14 @@
 
 package frc.robot.commands.DualRollerLauncherCommand;
 
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualRollerLauncher;
-import frc.robot.utilities.UnitConversion;
 
 public class RunDRLCommand extends CommandBase {
 
   public DualRollerLauncher drl;
+  private PS4Controller operator = new PS4Controller(1);
 
   /** Creates a new DRLTestRun. */
   public RunDRLCommand(DualRollerLauncher drl) {
@@ -30,14 +31,6 @@ public class RunDRLCommand extends CommandBase {
 
     this.drl.setShooterWheels();
     this.drl.setShooterRollers();
-
-    System.out.print(
-        "Current Shooter Wheels RPM "
-            + UnitConversion.nativeUnitstoRPM(this.drl.ShooterWheels.getSelectedSensorVelocity())
-            + "\t");
-    System.out.print(
-        "Current Shooter Rollers RPM "
-            + UnitConversion.nativeUnitstoRPM(this.drl.ShooterRollers.getSelectedSensorVelocity()));
   }
 
   // Called once the command ends or is interrupted.
