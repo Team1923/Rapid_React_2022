@@ -34,6 +34,13 @@ public final class Constants {
   public static final int leftClimberMotor = 8;
   public static final int rightClimberMotor = 12;
 
+  // Shuffleboard values
+  public static final double intakePercent = -0.9;
+  public static final double conveyorPerent = -0.9;
+  public static final double feederWheelsPercent = -0.9;
+  public static final double shooterWheelsRPM = 2700;
+  public static final double shooterRollerRPM = 900;
+
   // motion magic stuff for elevator
   public static final int kIdx = 0;
   public static final int kPIDloopIdx = 0;

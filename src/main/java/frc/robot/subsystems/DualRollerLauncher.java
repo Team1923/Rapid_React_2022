@@ -23,9 +23,11 @@ public class DualRollerLauncher extends SubsystemBase {
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
-  public NetworkTableEntry ShooterWheelsRPM = tuningTab.add("Shooter Wheels RPM", 0).getEntry();
+  public NetworkTableEntry ShooterWheelsRPM =
+      tuningTab.add("Shooter Wheels RPM", Constants.shooterWheelsRPM).getEntry();
 
-  public NetworkTableEntry ShooterRollersRPM = tuningTab.add("Shooter Rollers RPM", 0).getEntry();
+  public NetworkTableEntry ShooterRollersRPM =
+      tuningTab.add("Shooter Rollers RPM", Constants.shooterRollerRPM).getEntry();
 
   public NetworkTableEntry CURRENTShooterWheelsRPM =
       tuningTab.add("CURRENT Shooter Wheels RPM", 0).getEntry();

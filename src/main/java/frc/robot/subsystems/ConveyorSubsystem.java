@@ -29,8 +29,9 @@ public class ConveyorSubsystem extends SubsystemBase {
     ConveyorMotor.setInverted(InvertType.InvertMotorOutput);
     FeederWheelMotor.setInverted(InvertType.InvertMotorOutput);
 
-    Conveyor = tuningTab.add("Conveyor percentout", 0).getEntry();
-    FeederWheels = tuningTab.add("FeederWheels percentout", 0).getEntry();
+    Conveyor = tuningTab.add("Conveyor percentout", Constants.conveyorPerent).getEntry();
+    FeederWheels =
+        tuningTab.add("FeederWheels percentout", Constants.feederWheelsPercent).getEntry();
   }
 
   public void runConveyor(double ConveyorSpd, double FeederWheelSpd) {

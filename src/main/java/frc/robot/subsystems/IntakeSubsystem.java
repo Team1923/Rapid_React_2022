@@ -34,7 +34,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     intakeMotor.setInverted(InvertType.InvertMotorOutput);
 
-    intakeValue = tuningTab.add("Intake Percentout", 0).getEntry();
+    intakeValue = tuningTab.add("Intake Percentout", Constants.intakePercent).getEntry();
 
     // The default command may want to be running.
     // Not 100% sure if we want that or not, until then it'll be disabled.
