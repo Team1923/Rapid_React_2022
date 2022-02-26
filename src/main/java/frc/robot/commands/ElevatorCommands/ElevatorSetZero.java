@@ -8,11 +8,11 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorSubsystem;
 
-public class ElevatorKeepDown extends CommandBase {
+public class ElevatorSetZero extends CommandBase {
   /** Creates a new elevatorKeepDown. */
   ElevatorSubsystem elevator;
 
-  public ElevatorKeepDown(ElevatorSubsystem elevator) {
+  public ElevatorSetZero(ElevatorSubsystem elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevator);
     this.elevator = elevator;
@@ -28,7 +28,7 @@ public class ElevatorKeepDown extends CommandBase {
     // this.elevator.runelevator(0.01, 0);
 
     // TODO change current value
-    this.elevator.leftMotor.set(ControlMode.Current, 2);
+    this.elevator.leftMotor.set(ControlMode.PercentOutput, 0);
   }
 
   // Called once the command ends or is interrupted.

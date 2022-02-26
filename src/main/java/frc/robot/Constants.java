@@ -20,11 +20,11 @@ public final class Constants {
 
   // Shooter IDs
   public static final int ShooterWheelsMotor = 10;
-  public static final int ShooterRollersMotor = 13;
+  public static final int ShooterRollersMotor = 7;
 
   // Conveyor IDs
-  public static final int ConveyorMotor = 9;
-  public static final int FeederWheelMoter = 7;
+  public static final int ConveyorMotor = 13;
+  public static final int FeederWheelMoter = 9;
 
   // Intake ID
   public static final int intakeMotor = 11;
