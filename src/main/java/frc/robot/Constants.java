@@ -41,7 +41,7 @@ public final class Constants {
   public static final double shooterWheelsRPM = 2700;
   public static final double shooterRollerRPM = 900;
 
-  //pigeon ID
+  // pigeon ID
   public static final int pigeon = 14;
 
   // motion magic stuff for elevator

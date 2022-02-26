@@ -7,6 +7,7 @@ package frc.robot.commands.Autons;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
+import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
 import frc.robot.commands.DualRollerLauncherCommand.SpinUpLowOnce;
 import frc.robot.commands.IntakeCommands.AutoIntake;
@@ -31,12 +32,20 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, 0.5).withTimeout(.2), // drop intake
             new SequentialCommandGroup(
-                    new SpinUpLowOnce(drl, 2700, 900),
-                    new ParallelCommandGroup(
-                            new MaintainVelocity(drl, 2700, 900),
-                            new AutoConveyor(conveyor, -0.9, -0.9, drl))
-                        .withTimeout(0.7))));
-
-                        
+                new SpinUpLowOnce(drl, 2700, 900),
+                new ParallelCommandGroup(
+                        new MaintainVelocity(drl, 2700, 900),
+                        new AutoConveyor(conveyor, -0.9, -0.9, drl))
+                    .withTimeout(0.7),
+                new ParallelCommandGroup(
+                        new AutoIntake(intake, 0.9), new AutoDrive(drive, 0.675, -0.275))
+                    .withTimeout(2),
+                new ParallelCommandGroup(new AutoIntake(intake, 0.9), new AutoDrive(drive, 0.6, 0))
+                    .withTimeout(2.5),
+                new AutoDrive(drive, -0.75, 0.4),
+                new SpinUpLowOnce(drl, 2700, 900),
+                new ParallelCommandGroup(
+                    new MaintainVelocity(drl, 2700, 900),
+                    new AutoConveyor(conveyor, -0.9, -0.9, drl)))));
   }
 }
