@@ -44,11 +44,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l2.follow(l1);
     l3.follow(l1);
 
-
     l2.setInverted(InvertType.FollowMaster);
     l3.setInverted(InvertType.FollowMaster);
     l1.setInverted(InvertType.InvertMotorOutput);
-
   }
-
 }

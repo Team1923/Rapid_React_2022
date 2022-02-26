@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.DriveForwardAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
+import frc.robot.commands.Autons.OneBallLowAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.RunDRLCommand;
+import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -36,12 +37,13 @@ public class RobotContainer {
 
   public static final ConveyorSubsystem conveyor = new ConveyorSubsystem();
   public static IntakeSubsystem intake = new IntakeSubsystem();
-  public static ElevatorSubsystem climber = new ElevatorSubsystem();
+  public static ElevatorSubsystem elevator = new ElevatorSubsystem();
 
-  public static boolean enableClimber = false;
+  public static boolean enableElevator = false;
 
   public static TwoBallHighAuto twoBallHighAuto = new TwoBallHighAuto(intake, drl, drive, conveyor);
-  public static OneBallHighAuto oneBallLowAuto = new OneBallHighAuto(intake, drive, conveyor, drl);
+  public static OneBallLowAuto oneBallLowAuto = new OneBallLowAuto(intake, drive, conveyor, drl);
+  public static OneBallHighAuto oneBallHighAuto = new OneBallHighAuto(intake, drive, conveyor, drl);
   public static DriveForwardAuto driveForwardAuto =
       new DriveForwardAuto(intake, drive, conveyor, drl);
 
@@ -53,22 +55,16 @@ public class RobotContainer {
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
         .whileHeld(new RunIntakeCommand(intake, operator));
 
-    //INTAKE OUT (SQUARE)
-    //check about flipped values
+    // INTAKE OUT (SQUARE)
+    // check about flipped values
     new JoystickButton(operator, PS4Controller.Button.kSquare.value)
         .whileHeld(new RunIntakeCommand(intake, operator));
 
     // intake, feeder, conveyor wheels IN (CIRCLE)
-    // new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-    //     .whileHeld(new RunIntakeCommand(intake, operator));
-    // new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-    //     .whileHeld(new ConveyorCommand(conveyor, drl));
-
-    //new method of doing it?
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(
-            new ParallelCommandGroup(
-                new RunIntakeCommand(intake, operator), new ConveyorCommand(conveyor, drl)));
+        .whileHeld(new RunIntakeCommand(intake, operator));
+    new JoystickButton(operator, PS4Controller.Button.kCircle.value)
+        .whileHeld(new ConveyorCommand(conveyor, drl));
 
     // shoot ball (TRIANGLE)
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
@@ -84,23 +80,24 @@ public class RobotContainer {
 
     // CLIMBER
 
-    // new SpectrumAxisButton(
-    //         driver,
-    //         XboxController.Axis.kLeftTrigger.value,
-    //         0.1,
-    //         SpectrumAxisButton.ThresholdType.DEADBAND)
-    //     .whileActiveOnce(new ClimberTest(climber, driver));
+    new SpectrumAxisButton(
+            driver,
+            XboxController.Axis.kLeftTrigger.value,
+            0.1,
+            SpectrumAxisButton.ThresholdType.DEADBAND)
+        .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
-    // new SpectrumAxisButton(
-    //         driver,
-    //         XboxController.Axis.kRightTrigger.value,
-    //         0.1,
-    //         SpectrumAxisButton.ThresholdType.DEADBAND)
-    //     .whileActiveOnce(new ClimberTest(climber, driver));
+    new SpectrumAxisButton(
+            driver,
+            XboxController.Axis.kRightTrigger.value,
+            0.1,
+            SpectrumAxisButton.ThresholdType.DEADBAND)
+        .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
     chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
     chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
     chooser.addOption("Drive Forward Auto", driveForwardAuto);
+    chooser.addOption("OneBallHighAuto", oneBallHighAuto);
     SmartDashboard.putData(chooser);
   }
 

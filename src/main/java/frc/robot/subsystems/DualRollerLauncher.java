@@ -23,19 +23,15 @@ public class DualRollerLauncher extends SubsystemBase {
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
-  public NetworkTableEntry ShooterWheelsRPM =
-      tuningTab.add("Shooter Wheels RPM", 0).getEntry();
+  public NetworkTableEntry ShooterWheelsRPM = tuningTab.add("Shooter Wheels RPM", 0).getEntry();
 
-  public NetworkTableEntry ShooterRollersRPM =
-      tuningTab.add("Shooter Rollers RPM", 0).getEntry();
-  
-      public NetworkTableEntry CURRENTShooterWheelsRPM =
+  public NetworkTableEntry ShooterRollersRPM = tuningTab.add("Shooter Rollers RPM", 0).getEntry();
+
+  public NetworkTableEntry CURRENTShooterWheelsRPM =
       tuningTab.add("CURRENT Shooter Wheels RPM", 0).getEntry();
 
   public NetworkTableEntry CURRENTShooterRollersRPM =
       tuningTab.add("CURRENT Shooter Rollers RPM", 0).getEntry();
-
-      
 
   /** Creates a new DualRollerLauncher. */
   public DualRollerLauncher() {
@@ -51,7 +47,6 @@ public class DualRollerLauncher extends SubsystemBase {
 
     ShooterWheels.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
     ShooterRollers.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
-
 
     ShooterWheels.configNominalOutputForward(0, 30);
     ShooterWheels.configNominalOutputReverse(0, 30);
@@ -119,9 +114,11 @@ public class DualRollerLauncher extends SubsystemBase {
     return inRange(currentRPM, target, 50);
   }
 
-  public void updateRPM(){
-    CURRENTShooterWheelsRPM.setDouble(UnitConversion.nativeUnitstoRPM(ShooterWheels.getSelectedSensorVelocity())); 
-    CURRENTShooterRollersRPM.setDouble(UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity()));
+  public void updateRPM() {
+    CURRENTShooterWheelsRPM.setDouble(
+        UnitConversion.nativeUnitstoRPM(ShooterWheels.getSelectedSensorVelocity()));
+    CURRENTShooterRollersRPM.setDouble(
+        UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity()));
   }
 
   public void setZero() {

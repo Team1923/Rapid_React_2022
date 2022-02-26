@@ -9,13 +9,14 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class AutoDrive extends CommandBase {
   public DriveTrainSubsystem drive;
-  private double spd;
+  private double verticalSpd, horizontalSpd;
 
-  public AutoDrive(DriveTrainSubsystem drive, double spd) {
+  public AutoDrive(DriveTrainSubsystem drive, double v, double h) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drive);
     this.drive = drive;
-    this.spd = spd;
+    this.verticalSpd = v;
+    this.horizontalSpd = h;
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +26,7 @@ public class AutoDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drive.kDrive.arcadeDrive(spd, 0);
+    this.drive.kDrive.arcadeDrive(verticalSpd, horizontalSpd);
   }
 
   // Called once the command ends or is interrupted.

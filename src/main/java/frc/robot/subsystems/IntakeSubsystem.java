@@ -21,7 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
   SupplyCurrentLimitConfiguration supplyCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
-  ShuffleboardTab tuningTab = Shuffleboard.getTab("tune dual roller");
+  ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
   public NetworkTableEntry intakeValue;
 

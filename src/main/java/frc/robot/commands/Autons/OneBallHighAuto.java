@@ -29,17 +29,14 @@ public class OneBallHighAuto extends SequentialCommandGroup {
       DualRollerLauncher drl) {
     addCommands(
         new SequentialCommandGroup(
-            new ParallelCommandGroup(
-                new AutoIntake(intake, 0.5)
-                    .withTimeout(.2) 
-                ),
+            new ParallelCommandGroup(new AutoIntake(intake, 0.5).withTimeout(.2)),
             new SequentialCommandGroup(
-                new SpinUpLowOnce(drl, 2700, 900), 
+                new SpinUpLowOnce(drl, 2700, 900),
                 new ParallelCommandGroup(
                     new MaintainVelocity(drl, 2700, 900).withTimeout(3),
                     new SequentialCommandGroup(
                         new AutoConveyor(conveyor, -0.5, -0.5).withTimeout(3)),
                     new RunCommand(() -> {}).withTimeout(1.5)),
-                new AutoDrive(drive, .50).withTimeout(2))));
+                new AutoDrive(drive, .50, 0).withTimeout(2.5))));
   }
 }
