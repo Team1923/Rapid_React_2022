@@ -4,8 +4,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +43,9 @@ public class RobotContainer {
   public static final ConveyorSubsystem conveyor = new ConveyorSubsystem();
   public static IntakeSubsystem intake = new IntakeSubsystem();
   public static ElevatorSubsystem elevator = new ElevatorSubsystem();
+  public static PigeonIMU pigeon = new PigeonIMU(Constants.pigeon);
+  ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+  public NetworkTableEntry YAWangle = tuningTab.add("YAWAngle", 0).getEntry();
 
   public static boolean enableElevator = false;
 
@@ -93,6 +101,10 @@ public class RobotContainer {
             0.1,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
+    
+    double [] ypr = new double[3];
+    pigeon.getYawPitchRoll(ypr);
+    YAWangle.setDouble(ypr[0]);
 
     chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
     chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
