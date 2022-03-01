@@ -9,13 +9,9 @@ import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 
 public class AutoConveyor extends CommandBase {
-  /** Creates a new ConveyorTest. */
   public ConveyorSubsystem conveyor;
-
   private double belts, wheels;
-
   public DualRollerLauncher drl;
-
   private boolean shoot = false;
 
   public AutoConveyor(

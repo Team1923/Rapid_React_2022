@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
-import frc.robot.commands.DualRollerLauncherCommand.SpinUpLowOnce;
+import frc.robot.commands.DualRollerLauncherCommand.SpinUpToRPM;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -31,7 +31,7 @@ public class OneBallLowAuto extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new ParallelCommandGroup(new AutoIntake(intake, 0.5).withTimeout(.2)),
             new SequentialCommandGroup(
-                new SpinUpLowOnce(drl, 1600, 800),
+                new SpinUpToRPM(drl, 1600, 800),
                 new ParallelCommandGroup(
                     new MaintainVelocity(drl, 2700, 900).withTimeout(3),
                     new SequentialCommandGroup(

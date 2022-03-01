@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
-import frc.robot.commands.DualRollerLauncherCommand.SpinUpLowOnce;
+import frc.robot.commands.DualRollerLauncherCommand.SpinUpToRPM;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -37,7 +37,7 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
                 new AutoIntake(intake, 0.9),
                 new SequentialCommandGroup(
                     new AutoDrive(drive, 0.75, 0.15).withTimeout(0.7), // fix time
-                    new SpinUpLowOnce(drl, 2700, 900),
+                    new SpinUpToRPM(drl, 2700, 900),
                     new ParallelCommandGroup(
                             new MaintainVelocity(drl, 2700, 900),
                             new AutoDrive(drive, -0.675, 0.275))

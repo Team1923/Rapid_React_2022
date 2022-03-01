@@ -4,8 +4,8 @@
 
 package frc.robot.commands.DualRollerLauncherCommand;
 
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DualRollerLauncher;
@@ -34,8 +34,9 @@ public class RunDRLCommand extends CommandBase {
     this.drl.setShooterWheels();
     this.drl.setShooterRollers();
 
-    if(drl.ShooterRollersInRange(Constants.shooterRollerRPM) && drl.ShooterWheelsInRange(Constants.shooterWheelsRPM)){
-        operator.setRumble(RumbleType.kRightRumble, 1);
+    if (drl.ShooterRollersInRange(Constants.shooterRollerRPM)
+        && drl.ShooterWheelsInRange(Constants.shooterWheelsRPM)) {
+      operator.setRumble(RumbleType.kRightRumble, 1);
     }
   }
 

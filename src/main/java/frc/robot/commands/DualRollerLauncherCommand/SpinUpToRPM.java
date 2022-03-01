@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.UnitConversion;
 
-public class SpinUpLowOnce extends CommandBase {
+public class SpinUpToRPM extends CommandBase {
 
   private double ShooterWheelsRPM, ShooterRollersRPM;
   private DualRollerLauncher drl;
   /** Creates a new LowScore. */
-  public SpinUpLowOnce(DualRollerLauncher drl, double ShooterWheels, double ShooterRollers) {
+  public SpinUpToRPM(DualRollerLauncher drl, double ShooterWheels, double ShooterRollers) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
     this.drl = drl;
-    ShooterWheelsRPM = ShooterWheels;
-    ShooterRollersRPM = ShooterRollers;
+    this.ShooterWheelsRPM = ShooterWheels;
+    this.ShooterRollersRPM = ShooterRollers;
   }
 
   // Called when the command is initially scheduled.
@@ -28,10 +28,6 @@ public class SpinUpLowOnce extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO verify again these values.
-    // these were done on Saturday 2/19/2022 with Sarath and Kim.
-    // they may not be 100% good, or may need to be changed for comp low
-    // goal.
     this.drl.setShooterRollers(UnitConversion.RPMtoNativeUnits(ShooterRollersRPM));
     this.drl.setShooterWheels(UnitConversion.RPMtoNativeUnits(ShooterWheelsRPM));
   }
