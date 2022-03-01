@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utilities.UnitConversion;
 
 public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
@@ -64,13 +65,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     this.leftMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public boolean isInRange(double currentValue, double target, double variation) {
-
-    return (currentValue < (target + variation) && currentValue > (target - variation));
-  }
-
   public double encVal() {
     return leftMotor.getSelectedSensorPosition(0);
+  }
+
+  public boolean overRevLimit() {
+    return UnitConversion.positionNativeToRots(encVal()) > Constants.elevatorMaxRevs;
   }
 
   @Override

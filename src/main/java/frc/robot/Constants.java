@@ -54,4 +54,7 @@ public final class Constants {
   public static final double kF = 0.2;
   public static final double kIzone = 0;
   public static final double kPeakOutput = 1.0;
+
+  // climber elevator spool-out prevention
+  public static final double elevatorMaxRevs = 100;
 }
