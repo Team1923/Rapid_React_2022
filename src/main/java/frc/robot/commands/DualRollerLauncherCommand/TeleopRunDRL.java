@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DualRollerLauncher;
 
-public class RunDRLCommand extends CommandBase {
+public class TeleopRunDRL extends CommandBase {
 
   public DualRollerLauncher drl;
   private PS4Controller operator = new PS4Controller(1);
 
   /** Creates a new DRLTestRun. */
-  public RunDRLCommand(DualRollerLauncher drl) {
+  public TeleopRunDRL(DualRollerLauncher drl) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
 
