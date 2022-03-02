@@ -61,5 +61,5 @@ public final class Constants {
 
   // climber elevator spool-out prevention
   public static final double elevatorMaxRevs =
-      UnitConversion.positionNativeToRots(100); // TO DO  Change the number
+      UnitConversion.positionNativeToRots(57000);
 }
