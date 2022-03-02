@@ -66,7 +66,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public double encVal() {
-    return leftMotor.getSelectedSensorPosition(0);
+    return -1 * leftMotor.getSelectedSensorPosition(0);
   }
 
   public boolean overRevLimit() {

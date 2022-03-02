@@ -5,6 +5,7 @@
 package frc.robot.commands.ElevatorCommands;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -29,13 +30,21 @@ public class ElevatorCommand extends CommandBase {
   @Override
   public void execute() {
 
-    this.elevator.runElevator(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
+    if(this.elevator.overRevLimit() && xbox.getRightTriggerAxis() != 0){
+      xbox.setRumble(RumbleType.kLeftRumble, 1);
+    }
+    else{
+      this.elevator.runElevator(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
+    }
+
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     this.elevator.setZero();
+    xbox.setRumble(RumbleType.kLeftRumble, 0);
   }
 
   // Returns true when the command should end.

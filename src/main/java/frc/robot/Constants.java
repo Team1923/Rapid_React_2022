@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.utilities.UnitConversion;
+
 public final class Constants {
 
   // Controller Ports
@@ -56,5 +58,5 @@ public final class Constants {
   public static final double kPeakOutput = 1.0;
 
   // climber elevator spool-out prevention
-  public static final double elevatorMaxRevs = 100;
+  public static final double elevatorMaxRevs = UnitConversion.positionNativeToRots(100); //TO DO  Change the number 
 }
