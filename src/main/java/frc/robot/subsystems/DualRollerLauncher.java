@@ -72,7 +72,7 @@ public class DualRollerLauncher extends SubsystemBase {
     this.ShooterWheels.config_kD(0, 0, 30);
     this.ShooterRollers.config_kD(0, 0, 30);
 
-    this.ShooterWheels.config_kF(0, .05, 30);
+    this.ShooterWheels.config_kF(0, .055, 30);
     this.ShooterRollers.config_kF(0, .057, 30);
   }
 

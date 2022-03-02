@@ -18,9 +18,7 @@ public class MaintainSpikeEnd extends MaintainVelocity {
     super(drl, ShooterWheels, ShooterRollers);
     addRequirements(drl);
   }
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+
 
   /* This command should end when the velocity drops and current is above some threshold (likely 20-30A?  Needs to be observed and charted.) */
   @Override

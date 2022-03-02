@@ -78,8 +78,8 @@ public class RobotContainer {
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
         .toggleWhenPressed(new TeleopRunDRLHigh(drl));
 
-    // shoot ball Low Goal (OPTIONS)
-    new JoystickButton(operator, PS4Controller.Button.kOptions.value)
+    // shoot ball Low Goal (OPTION = 8)
+    new JoystickButton(operator, 8)
         .toggleWhenPressed(new TeleopRunDRLLow(drl));
 
     // drive (arcade)

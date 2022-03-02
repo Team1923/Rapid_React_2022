@@ -10,6 +10,10 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.UnitConversion;
@@ -22,6 +26,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
+
+  ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+
+  public NetworkTableEntry rotations = tuningTab.add("Elevtor Rotations", 0).getEntry(); 
 
   public ElevatorSubsystem() {
     leftMotor.configFactoryDefault();
@@ -76,5 +84,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    rotations.setDouble(UnitConversion.positionNativeToRots(encVal()));
   }
 }

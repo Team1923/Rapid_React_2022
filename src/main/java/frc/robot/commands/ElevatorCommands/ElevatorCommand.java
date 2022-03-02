@@ -11,7 +11,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 
 public class ElevatorCommand extends CommandBase {
   /** Creates a new elevatorTest. */
-  ElevatorSubsystem elevator = new ElevatorSubsystem();
+  ElevatorSubsystem elevator;
 
   XboxController xbox;
 
@@ -32,6 +32,7 @@ public class ElevatorCommand extends CommandBase {
 
     if (this.elevator.overRevLimit() && xbox.getRightTriggerAxis() != 0) {
       xbox.setRumble(RumbleType.kLeftRumble, 1);
+      this.elevator.setZero();
     } else {
       this.elevator.runElevator(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
     }
