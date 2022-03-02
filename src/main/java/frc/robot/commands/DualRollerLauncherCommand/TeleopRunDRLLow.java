@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DualRollerLauncher;
+import frc.robot.utilities.UnitConversion;
 
-public class TeleopRunDRL extends CommandBase {
+public class TeleopRunDRLLow extends CommandBase {
 
   public DualRollerLauncher drl;
   private PS4Controller operator = new PS4Controller(1);
 
   /** Creates a new DRLTestRun. */
-  public TeleopRunDRL(DualRollerLauncher drl) {
+  public TeleopRunDRLLow(DualRollerLauncher drl) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
 
@@ -31,11 +32,15 @@ public class TeleopRunDRL extends CommandBase {
   @Override
   public void execute() {
 
-    this.drl.setShooterWheels();
-    this.drl.setShooterRollers();
+    double velRollers = UnitConversion.RPMtoNativeUnits(Constants.shooterRollerRPMLowGoal);
 
-    if (drl.ShooterRollersInRange(Constants.shooterRollerRPM)
-        && drl.ShooterWheelsInRange(Constants.shooterWheelsRPM)) {
+    double velWheels = UnitConversion.RPMtoNativeUnits(Constants.shooterRollerRPMLowGoal);
+
+    this.drl.setShooterWheels(velWheels);
+    this.drl.setShooterRollers(velRollers);
+
+    if (drl.ShooterRollersInRange(Constants.shooterRollerRPMLowGoal)
+        && drl.ShooterWheelsInRange(Constants.shooterWheelsRPMLowGoal)) {
       operator.setRumble(RumbleType.kRightRumble, 1);
     }
   }

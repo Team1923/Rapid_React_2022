@@ -40,8 +40,10 @@ public final class Constants {
   public static final double intakePercent = -0.9;
   public static final double conveyorPerent = -0.9;
   public static final double feederWheelsPercent = -0.9;
-  public static final double shooterWheelsRPM = 2700;
-  public static final double shooterRollerRPM = 900;
+  public static final double shooterWheelsRPMHighGoal = 2700;
+  public static final double shooterRollerRPMHighGoal = 900;
+  public static final double shooterWheelsRPMLowGoal = 1700;
+  public static final double shooterRollerRPMLowGoal = 400;
 
   // pigeon ID
   public static final int pigeon = 14;
@@ -58,5 +60,6 @@ public final class Constants {
   public static final double kPeakOutput = 1.0;
 
   // climber elevator spool-out prevention
-  public static final double elevatorMaxRevs = UnitConversion.positionNativeToRots(100); //TO DO  Change the number 
+  public static final double elevatorMaxRevs =
+      UnitConversion.positionNativeToRots(100); // TO DO  Change the number
 }

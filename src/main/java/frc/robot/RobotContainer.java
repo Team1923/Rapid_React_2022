@@ -20,7 +20,8 @@ import frc.robot.commands.Autons.OneBallLowAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.commands.DualRollerLauncherCommand.TeleopRunDRL;
+import frc.robot.commands.DualRollerLauncherCommand.TeleopRunDRLHigh;
+import frc.robot.commands.DualRollerLauncherCommand.TeleopRunDRLLow;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -73,9 +74,13 @@ public class RobotContainer {
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
         .whileHeld(new ConveyorCommand(conveyor, drl));
 
-    // shoot ball (TRIANGLE)
+    // shoot ball High Goal (TRIANGLE)
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new TeleopRunDRL(drl));
+        .toggleWhenPressed(new TeleopRunDRLHigh(drl));
+
+    // shoot ball Low Goal (OPTIONS)
+    new JoystickButton(operator, PS4Controller.Button.kOptions.value)
+        .toggleWhenPressed(new TeleopRunDRLLow(drl));
 
     // drive (arcade)
     new SpectrumAxisButton(
