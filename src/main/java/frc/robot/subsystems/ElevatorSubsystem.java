@@ -11,8 +11,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.UnitConversion;
@@ -29,6 +31,14 @@ public class ElevatorSubsystem extends SubsystemBase {
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
   public NetworkTableEntry rotations = tuningTab.add("Elevtor Rotations", 0).getEntry();
+  public ComplexWidget t =
+      tuningTab.add(
+          "re-zero encoder",
+          new RunCommand(
+              () -> {
+                setEncZero();
+              },
+              this));
 
   public ElevatorSubsystem() {
     leftMotor.configFactoryDefault();
@@ -78,6 +88,11 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public boolean overRevLimit() {
     return UnitConversion.positionNativeToRots(encVal()) > Constants.elevatorMaxRevs;
+  }
+
+  public void setEncZero() {
+    System.out.println("Zeroed Elevator");
+    leftMotor.setSelectedSensorPosition(0);
   }
 
   @Override
