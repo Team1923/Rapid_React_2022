@@ -33,7 +33,7 @@ public class TeleopRunDRLLow extends CommandBase {
   public void execute() {
 
     double velRollers = UnitConversion.RPMtoNativeUnits(Constants.shooterRollerRPMLowGoal);
-    double velWheels = UnitConversion.RPMtoNativeUnits(Constants.shooterRollerRPMLowGoal);
+    double velWheels = UnitConversion.RPMtoNativeUnits(Constants.shooterWheelsRPMLowGoal);
 
     this.drl.setShooterWheels(velWheels);
     this.drl.setShooterRollers(velRollers);

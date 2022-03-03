@@ -32,9 +32,9 @@ public class TeleopRunDRLHigh extends CommandBase {
   @Override
   public void execute() {
 
-    double velRollers = UnitConversion.RPMtoNativeUnits(drl.ShooterRollersRPM.getDouble(0));
+    double velRollers = UnitConversion.RPMtoNativeUnits(Constants.shooterRollerRPMHighGoal);
 
-    double velWheels = UnitConversion.RPMtoNativeUnits(drl.ShooterWheelsRPM.getDouble(0));
+    double velWheels = UnitConversion.RPMtoNativeUnits(Constants.shooterWheelsRPMHighGoal);
 
     this.drl.setShooterWheels(velWheels);
     this.drl.setShooterRollers(velRollers);

@@ -35,9 +35,9 @@ public class DualRollerLauncher extends SubsystemBase {
       launcherLayout.add("Current Roller RPM", 0).withSize(1, 1).withPosition(0, 1).getEntry();
 
   public NetworkTableEntry coachWheelTargetRPM =
-      launcherLayout.add("Target Wheel RPM", 0).withSize(1, 1).withPosition(0, 2).getEntry();
+      launcherLayout.add("Target Wheel RPM", Constants.shooterWheelsRPMHighGoal).withSize(1, 1).withPosition(0, 2).getEntry();
   public NetworkTableEntry coachRollerTargetRPM =
-      launcherLayout.add("Target Roller RPM", 0).withSize(1, 1).withPosition(0, 3).getEntry();
+      launcherLayout.add("Target Roller RPM", Constants.shooterRollerRPMHighGoal).withSize(1, 1).withPosition(0, 3).getEntry();
 
   public NetworkTableEntry onTarget =
       launcherLayout
@@ -49,10 +49,10 @@ public class DualRollerLauncher extends SubsystemBase {
 
   /* Tuning RPM Pushes */
   public NetworkTableEntry ShooterWheelsRPM =
-      tuningTab.add("Shooter Wheels RPM", Constants.shooterWheelsRPMHighGoal).getEntry();
+      tuningTab.add("Shooter Wheels RPM", 0).getEntry();
 
   public NetworkTableEntry ShooterRollersRPM =
-      tuningTab.add("Shooter Rollers RPM", Constants.shooterRollerRPMHighGoal).getEntry();
+      tuningTab.add("Shooter Rollers RPM", 0).getEntry();
 
   public NetworkTableEntry CURRENTShooterWheelsRPM =
       tuningTab.add("CURRENT Shooter Wheels RPM", 0).getEntry();
@@ -110,14 +110,14 @@ public class DualRollerLauncher extends SubsystemBase {
   /* Used to set for both auto and teleop.*/
   public void setShooterWheels(double spd) {
     ShooterWheels.set(TalonFXControlMode.Velocity, spd);
-    coachWheelTargetRPM.setDouble(spd);
+    //coachWheelTargetRPM.setDouble(spd);
     wheelTargetRPM = spd;
     updateRPM();
   }
   /* Used to set for both auto and teleop.*/
   public void setShooterRollers(double spd) {
     ShooterRollers.set(TalonFXControlMode.Velocity, spd);
-    coachRollerTargetRPM.setDouble(spd);
+    //coachRollerTargetRPM.setDouble(spd);
     rollerTargetRPM = spd;
     updateRPM();
   }
@@ -157,14 +157,22 @@ public class DualRollerLauncher extends SubsystemBase {
   public void periodic() {
     // pushes periodic values to the coach dashboard.
     coachWheelRPM.setDouble(
-        UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity()));
+        UnitConversion.nativeUnitstoRPM(ShooterWheels.getSelectedSensorVelocity()));
     coachRollerRPM.setDouble(
         UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity()));
 
     // pushes the "we good" boolean to the coach dashboard.
 
-    onTarget.setBoolean(
-        wheelTargetRPM != 0
-            && (ShooterWheelsInRange(wheelTargetRPM) && ShooterRollersInRange(rollerTargetRPM)));
+    if( (ShooterRollersInRange(Constants.shooterRollerRPMHighGoal) && ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) || 
+      (ShooterRollersInRange(Constants.shooterRollerRPMLowGoal) && ShooterWheelsInRange(Constants.shooterWheelsRPMLowGoal)) ){
+        onTarget.setBoolean(true);
+      }
+      else{
+        onTarget.setBoolean(false);
+      }
+
+    // onTarget.setBoolean(
+    //     wheelTargetRPM != 0
+    //         && (ShooterWheelsInRange(wheelTargetRPM) && ShooterRollersInRange(rollerTargetRPM)));
   }
 }

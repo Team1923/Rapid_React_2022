@@ -61,6 +61,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    coachIntakeSetpoint.setDouble(0);
+    coachIntakeSetpoint.setDouble(intakeMotor.getMotorOutputPercent());
   }
 }
