@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -29,7 +28,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
-  public NetworkTableEntry rotations = tuningTab.add("Elevtor Rotations", 0).getEntry(); 
+  public NetworkTableEntry rotations = tuningTab.add("Elevtor Rotations", 0).getEntry();
 
   public ElevatorSubsystem() {
     leftMotor.configFactoryDefault();

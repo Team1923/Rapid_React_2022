@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.utilities.UnitConversion;
-
 public final class Constants {
 
   // Controller Ports
@@ -41,10 +39,8 @@ public final class Constants {
   public static final double conveyorPerent = -0.9;
   public static final double feederWheelsPercent = -0.9;
 
-
   public static final double shooterWheelsRPMHighGoal = 2700;
   public static final double shooterRollerRPMHighGoal = 1000;
-
 
   public static final double shooterWheelsRPMLowGoal = 1800;
   public static final double shooterRollerRPMLowGoal = 600;
@@ -64,6 +60,6 @@ public final class Constants {
   public static final double kPeakOutput = 1.0;
 
   // climber elevator spool-out prevention
-  //will have some slack(not intended to be precise)
+  // will have some slack(not intended to be precise)
   public static final double elevatorMaxRevs = 32;
 }

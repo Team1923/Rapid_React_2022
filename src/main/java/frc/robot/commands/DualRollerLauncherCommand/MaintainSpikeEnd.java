@@ -19,7 +19,6 @@ public class MaintainSpikeEnd extends MaintainVelocity {
     addRequirements(drl);
   }
 
-
   /* This command should end when the velocity drops and current is above some threshold (likely 20-30A?  Needs to be observed and charted.) */
   @Override
   public boolean isFinished() {

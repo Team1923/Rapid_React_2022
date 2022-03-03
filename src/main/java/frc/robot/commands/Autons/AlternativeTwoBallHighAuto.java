@@ -5,10 +5,11 @@
 package frc.robot.commands.Autons;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
+import frc.robot.commands.DualRollerLauncherCommand.MaintainSpikeEnd;
 import frc.robot.commands.DualRollerLauncherCommand.MaintainVelocity;
 import frc.robot.commands.DualRollerLauncherCommand.SpinUpToRPM;
 import frc.robot.commands.IntakeCommands.AutoIntake;
@@ -51,17 +52,14 @@ public class AlternativeTwoBallHighAuto extends SequentialCommandGroup {
                     /* TODO: Make a spin up command that launches a single ball
                     and ENDS when we dip below our target and stops the conveyor.
                      Likely to need both subsystems passed in.  This is _okay_. */
-                    new ParallelCommandGroup(
-                        new MaintainVelocity(drl, 2700, 900).withTimeout(10),
-                        new SequentialCommandGroup(
-                            new AutoDrive(drive, -0.5, 0).withTimeout(0.9),
-                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
-                            new RunCommand(() -> {}).withTimeout(0.5),
-                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
-                            new RunCommand(() -> {}).withTimeout(0.5),
-                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
-                            new RunCommand(() -> {}).withTimeout(0.5),
-                            new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),
-                            new RunCommand(() -> {}).withTimeout(0.5)))))));
+
+                    new SequentialCommandGroup(
+                        new ParallelRaceGroup(
+                            new MaintainSpikeEnd(drl, 2700, 900),
+                            new AutoConveyor(conveyor, -0.9, -0.9, drl)),
+                        new MaintainVelocity(drl, 2700, 900).withTimeout(.5),
+                        new ParallelRaceGroup(
+                            new MaintainSpikeEnd(drl, 2700, 900),
+                            new AutoConveyor(conveyor, -0.9, -0.9, drl)))))));
   }
 }
