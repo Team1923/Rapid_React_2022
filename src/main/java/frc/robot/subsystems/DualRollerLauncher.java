@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.UnitConversion;
+import java.util.Map;
 
 public class DualRollerLauncher extends SubsystemBase {
 
@@ -24,14 +25,29 @@ public class DualRollerLauncher extends SubsystemBase {
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
-  ShuffleboardLayout climberLayout =
+  ShuffleboardLayout launcherLayout =
       coachTab.getLayout("Launcher", "List Layout").withPosition(1, 0).withSize(1, 5);
 
+  /* Coach Tab Pushes */
   public NetworkTableEntry coachWheelRPM =
-      climberLayout.add("Current Wheel RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
+      launcherLayout.add("Current Wheel RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
   public NetworkTableEntry coachRollerRPM =
-      climberLayout.add("Current Roller RPM", 0).withSize(1, 1).withPosition(0, 1).getEntry();
+      launcherLayout.add("Current Roller RPM", 0).withSize(1, 1).withPosition(0, 1).getEntry();
 
+  public NetworkTableEntry coachWheelTargetRPM =
+      launcherLayout.add("Target Wheel RPM", 0).withSize(1, 1).withPosition(0, 2).getEntry();
+  public NetworkTableEntry coachRollerTargetRPM =
+      launcherLayout.add("Target Roller RPM", 0).withSize(1, 1).withPosition(0, 3).getEntry();
+
+  public NetworkTableEntry onTarget =
+      launcherLayout
+          .add("On Target", false)
+          .withSize(1, 1)
+          .withPosition(0, 4)
+          .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+          .getEntry();
+
+  /* Tuning RPM Pushes */
   public NetworkTableEntry ShooterWheelsRPM =
       tuningTab.add("Shooter Wheels RPM", Constants.shooterWheelsRPMHighGoal).getEntry();
 
@@ -43,6 +59,12 @@ public class DualRollerLauncher extends SubsystemBase {
 
   public NetworkTableEntry CURRENTShooterRollersRPM =
       tuningTab.add("CURRENT Shooter Rollers RPM", 0).getEntry();
+
+  /* These two are JUST for the coach dashboard since you can't seem to get the just set
+  value from shuffleboard.  Yes I'm as annoyed as you are. */
+
+  public double wheelTargetRPM;
+  public double rollerTargetRPM;
 
   /** Creates a new DualRollerLauncher. */
   public DualRollerLauncher() {
@@ -85,26 +107,18 @@ public class DualRollerLauncher extends SubsystemBase {
     this.ShooterRollers.config_kF(0, .057, 30);
   }
 
-  public void setShooterWheels() {
-    double vel = UnitConversion.RPMtoNativeUnits(ShooterWheelsRPM.getDouble(0));
-    ShooterWheels.set(TalonFXControlMode.Velocity, vel);
-    updateRPM();
-  }
-
-  public void setShooterRollers() {
-    double vel = UnitConversion.RPMtoNativeUnits(ShooterRollersRPM.getDouble(0));
-    ShooterRollers.set(TalonFXControlMode.Velocity, vel);
-    updateRPM();
-  }
-  // this is for autos.
+  /* Used to set for both auto and teleop.*/
   public void setShooterWheels(double spd) {
     ShooterWheels.set(TalonFXControlMode.Velocity, spd);
+    coachWheelTargetRPM.setDouble(spd);
+    wheelTargetRPM = spd;
     updateRPM();
   }
-
-  // this is for autos.
+  /* Used to set for both auto and teleop.*/
   public void setShooterRollers(double spd) {
     ShooterRollers.set(TalonFXControlMode.Velocity, spd);
+    coachRollerTargetRPM.setDouble(spd);
+    rollerTargetRPM = spd;
     updateRPM();
   }
 
@@ -135,5 +149,22 @@ public class DualRollerLauncher extends SubsystemBase {
   public void setZero() {
     ShooterWheels.set(TalonFXControlMode.PercentOutput, 0);
     ShooterRollers.set(TalonFXControlMode.PercentOutput, 0);
+    wheelTargetRPM = 0;
+    rollerTargetRPM = 0;
+  }
+
+  @Override
+  public void periodic() {
+    // pushes periodic values to the coach dashboard.
+    coachWheelRPM.setDouble(
+        UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity()));
+    coachRollerRPM.setDouble(
+        UnitConversion.nativeUnitstoRPM(ShooterRollers.getSelectedSensorVelocity()));
+
+    // pushes the "we good" boolean to the coach dashboard.
+
+    onTarget.setBoolean(
+        wheelTargetRPM != 0
+            && (ShooterWheelsInRange(wheelTargetRPM) && ShooterRollersInRange(rollerTargetRPM)));
   }
 }

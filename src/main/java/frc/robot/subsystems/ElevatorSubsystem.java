@@ -50,9 +50,9 @@ public class ElevatorSubsystem extends SubsystemBase {
           .add("At Limit", false)
           .withSize(1, 1)
           .withPosition(0, 0)
-          .withProperties(Map.of("Color when false", "#000000","Color when true", "#17FC03"))
+          .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
           .getEntry();
-          
+
   public NetworkTableEntry commandedOutput =
       climberLayout.add("Elevator %Out", 0).withSize(1, 1).withPosition(0, 1).getEntry();
   public NetworkTableEntry rotationsCoach =
