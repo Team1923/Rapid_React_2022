@@ -60,7 +60,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
     ShuffleboardLayout driveLayout =
-        coachTab.getLayout("Drivetrain", "List Layout").withPosition(2, 0).withSize(2, 5);
+        coachTab.getLayout("Drivetrain", "List Layout").withPosition(1, 0).withSize(2, 5);
 
     driveLVolts =
         driveLayout

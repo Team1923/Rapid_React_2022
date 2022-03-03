@@ -9,7 +9,9 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,8 +24,18 @@ public class IntakeSubsystem extends SubsystemBase {
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  ShuffleboardLayout intakeLayout =
+      coachTab.getLayout("Intake", "List Layout").withPosition(3, 0).withSize(1, 5);
 
   public NetworkTableEntry intakeValue;
+  public NetworkTableEntry coachIntakeSetpoint =
+      intakeLayout
+          .add("Intake Speed", 0)
+          .withWidget(BuiltInWidgets.kNumberBar)
+          .withSize(1, 1)
+          .withPosition(0, 0)
+          .getEntry();
 
   /** Creates a new Intake. */
   public IntakeSubsystem() {
@@ -44,10 +56,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void runIntake(double speed) {
     intakeMotor.set(ControlMode.PercentOutput, speed);
+    coachIntakeSetpoint.setDouble(speed);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    coachIntakeSetpoint.setDouble(0);
   }
 }

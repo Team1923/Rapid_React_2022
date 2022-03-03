@@ -8,11 +8,10 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
@@ -49,6 +48,11 @@ public class RobotContainer {
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
   public NetworkTableEntry YAWangle = tuningTab.add("YAWAngle", 0).getEntry();
 
+  // coach dashboard to choose an auto / show the auto.
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  ShuffleboardLayout auto =
+      coachTab.getLayout("Auto Setup", "List Layout").withPosition(0, 0).withSize(1, 5);
+
   public static boolean enableElevator = false;
 
   public static TwoBallHighAuto twoBallHighAuto = new TwoBallHighAuto(intake, drl, drive, conveyor);
@@ -64,7 +68,7 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    LiveWindow.disableAllTelemetry();
+    // LiveWindow.disableAllTelemetry();
 
     // intake in (CROSS)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
@@ -121,7 +125,8 @@ public class RobotContainer {
     chooser.addOption("Drive Forward Auto", driveForwardAuto);
     chooser.addOption("OneBallHighAuto", oneBallHighAuto);
     chooser.addOption("Death Trap 2 ball", alternativeTwoBallHighAuto);
-    SmartDashboard.putData(chooser);
+    // SmartDashboard.putData(chooser);
+    auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
   public Command getAutonomousCommand() {

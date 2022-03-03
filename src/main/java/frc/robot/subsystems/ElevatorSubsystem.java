@@ -30,33 +30,40 @@ public class ElevatorSubsystem extends SubsystemBase {
   SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
+  // tuning tab setup
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+  public NetworkTableEntry rotations = tuningTab.add("Elevator Rotations", 0).getEntry();
+
+  // just for coach tab.
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
   ShuffleboardLayout climberLayout =
-      coachTab.getLayout("Climber", "List Layout").withPosition(0, 0).withSize(1, 5);
+      coachTab.getLayout("Climber", "List Layout").withPosition(7, 0).withSize(1, 5);
 
-  public NetworkTableEntry rotations = tuningTab.add("Elevator Rotations", 0).getEntry();
-  public ComplexWidget t =
-      tuningTab.add(
-          "re-zero encoder",
-          new InstantCommand(
-              () -> {
-                setEncZero();
-              },
-              this));
-
+  // for coach tab
   public NetworkTableEntry atLocation =
       climberLayout
           .add("At Limit", false)
-          .withSize(1, 1)
+          .withSize(1, 2)
           .withPosition(0, 0)
           .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
           .getEntry();
 
   public NetworkTableEntry commandedOutput =
-      climberLayout.add("Elevator %Out", 0).withSize(1, 1).withPosition(0, 1).getEntry();
+      climberLayout.add("Elevator Percent Out", 0.0).withSize(1, 1).withPosition(0, 2).getEntry();
   public NetworkTableEntry rotationsCoach =
-      climberLayout.add("Elevator Rotations", 0).withSize(1, 1).withPosition(0, 2).getEntry();
+      climberLayout.add("Elevator Rotations", 0.0).withSize(1, 1).withPosition(0, 3).getEntry();
+
+  public ComplexWidget rezero_encoder =
+      climberLayout
+          .add(
+              "Re-Zero Encoder",
+              new InstantCommand(
+                  () -> {
+                    setEncZero();
+                  },
+                  this))
+          .withSize(1, 1)
+          .withPosition(0, 5);
 
   public ElevatorSubsystem() {
     leftMotor.configFactoryDefault();
@@ -118,7 +125,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     rotations.setDouble(UnitConversion.positionNativeToRots(encVal()));
     rotationsCoach.setDouble(UnitConversion.positionNativeToRots(encVal()));
-    commandedOutput.setDouble(leftMotor.getMotorOutputVoltage()); // should be output volts?
+    commandedOutput.setDouble(leftMotor.get()); // should be output volts?
     atLocation.setBoolean(overRevLimit());
   }
 }

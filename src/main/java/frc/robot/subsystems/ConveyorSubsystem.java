@@ -8,7 +8,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,7 +21,28 @@ public class ConveyorSubsystem extends SubsystemBase {
   private TalonFX FeederWheelMotor = new TalonFX(Constants.FeederWheelMoter);
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  ShuffleboardLayout intakeLayout =
+      coachTab.getLayout("Feeder + Conveyor", "List Layout").withPosition(4, 0).withSize(2, 5);
 
+  // just for the coach dashboard.
+  public NetworkTableEntry coachConveyor =
+      intakeLayout
+          .add("Conveyor Speed", 0)
+          .withWidget(BuiltInWidgets.kNumberBar)
+          .withSize(1, 1)
+          .withPosition(0, 0)
+          .getEntry();
+
+  public NetworkTableEntry coachFeeder =
+      intakeLayout
+          .add("Feeder Speed", 0)
+          .withWidget(BuiltInWidgets.kNumberBar)
+          .withSize(1, 1)
+          .withPosition(0, 1)
+          .getEntry();
+
+  // used for other tuning.
   public NetworkTableEntry Conveyor;
   public NetworkTableEntry FeederWheels;
   /** Creates a new CoveyorSubsystem. */
@@ -37,10 +60,15 @@ public class ConveyorSubsystem extends SubsystemBase {
   public void runConveyor(double ConveyorSpd, double FeederWheelSpd) {
     ConveyorMotor.set(ControlMode.PercentOutput, ConveyorSpd);
     FeederWheelMotor.set(ControlMode.PercentOutput, FeederWheelSpd);
+
+    coachConveyor.setDouble(ConveyorSpd);
+    coachFeeder.setDouble(FeederWheelSpd);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    coachConveyor.setDouble(0);
+    coachFeeder.setDouble(0);
   }
 }
