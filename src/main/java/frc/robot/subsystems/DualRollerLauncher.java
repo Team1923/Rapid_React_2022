@@ -22,6 +22,7 @@ public class DualRollerLauncher extends SubsystemBase {
   public WPI_TalonFX ShooterRollers = new WPI_TalonFX(Constants.ShooterRollersMotor);
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
 
   public NetworkTableEntry ShooterWheelsRPM =
       tuningTab.add("Shooter Wheels RPM", Constants.shooterWheelsRPMHighGoal).getEntry();

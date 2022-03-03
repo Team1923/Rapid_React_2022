@@ -13,8 +13,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.UnitConversion;
@@ -29,16 +30,26 @@ public class ElevatorSubsystem extends SubsystemBase {
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  ShuffleboardLayout climberLayout =
+      coachTab.getLayout("Climber", "List Layout").withPosition(0, 0).withSize(1, 5);
 
-  public NetworkTableEntry rotations = tuningTab.add("Elevtor Rotations", 0).getEntry();
+  public NetworkTableEntry rotations = tuningTab.add("Elevator Rotations", 0).getEntry();
   public ComplexWidget t =
       tuningTab.add(
           "re-zero encoder",
-          new RunCommand(
+          new InstantCommand(
               () -> {
                 setEncZero();
               },
               this));
+
+  public NetworkTableEntry atLocation =
+      climberLayout.add("At Limit", false).withSize(1, 1).withPosition(0, 0).getEntry();
+  public NetworkTableEntry commandedOutput =
+      climberLayout.add("Elevator %Out", 0).withSize(1, 1).withPosition(0, 1).getEntry();
+  public NetworkTableEntry rotationsCoach =
+      climberLayout.add("Elevator Rotations", 0).withSize(1, 1).withPosition(0, 2).getEntry();
 
   public ElevatorSubsystem() {
     leftMotor.configFactoryDefault();
@@ -99,5 +110,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     rotations.setDouble(UnitConversion.positionNativeToRots(encVal()));
+    rotationsCoach.setDouble(UnitConversion.positionNativeToRots(encVal()));
+    commandedOutput.setDouble(leftMotor.getMotorOutputVoltage()); // should be output volts?
+    atLocation.setBoolean(overRevLimit());
   }
 }

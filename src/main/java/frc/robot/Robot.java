@@ -82,27 +82,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-    // new ArcadeOldCommand(drive, driver.getLeftY(), driver.getRightX());
-    // new ConveyorCommand(conveyor, operator.getLeftY(), operator.getRightY());
-
-    // if (driver.getBButtonPressed()) {
-    //   new RunIntakeCommand(intake, 0);
-    // }
-    // if (operator.getCircleButtonPressed()) {
-    //   new DualRollerLauncherCommand(drl, 0, 0);
-    // }
-
-    // Set Constant Speed for Conveyor
-    //   if (operator.getTriangleButtonPressed()) {
-    //     new ConveyorCommand(
-    //         conveyor, -converyorConstantVal.getDouble(0), -converyorConstantVal.getDouble(0));
-    //   }
-
-    //   if (operator.getSquareButtonPressed()) {
-    //     new ConveyorCommand(conveyor, 0, 0);
-    //   }
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
