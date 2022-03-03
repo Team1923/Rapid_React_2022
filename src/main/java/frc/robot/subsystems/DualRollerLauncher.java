@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,6 +24,13 @@ public class DualRollerLauncher extends SubsystemBase {
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  ShuffleboardLayout climberLayout =
+      coachTab.getLayout("Launcher", "List Layout").withPosition(1, 0).withSize(1, 5);
+
+  public NetworkTableEntry coachWheelRPM =
+      climberLayout.add("Current Wheel RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
+  public NetworkTableEntry coachRollerRPM =
+      climberLayout.add("Current Roller RPM", 0).withSize(1, 1).withPosition(0, 1).getEntry();
 
   public NetworkTableEntry ShooterWheelsRPM =
       tuningTab.add("Shooter Wheels RPM", Constants.shooterWheelsRPMHighGoal).getEntry();

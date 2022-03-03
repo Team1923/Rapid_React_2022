@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.UnitConversion;
+import java.util.Map;
 
 public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
@@ -45,7 +46,13 @@ public class ElevatorSubsystem extends SubsystemBase {
               this));
 
   public NetworkTableEntry atLocation =
-      climberLayout.add("At Limit", false).withSize(1, 1).withPosition(0, 0).getEntry();
+      climberLayout
+          .add("At Limit", false)
+          .withSize(1, 1)
+          .withPosition(0, 0)
+          .withProperties(Map.of("Color when false", "#000000","Color when true", "#17FC03"))
+          .getEntry();
+          
   public NetworkTableEntry commandedOutput =
       climberLayout.add("Elevator %Out", 0).withSize(1, 1).withPosition(0, 1).getEntry();
   public NetworkTableEntry rotationsCoach =
