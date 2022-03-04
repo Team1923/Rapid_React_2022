@@ -5,6 +5,7 @@
 package frc.robot.commands.ConveyorCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 
@@ -33,8 +34,8 @@ public class ConveyorCommand extends CommandBase {
   public void execute() {
 
     // checking if the shooter is range of the rpm
-    if (this.drl.ShooterRollersInRange(this.drl.ShooterRollersRPM.getDouble(0))
-        && this.drl.ShooterWheelsInRange(this.drl.ShooterWheelsRPM.getDouble(0))) {
+    if (this.drl.ShooterRollersInRange(Constants.shooterRollerRPMHighGoal)
+        && this.drl.ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) {
       this.conveyor.runConveyor(
           this.conveyor.Conveyor.getDouble(0), this.conveyor.FeederWheels.getDouble(0));
     }
