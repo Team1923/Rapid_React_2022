@@ -10,6 +10,10 @@ public final class Constants {
   public static final int driverPort = 0;
   public static final int operatorPort = 1;
 
+  // are we tuning?
+
+  public static boolean tuning = true;
+
   // DriveTrain CAN IDs
   public static final int l1 = 1;
   public static final int l2 = 2;
