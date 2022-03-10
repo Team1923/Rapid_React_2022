@@ -40,11 +40,12 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
                     // drive first leg and spin up, exiting when both are done.
                     new AutoDrive(drive, 0.75, 0.15).withTimeout(0.7),
                     new SpinUpToRPM(drl, 2700, 900),
+                    new RunCommand(() -> {}).withTimeout(0.3),
                     // keep spinning and drive leg #2 with a timeout on both.
                     new ParallelCommandGroup(
                             new MaintainVelocity(drl, 2700, 900),
                             new AutoDrive(drive, -0.675, 0.275))
-                        .withTimeout(2.5),
+                        .withTimeout(2),
 
                     // spin up and keep it for 10s while agitating input, but no pause to ensure it
                     // keeps going?
