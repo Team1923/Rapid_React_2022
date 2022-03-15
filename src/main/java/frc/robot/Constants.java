@@ -23,8 +23,8 @@ public final class Constants {
   public static final int r3 = 6;
 
   // Shooter IDs
-  public static final int ShooterWheelsMotor = 10;
-  public static final int ShooterRollersMotor = 7;
+  public static final int ShooterMotorA = 10;
+  public static final int ShooterMotorB = 7;
 
   // Conveyor IDs
   public static final int ConveyorMotor = 13;
@@ -44,24 +44,10 @@ public final class Constants {
   public static final double feederWheelsPercent = -0.9;
 
   public static final double shooterWheelsRPMHighGoal = 2700;
-  public static final double shooterRollerRPMHighGoal = 1000;
-
   public static final double shooterWheelsRPMLowGoal = 1800;
-  public static final double shooterRollerRPMLowGoal = 600;
 
   // pigeon ID
   public static final int pigeon = 14;
-
-  // motion magic stuff for elevator
-  public static final int kIdx = 0;
-  public static final int kPIDloopIdx = 0;
-  public static final int kTimeoutMs = 0;
-  public static final double kP = 0.2;
-  public static final double kI = 0;
-  public static final double kD = 0;
-  public static final double kF = 0.2;
-  public static final double kIzone = 0;
-  public static final double kPeakOutput = 1.0;
 
   // climber elevator spool-out prevention
   // will have some slack(not intended to be precise)

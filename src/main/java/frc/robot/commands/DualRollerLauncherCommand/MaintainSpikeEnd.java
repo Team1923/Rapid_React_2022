@@ -22,8 +22,9 @@ public class MaintainSpikeEnd extends MaintainVelocity {
   /* This command should end when the velocity drops and current is above some threshold (likely 20-30A?  Needs to be observed and charted.) */
   @Override
   public boolean isFinished() {
+    // TODO Fix logic.
     return (!(this.drl.ShooterWheelsInRange(ShooterWheelsRPM)
             && this.drl.ShooterRollersInRange(ShooterRollersRPM))
-        && this.drl.ShooterWheels.getStatorCurrent() > this.someValue);
+        && this.drl.ShooterWheelA.getStatorCurrent() > this.someValue);
   }
 }

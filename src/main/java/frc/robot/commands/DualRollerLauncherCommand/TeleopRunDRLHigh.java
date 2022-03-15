@@ -31,16 +31,11 @@ public class TeleopRunDRLHigh extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double velRollers = UnitConversion.RPMtoNativeUnits(Constants.shooterRollerRPMHighGoal);
-
     double velWheels = UnitConversion.RPMtoNativeUnits(Constants.shooterWheelsRPMHighGoal);
 
     this.drl.setShooterWheels(velWheels);
-    this.drl.setShooterRollers(velRollers);
 
-    if (drl.ShooterRollersInRange(Constants.shooterRollerRPMHighGoal)
-        && drl.ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) {
+    if (drl.ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) {
       operator.setRumble(RumbleType.kRightRumble, 1);
     }
   }

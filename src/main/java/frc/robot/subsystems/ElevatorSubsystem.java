@@ -82,19 +82,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     // set up encoder logic.
     leftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);
 
-    // configing motion magic
-    leftMotor.selectProfileSlot(0, 0);
-    leftMotor.config_kF(Constants.kIdx, Constants.kF, Constants.kTimeoutMs);
-    leftMotor.config_kP(Constants.kIdx, Constants.kP, Constants.kTimeoutMs);
-    leftMotor.config_kI(Constants.kIdx, Constants.kI, Constants.kTimeoutMs);
-    leftMotor.config_kD(Constants.kIdx, Constants.kD, Constants.kTimeoutMs);
-
     // setDefaultCommand(new ElevatorKeepDown(this));
   }
 
   public void runElevator(double leftSpeed, double rightSpeed) {
-    // double target = driver.getRightTriggerAxis() * 2048 * 10;
-    // leftMotor.set(ControlMode.MotionMagic, target);
     if (rightSpeed > 0.1) {
       leftMotor.set(ControlMode.PercentOutput, -.5 * rightSpeed);
     }

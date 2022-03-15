@@ -34,8 +34,7 @@ public class ConveyorCommand extends CommandBase {
   public void execute() {
 
     // checking if the shooter is range of the rpm
-    if (this.drl.ShooterRollersInRange(Constants.shooterRollerRPMHighGoal)
-        && this.drl.ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) {
+    if (this.drl.ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) {
       this.conveyor.runConveyor(
           this.conveyor.Conveyor.getDouble(0), this.conveyor.FeederWheels.getDouble(0));
     }

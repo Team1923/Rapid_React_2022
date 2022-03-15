@@ -31,15 +31,11 @@ public class TeleopRunDRLLow extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double velRollers = UnitConversion.RPMtoNativeUnits(Constants.shooterRollerRPMLowGoal);
     double velWheels = UnitConversion.RPMtoNativeUnits(Constants.shooterWheelsRPMLowGoal);
 
     this.drl.setShooterWheels(velWheels);
-    this.drl.setShooterRollers(velRollers);
 
-    if (drl.ShooterRollersInRange(Constants.shooterRollerRPMLowGoal)
-        && drl.ShooterWheelsInRange(Constants.shooterWheelsRPMLowGoal)) {
+    if ((drl.ShooterWheelsInRange(Constants.shooterWheelsRPMLowGoal))) {
       operator.setRumble(RumbleType.kRightRumble, 1);
     }
   }
