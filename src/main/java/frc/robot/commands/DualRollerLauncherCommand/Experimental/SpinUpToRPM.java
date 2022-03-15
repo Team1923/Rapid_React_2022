@@ -13,12 +13,24 @@ public class SpinUpToRPM extends CommandBase {
   private double ShooterWheelsRPM;
   private DualRollerLauncher drl;
   private RollingAvgDouble avg;
-  /** Creates a new LowScore. */
+
+  /* We have two constructors here to allow the use of 
+  both an avgWindow, defining number of items, and a 
+  timewindow, assuming 50Hz clock like FRC robots have
+  by default.  This may change in the future. */
+  
   public SpinUpToRPM(DualRollerLauncher drl, double wheelsRPM, int avgWindow) {
     addRequirements(drl);
     this.drl = drl;
     this.ShooterWheelsRPM = wheelsRPM;
     this.avg = new RollingAvgDouble(avgWindow);
+  }
+
+  public SpinUpToRPM(DualRollerLauncher drl, double wheelsRPM, double timeWindow) {
+    addRequirements(drl);
+    this.drl = drl;
+    this.ShooterWheelsRPM = wheelsRPM;
+    this.avg = new RollingAvgDouble(timeWindow);
   }
 
   // Called when the command is initially scheduled.
