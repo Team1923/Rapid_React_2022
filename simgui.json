@@ -33,6 +33,8 @@
       "/Shuffleboard/Coach Dashboard/Auto Setup/Auto Routine": "String Chooser",
       "/Shuffleboard/Coach Dashboard/Climber/Re-Zero Encoder": "Command",
       "/Shuffleboard/Tune Launcher/System Info/SequentialCommandGroup": "Command",
+      "/Shuffleboard/Tuning Tab/FeedAndShoot": "Command",
+      "/Shuffleboard/Tuning Tab/Test Run FeedShooter": "Command",
       "/Shuffleboard/Tuning Tab/re-zero encoder": "Command",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     }

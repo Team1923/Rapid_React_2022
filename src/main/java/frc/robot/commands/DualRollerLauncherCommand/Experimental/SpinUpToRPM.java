@@ -14,11 +14,11 @@ public class SpinUpToRPM extends CommandBase {
   private DualRollerLauncher drl;
   private RollingAvgDouble avg;
 
-  /* We have two constructors here to allow the use of 
-  both an avgWindow, defining number of items, and a 
+  /* We have two constructors here to allow the use of
+  both an avgWindow, defining number of items, and a
   timewindow, assuming 50Hz clock like FRC robots have
   by default.  This may change in the future. */
-  
+
   public SpinUpToRPM(DualRollerLauncher drl, double wheelsRPM, int avgWindow) {
     addRequirements(drl);
     this.drl = drl;

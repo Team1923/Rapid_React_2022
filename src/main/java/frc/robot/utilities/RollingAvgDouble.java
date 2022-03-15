@@ -16,9 +16,8 @@ public class RollingAvgDouble {
   }
 
   public RollingAvgDouble(double maxTime) {
-    this.maxItems = (int)(50 * maxTime);
+    this.maxItems = (int) (50 * maxTime);
   }
-
 
   public void add(double inputVal) {
     this.lastVals.add(inputVal);

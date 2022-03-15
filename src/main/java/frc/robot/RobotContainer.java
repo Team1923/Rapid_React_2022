@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.DriveForwardAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
@@ -22,6 +23,7 @@ import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopRunDRLHigh;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopRunDRLLow;
+import frc.robot.commands.DualRollerLauncherCommand.Experimental.FeedAndShoot;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -122,6 +124,8 @@ public class RobotContainer {
     chooser.addOption("OneBallHighAuto", oneBallHighAuto);
     // SmartDashboard.putData(chooser);
     auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
+
+    tuningTab.add(new PerpetualCommand(new FeedAndShoot(drl, conveyor)).withName("Test Run FeedShooter"));
   }
 
   public Command getAutonomousCommand() {

@@ -25,17 +25,21 @@ public class FeedAndShoot extends SequentialCommandGroup {
     addRequirements(this.drl, this.conveyor);
 
     addCommands(
-        new SpinUpToRPM(drl, Constants.shooterWheelsRPMHighGoal, 0.5), //monitor window of the last .5s
+        new PrintCommand("Starting autonomous bullshit"),
+        new SpinUpToRPM(
+            drl, Constants.shooterWheelsRPMHighGoal, 0.5), // monitor window of the last .5s
         new PrintCommand("At target RPM!"),
-        new ParallelRaceGroup( //run the wheel until we see a dip, then stop the conveyor (race group ends all other tasks when one exits.)
+        new ParallelRaceGroup( // run the wheel until we see a dip, then stop the conveyor (race
+            // group ends all other tasks when one exits.)
             new ShootOneBall(drl, Constants.shooterWheelsRPMHighGoal),
             new AutoConveyor(conveyor, -.5, -.5)),
-        new PrintCommand("wheel RPM dipped outside of internal target zone, spinning back up and pausing until met"),
-        new ParallelRaceGroup( //run the conveyor backwards until the wheel is back at speed for .1s.
+        new PrintCommand(
+            "wheel RPM dipped outside of internal target zone, spinning back up and pausing until met condition"),
+        new ParallelRaceGroup( // run the conveyor backwards until the wheel is back at speed for
+            // .1s.
             new SpinUpToRPM(drl, Constants.shooterWheelsRPMHighGoal, .1),
             new AutoConveyor(conveyor, .5, .5)),
-        new PrintCommand("At target for desired duration, stopping conveyors to repeat")
-    );
+        new PrintCommand("At target for desired duration, stopping conveyors to repeat"));
   }
 
   @Override
