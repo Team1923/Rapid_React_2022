@@ -11,16 +11,13 @@ import frc.robot.utilities.UnitConversion;
 public class MaintainVelocity extends CommandBase {
   private DualRollerLauncher drl;
   private double ShooterWheels;
-  private double ShooterRoller;
 
   /** Creates a new LowScore. */
-  public MaintainVelocity(
-      DualRollerLauncher drl, double ShooterWheelsVel, double ShooterRollerVel) {
+  public MaintainVelocity(DualRollerLauncher drl, double ShooterWheelsVel) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
     this.drl = drl;
     this.ShooterWheels = ShooterWheelsVel;
-    this.ShooterRoller = ShooterRollerVel;
   }
 
   // Called when the command is initially scheduled.
@@ -30,7 +27,6 @@ public class MaintainVelocity extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drl.setShooterRollers(UnitConversion.RPMtoNativeUnits(this.ShooterRoller));
     this.drl.setShooterWheels(UnitConversion.RPMtoNativeUnits(this.ShooterWheels));
   }
 
@@ -41,7 +37,6 @@ public class MaintainVelocity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.ShooterWheelsInRange(ShooterWheels)
-        && this.drl.ShooterRollersInRange(ShooterRoller));
+    return (this.drl.ShooterWheelsInRange(ShooterWheels));
   }
 }

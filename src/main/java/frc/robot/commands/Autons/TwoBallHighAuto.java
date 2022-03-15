@@ -39,12 +39,11 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                     // drive first leg and spin up, exiting when both are done.
                     new AutoDrive(drive, 0.75, 0.15).withTimeout(0.7),
-                    new SpinUpToRPM(drl, 2700, 900),
+                    new SpinUpToRPM(drl, 2700),
                     new RunCommand(() -> {}).withTimeout(0.3),
                     // keep spinning and drive leg #2 with a timeout on both.
                     new ParallelCommandGroup(
-                            new MaintainVelocity(drl, 2700, 900),
-                            new AutoDrive(drive, -0.675, 0.275))
+                            new MaintainVelocity(drl, 2700), new AutoDrive(drive, -0.675, 0.275))
                         .withTimeout(2),
 
                     // spin up and keep it for 10s while agitating input, but no pause to ensure it
@@ -53,7 +52,7 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
                     and ENDS when we dip below our target and stops the conveyor.
                      Likely to need both subsystems passed in.  This is _okay_. */
                     new ParallelCommandGroup(
-                        new MaintainVelocity(drl, 2700, 900).withTimeout(10),
+                        new MaintainVelocity(drl, 2700).withTimeout(10),
                         new SequentialCommandGroup(
                             new AutoDrive(drive, -0.5, 0).withTimeout(0.9),
                             new AutoConveyor(conveyor, -0.9, -0.9, drl).withTimeout(0.3),

@@ -10,15 +10,14 @@ import frc.robot.utilities.UnitConversion;
 
 public class SpinUpToRPM extends CommandBase {
 
-  private double ShooterWheelsRPM, ShooterRollersRPM;
+  private double ShooterWheelsRPM;
   private DualRollerLauncher drl;
   /** Creates a new LowScore. */
-  public SpinUpToRPM(DualRollerLauncher drl, double ShooterWheels, double ShooterRollers) {
+  public SpinUpToRPM(DualRollerLauncher drl, double ShooterWheels) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
     this.drl = drl;
     this.ShooterWheelsRPM = ShooterWheels;
-    this.ShooterRollersRPM = ShooterRollers;
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +27,6 @@ public class SpinUpToRPM extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drl.setShooterRollers(UnitConversion.RPMtoNativeUnits(ShooterRollersRPM));
     this.drl.setShooterWheels(UnitConversion.RPMtoNativeUnits(ShooterWheelsRPM));
   }
 
@@ -39,7 +37,6 @@ public class SpinUpToRPM extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (this.drl.ShooterWheelsInRange(ShooterWheelsRPM)
-        && this.drl.ShooterRollersInRange(ShooterRollersRPM));
+    return (this.drl.ShooterWheelsInRange(ShooterWheelsRPM));
   }
 }

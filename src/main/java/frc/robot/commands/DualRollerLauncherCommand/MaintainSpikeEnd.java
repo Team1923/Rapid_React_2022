@@ -8,23 +8,17 @@ import frc.robot.subsystems.DualRollerLauncher;
 
 /* This command is intended to be used as an extension of the MaintainVelocity command, specifically to end when a current behavior is detected on the motor consistent with actually launching a ball.  This lets us pause feeding in more complex autos. */
 public class MaintainSpikeEnd extends MaintainVelocity {
-  private double ShooterWheelsRPM, ShooterRollersRPM;
+  private double ShooterWheelsRPM;
   private DualRollerLauncher drl;
-  private double someValue =
-      30; // 30 amps for shooter wheel stalling while not at speed.  This should be run after a
-  // spin-up to ensure a standing-start isn't caught.
 
-  public MaintainSpikeEnd(DualRollerLauncher drl, double ShooterWheels, double ShooterRollers) {
-    super(drl, ShooterWheels, ShooterRollers);
+  public MaintainSpikeEnd(DualRollerLauncher drl, double ShooterWheels) {
+    super(drl, ShooterWheels);
     addRequirements(drl);
   }
 
   /* This command should end when the velocity drops and current is above some threshold (likely 20-30A?  Needs to be observed and charted.) */
   @Override
   public boolean isFinished() {
-    // TODO Fix logic.
-    return (!(this.drl.ShooterWheelsInRange(ShooterWheelsRPM)
-            && this.drl.ShooterRollersInRange(ShooterRollersRPM))
-        && this.drl.ShooterWheelA.getStatorCurrent() > this.someValue);
+    return (!(this.drl.ShooterWheelsInRange(ShooterWheelsRPM)));
   }
 }

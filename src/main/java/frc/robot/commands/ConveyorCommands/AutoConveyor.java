@@ -12,14 +12,9 @@ public class AutoConveyor extends CommandBase {
   public ConveyorSubsystem conveyor;
   private double belts, wheels;
   public DualRollerLauncher drl;
-  private boolean shoot = false;
 
   public AutoConveyor(
-      ConveyorSubsystem conveyor,
-      double belts,
-      double wheels,
-      DualRollerLauncher d) { // ,double frontSpeed, double backSpeed
-    // Use addRequirements() here to declare subsystem dependencies.
+      ConveyorSubsystem conveyor, double belts, double wheels, DualRollerLauncher d) {
     addRequirements(conveyor);
     this.conveyor = conveyor;
 

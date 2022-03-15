@@ -59,8 +59,6 @@ public class DualRollerLauncher extends SubsystemBase {
   /* Tuning RPM Pushes */
   public NetworkTableEntry ShooterWheelsRPM = tuningTab.add("Shooter Wheels RPM", 0).getEntry();
 
-  public NetworkTableEntry ShooterRollersRPM = tuningTab.add("Shooter Rollers RPM", 0).getEntry();
-
   public NetworkTableEntry CURRENTShooterWheelsRPM =
       tuningTab.add("CURRENT Shooter Wheels RPM", 0).getEntry();
 
@@ -100,28 +98,26 @@ public class DualRollerLauncher extends SubsystemBase {
     this.ShooterWheelA.config_kF(0, .055, 30);
 
     if (Constants.tuning) {
-      this.wheelLauncherLayout =
-          shooterTuneTab.getLayout("Wheel Tuning", "Grid Layout").withPosition(3, 0).withSize(2, 6);
       this.launcherTuneLayout =
           shooterTuneTab.getLayout("System Info", "List Layout").withPosition(6, 0).withSize(2, 6);
 
       // wheel layout setup.
       // important to note that certain types of properties (ie position) do not work.
       this.wheelCurrentRPM =
-          wheelLauncherLayout
+          this.shooterTuneTab
               .add("Curr. Wheel RPM", 0)
               .withPosition(0, 0)
-              .withSize(2, 2)
+              .withSize(6, 3)
               .withWidget(BuiltInWidgets.kGraph)
+              .withProperties(Map.of("Visible time", 60))
               .getEntry();
-      this.wheelkP =
-          wheelLauncherLayout.add("Wheel kP", 0).withPosition(0, 3).withSize(2, 1).getEntry();
-      this.wheelkI =
-          wheelLauncherLayout.add("Wheel kI", 0).withPosition(0, 4).withSize(2, 1).getEntry();
-      this.wheelkD =
-          wheelLauncherLayout.add("Wheel kD", 0).withPosition(0, 5).withSize(2, 1).getEntry();
+
+      this.wheelkP = shooterTuneTab.add("Wheel kP", 0).withPosition(0, 3).withSize(3, 1).getEntry();
+      this.wheelkI = shooterTuneTab.add("Wheel kI", 0).withPosition(3, 3).withSize(3, 1).getEntry();
+      this.wheelkD = shooterTuneTab.add("Wheel kD", 0).withPosition(0, 4).withSize(3, 1).getEntry();
       this.wheelkFF =
-          wheelLauncherLayout.add("Wheel kFF", 0).withPosition(0, 6).withSize(2, 1).getEntry();
+          shooterTuneTab.add("Wheel kFF", 0).withPosition(3, 4).withSize(3, 1).getEntry();
+
       this.wheelTargetRPMTuning =
           launcherTuneLayout
               .add("Tar. Wheel RPM", Constants.shooterWheelsRPMHighGoal)
@@ -139,7 +135,6 @@ public class DualRollerLauncher extends SubsystemBase {
                     this.ShooterWheelA.config_kI(0, this.wheelkI.getDouble(0), 30);
                     this.ShooterWheelA.config_kD(0, this.wheelkD.getDouble(0), 30);
                     this.ShooterWheelA.config_kF(0, this.wheelkFF.getDouble(0), 30);
-                    // roller config
                   },
                   this),
               new RunCommand(
@@ -157,8 +152,6 @@ public class DualRollerLauncher extends SubsystemBase {
     wheelTargetRPM = spd;
     updateRPM();
   }
-  /* Used to set for both auto and teleop.*/
-  public void setShooterRollers(double spd) {}
 
   public boolean inRange(double currentRPM, double targetRPM, double threshold) {
     boolean weGood = currentRPM < (targetRPM + threshold) && currentRPM > (targetRPM - threshold);
@@ -167,12 +160,6 @@ public class DualRollerLauncher extends SubsystemBase {
 
   public boolean ShooterWheelsInRange(double targetRPM) {
     double currentRPM = UnitConversion.nativeUnitstoRPM(ShooterWheelA.getSelectedSensorVelocity());
-    double target = targetRPM;
-    return inRange(currentRPM, target, 75);
-  }
-
-  public boolean ShooterRollersInRange(double targetRPM) {
-    double currentRPM = UnitConversion.nativeUnitstoRPM(ShooterWheelB.getSelectedSensorVelocity());
     double target = targetRPM;
     return inRange(currentRPM, target, 75);
   }

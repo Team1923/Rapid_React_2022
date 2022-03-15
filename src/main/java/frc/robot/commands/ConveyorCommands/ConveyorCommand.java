@@ -32,7 +32,6 @@ public class ConveyorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     // checking if the shooter is range of the rpm
     if (this.drl.ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) {
       this.conveyor.runConveyor(

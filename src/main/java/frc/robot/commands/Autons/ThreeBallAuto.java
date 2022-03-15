@@ -32,9 +32,9 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, 0.5).withTimeout(.2), // drop intake
             new SequentialCommandGroup(
-                new SpinUpToRPM(drl, 2700, 900),
+                new SpinUpToRPM(drl, 2700),
                 new ParallelCommandGroup(
-                        new MaintainVelocity(drl, 2700, 900),
+                        new MaintainVelocity(drl, 2700),
                         new AutoConveyor(conveyor, -0.9, -0.9, drl))
                     .withTimeout(0.7),
                 new ParallelCommandGroup(
@@ -43,9 +43,9 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                 new ParallelCommandGroup(new AutoIntake(intake, 0.9), new AutoDrive(drive, 0.6, 0))
                     .withTimeout(2.5),
                 new AutoDrive(drive, -0.75, 0.4),
-                new SpinUpToRPM(drl, 2700, 900),
+                new SpinUpToRPM(drl, 2700),
                 new ParallelCommandGroup(
-                    new MaintainVelocity(drl, 2700, 900),
+                    new MaintainVelocity(drl, 2700),
                     new AutoConveyor(conveyor, -0.9, -0.9, drl)))));
   }
 }
