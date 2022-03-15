@@ -19,6 +19,10 @@ public class RollingAvgDouble {
     this.lastVals.add(inputVal);
   }
 
+  public boolean full() {
+    return (this.lastVals.size() == this.maxItems);
+  }
+
   public double getAvg() {
     // ensures we only look at the last n samples, set via robot loop logic timing.
     while (this.lastVals.size() > this.maxItems) {
@@ -41,6 +45,16 @@ public class RollingAvgDouble {
 
     return (currentAvg > goalTarget - targetTolerance)
         && (currentAvg < goalTarget + targetTolerance);
+  }
+
+  /* This is to verify if all of the last values we saw within the target window are within tolerance */
+  public boolean lastValuesWithinTolerance(double targetTolerance, double goalTarget) {
+    for (double val : this.lastVals) {
+      if (!((val > goalTarget - targetTolerance) && val < goalTarget + targetTolerance)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /* BE SURE TO EXPRESS AS PERCENT VALUE.

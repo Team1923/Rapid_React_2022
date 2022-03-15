@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
@@ -60,9 +59,6 @@ public class RobotContainer {
   public static OneBallHighAuto oneBallHighAuto = new OneBallHighAuto(intake, drive, conveyor, drl);
   public static DriveForwardAuto driveForwardAuto =
       new DriveForwardAuto(intake, drive, conveyor, drl);
-
-  public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
-      new AlternativeTwoBallHighAuto(intake, drl, drive, conveyor);
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -124,7 +120,6 @@ public class RobotContainer {
     chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
     chooser.addOption("Drive Forward Auto", driveForwardAuto);
     chooser.addOption("OneBallHighAuto", oneBallHighAuto);
-    chooser.addOption("Death Trap 2 ball", alternativeTwoBallHighAuto);
     // SmartDashboard.putData(chooser);
     auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }

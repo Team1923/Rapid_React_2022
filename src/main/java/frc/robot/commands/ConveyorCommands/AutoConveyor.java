@@ -23,6 +23,14 @@ public class AutoConveyor extends CommandBase {
     this.drl = d;
   }
 
+  public AutoConveyor(ConveyorSubsystem conveyor, double belts, double wheels) {
+    addRequirements(conveyor);
+    this.conveyor = conveyor;
+
+    this.belts = belts;
+    this.wheels = wheels;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
