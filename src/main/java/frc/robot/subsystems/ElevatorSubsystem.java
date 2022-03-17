@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
@@ -26,9 +26,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   public WPI_TalonFX leftMotor = new WPI_TalonFX(Constants.leftClimberMotor);
 
   private WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
-
-  SupplyCurrentLimitConfiguration supplyCurrentLimitConfiguration =
-      new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
   // tuning tab setup
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
@@ -76,13 +73,15 @@ public class ElevatorSubsystem extends SubsystemBase {
     rightMotor.follow(leftMotor);
     rightMotor.setInverted(InvertType.InvertMotorOutput);
 
-    leftMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
-    rightMotor.configSupplyCurrentLimit(supplyCurrentLimitConfiguration);
+    leftMotor.configSupplyCurrentLimit(Constants.elevatorCurrentLimit);
+    rightMotor.configSupplyCurrentLimit(Constants.elevatorCurrentLimit);
+
+    // since we use the left motor as our "smart" one, we can turn down the encoder info from it.
+    rightMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
+    rightMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
 
     // set up encoder logic.
     leftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 30);
-
-    // setDefaultCommand(new ElevatorKeepDown(this));
   }
 
   public void runElevator(double leftSpeed, double rightSpeed) {
@@ -90,7 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase {
       leftMotor.set(ControlMode.PercentOutput, -.5 * rightSpeed);
     }
     if (leftSpeed > 0.1) {
-      leftMotor.set(ControlMode.PercentOutput, .5 * leftSpeed);
+      leftMotor.set(ControlMode.PercentOutput, 0.8 * leftSpeed);
     }
   }
 
@@ -116,7 +115,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     rotations.setDouble(UnitConversion.positionNativeToRots(encVal()));
     rotationsCoach.setDouble(UnitConversion.positionNativeToRots(encVal()));
-    commandedOutput.setDouble(leftMotor.get()); // should be output volts?
+    commandedOutput.setDouble(leftMotor.get());
     atLocation.setBoolean(overRevLimit());
   }
 }

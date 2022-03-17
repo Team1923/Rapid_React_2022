@@ -18,13 +18,14 @@ import frc.robot.Constants;
 public class ConveyorSubsystem extends SubsystemBase {
 
   private TalonFX ConveyorMotor = new TalonFX(Constants.ConveyorMotor);
-  private TalonFX FeederWheelMotor = new TalonFX(Constants.FeederWheelMoter);
+  private TalonFX FeederWheelMotor = new TalonFX(Constants.FeederWheelMotor);
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
+  ShuffleboardTab shootingTab = Shuffleboard.getTab("Shooter Tuning Tab");
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
   ShuffleboardLayout intakeLayout =
       coachTab.getLayout("Feeder + Conveyor", "List Layout").withPosition(4, 0).withSize(2, 5);
-
+  public NetworkTableEntry shotCount = shootingTab.add("Shot Count", 0).getEntry();
   // just for the coach dashboard.
   public NetworkTableEntry coachConveyor =
       intakeLayout
@@ -49,13 +50,23 @@ public class ConveyorSubsystem extends SubsystemBase {
   public ConveyorSubsystem() {
     ConveyorMotor.configFactoryDefault();
     FeederWheelMotor.configFactoryDefault();
-    ConveyorMotor.setInverted(InvertType.InvertMotorOutput);
-    FeederWheelMotor.setInverted(InvertType.InvertMotorOutput);
+
+    ConveyorMotor.setInverted(InvertType.None);
+    FeederWheelMotor.setInverted(InvertType.None);
+
+    // voltage compensation will help the consistency of this mechanism a bit.
+    ConveyorMotor.configVoltageCompSaturation(12);
+    FeederWheelMotor.configVoltageCompSaturation(12);
+
+    // so will the current limit.
 
     Conveyor = tuningTab.add("Conveyor percentout", Constants.conveyorPerent).getEntry();
     FeederWheels =
         tuningTab.add("FeederWheels percentout", Constants.feederWheelsPercent).getEntry();
   }
+
+  // positive is in with InvertType.None.
+  // negative is out.
 
   public void runConveyor(double ConveyorSpd, double FeederWheelSpd) {
     ConveyorMotor.set(ControlMode.PercentOutput, ConveyorSpd);

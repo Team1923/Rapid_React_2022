@@ -19,9 +19,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TwoBallHighAuto extends SequentialCommandGroup {
+public class TwoBallLowAuto extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public TwoBallHighAuto(
+  public TwoBallLowAuto(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -38,20 +38,14 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                     // drive first leg and spin up, exiting when both are done.
                     new AutoDrive(drive, 0.6, 0.15).withTimeout(0.6),
-                    new NewSpinUpToRPM(drl, -4050),
+                    new NewSpinUpToRPM(drl, 4050),
                     new RunCommand(() -> {}).withTimeout(0.3),
                     // keep spinning and drive leg #2 with a timeout on both.
                     new ParallelCommandGroup(
-                            new NewSpinUpToRPM(drl, -4050), new AutoDrive(drive, -0.675, 0.23))
-                        .withTimeout(1.8),
-
-                    // spin up and keep it for 10s while agitating input, but no pause to ensure it
-                    // keeps going?
-                    /* TODO: Make a spin up command that launches a single ball
-                    and ENDS when we dip below our target and stops the conveyor.
-                     Likely to need both subsystems passed in.  This is _okay_. */
+                            new NewSpinUpToRPM(drl, 4050), new AutoDrive(drive, -0.675, 0.23))
+                        .withTimeout(2),
                     new ParallelCommandGroup(
-                        new NewSpinUpToRPM(drl, -4050).withTimeout(10),
+                        new NewSpinUpToRPM(drl, 4050).withTimeout(10),
                         new SequentialCommandGroup(
                             new AutoDrive(drive, -0.5, 0).withTimeout(0.9),
                             new AutoConveyor(conveyor, -0.9, -0.9).withTimeout(0.3),
@@ -61,7 +55,6 @@ public class TwoBallHighAuto extends SequentialCommandGroup {
                             new AutoConveyor(conveyor, -0.9, -0.9).withTimeout(0.3),
                             new RunCommand(() -> {}).withTimeout(0.5),
                             new AutoConveyor(conveyor, -0.9, -0.9).withTimeout(0.3),
-                            new RunCommand(() -> {}).withTimeout(0.5),
-                            new AutoDrive(drive, 0.6, 0).withTimeout(0.5)))))));
+                            new RunCommand(() -> {}).withTimeout(0.5)))))));
   }
 }

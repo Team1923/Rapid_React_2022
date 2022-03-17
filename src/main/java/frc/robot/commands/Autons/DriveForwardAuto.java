@@ -10,7 +10,6 @@ import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -19,14 +18,11 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class DriveForwardAuto extends SequentialCommandGroup {
   /** Creates a new OneBallAuto. */
   public DriveForwardAuto(
-      IntakeSubsystem intake,
-      DriveTrainSubsystem drive,
-      ConveyorSubsystem conveyor,
-      DualRollerLauncher drl) {
+      IntakeSubsystem intake, DriveTrainSubsystem drive, ConveyorSubsystem conveyor) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new AutoConveyor(conveyor, -.5, -.5, drl).withTimeout(3),
+        new AutoConveyor(conveyor, -.5, -.5).withTimeout(3),
         new RunCommand(() -> {}).withTimeout(1),
         new SequentialCommandGroup(new AutoDrive(drive, .50, 0.5).withTimeout(2)));
   }

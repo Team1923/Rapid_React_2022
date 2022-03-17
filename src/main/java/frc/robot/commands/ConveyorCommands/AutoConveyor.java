@@ -6,24 +6,16 @@ package frc.robot.commands.ConveyorCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ConveyorSubsystem;
-import frc.robot.subsystems.DualRollerLauncher;
 
 public class AutoConveyor extends CommandBase {
   public ConveyorSubsystem conveyor;
   private double belts, wheels;
-  public DualRollerLauncher drl;
 
   public AutoConveyor(
-      ConveyorSubsystem conveyor, double belts, double wheels, DualRollerLauncher d) {
-    addRequirements(conveyor);
-    this.conveyor = conveyor;
-
-    this.belts = belts;
-    this.wheels = wheels;
-    this.drl = d;
-  }
-
-  public AutoConveyor(ConveyorSubsystem conveyor, double belts, double wheels) {
+      ConveyorSubsystem conveyor,
+      double belts,
+      double wheels) { // ,double frontSpeed, double backSpeed
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(conveyor);
     this.conveyor = conveyor;
 

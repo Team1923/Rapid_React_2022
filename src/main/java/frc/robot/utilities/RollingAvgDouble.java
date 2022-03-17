@@ -19,16 +19,29 @@ public class RollingAvgDouble {
     this.maxItems = (int) (50 * maxTime);
   }
 
+  public void clearExtras() {
+    while (this.lastVals.size() > this.maxItems) {
+      this.lastVals.remove(0);
+    }
+  }
+
   public void add(double inputVal) {
+    this.clearExtras();
     this.lastVals.add(inputVal);
   }
 
   public boolean full() {
+    this.clearExtras();
     return (this.lastVals.size() == this.maxItems);
+  }
+
+  public void emptyValues() {
+    this.lastVals.clear();
   }
 
   public double getAvg() {
     // ensures we only look at the last n samples, set via robot loop logic timing.
+    this.clearExtras();
     while (this.lastVals.size() > this.maxItems) {
       this.lastVals.remove(0);
     }
@@ -45,6 +58,8 @@ public class RollingAvgDouble {
   This function returns whether the rolling average is on target.
   */
   public boolean withinTolerance(double targetTolerance, double goalTarget) {
+    this.clearExtras();
+
     double currentAvg = getAvg();
 
     return (currentAvg > goalTarget - targetTolerance)
@@ -53,6 +68,8 @@ public class RollingAvgDouble {
 
   /* This is to verify if all of the last values we saw within the target window are within tolerance */
   public boolean lastValuesWithinTolerance(double targetTolerance, double goalTarget) {
+    this.clearExtras();
+
     for (double val : this.lastVals) {
       if (!((val > goalTarget - targetTolerance) && val < goalTarget + targetTolerance)) {
         return false;
@@ -69,7 +86,6 @@ public class RollingAvgDouble {
 
   public boolean withinTolerancePercent(double targetTolerancePercent, double goalTarget) {
     double unitsTolerance = goalTarget * targetTolerancePercent;
-
     return withinTolerance(unitsTolerance, goalTarget);
   }
 }

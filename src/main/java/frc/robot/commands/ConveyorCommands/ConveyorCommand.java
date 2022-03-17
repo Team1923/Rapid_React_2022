@@ -10,9 +10,8 @@ import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 
 public class ConveyorCommand extends CommandBase {
-  /** Creates a new ConveyorTest. */
-  public ConveyorSubsystem conveyor;
 
+  private ConveyorSubsystem conveyor;
   private DualRollerLauncher drl;
 
   public ConveyorCommand(
@@ -21,21 +20,26 @@ public class ConveyorCommand extends CommandBase {
     addRequirements(conveyor);
     this.conveyor = conveyor;
     this.drl = drl;
-    // this.frontSpeed = frontSpeed;
-    // this.backSpeed = backSpeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
+  /* The intent of this logic is to check if we're in the boolean range of either
+   the high or low goal in an instant, and if so run the conveyor to feed it,
+   *otherwise* to feed it out.
+
+  With swapping invert states this may not be perfect and may need some work.
+  */
   @Override
   public void execute() {
-    // checking if the shooter is range of the rpm
-    if (this.drl.ShooterWheelsInRange(Constants.shooterWheelsRPMHighGoal)) {
+    if (drl.launcherInRange(Constants.launcherRPMHighGoal)
+        || drl.launcherInRange(Constants.launcherRPMLowGoal)) {
       this.conveyor.runConveyor(
           this.conveyor.Conveyor.getDouble(0), this.conveyor.FeederWheels.getDouble(0));
+    } else {
+      this.conveyor.runConveyor(-Constants.conveyorPerent, -Constants.feederWheelsPercent);
     }
   }
 

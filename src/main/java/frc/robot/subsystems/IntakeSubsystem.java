@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -18,10 +18,7 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  private WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.intakeMotor, Constants.canivoreBus);
-
-  SupplyCurrentLimitConfiguration supplyCurrentLimit =
-      new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
+  private WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.intakeMotor);
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
@@ -40,18 +37,15 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new Intake. */
   public IntakeSubsystem() {
     intakeMotor.configFactoryDefault();
-    intakeMotor.configSupplyCurrentLimit(supplyCurrentLimit);
-    // todo, set invert?
-    // todo, change current limit.
+    intakeMotor.configSupplyCurrentLimit(Constants.intakeCurrentLimit);
 
     intakeMotor.setInverted(InvertType.InvertMotorOutput);
 
+    // this will help de-noise our CAN bus ideally.
+    intakeMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
+    intakeMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
+
     intakeValue = tuningTab.add("Intake Percentout", Constants.intakePercent).getEntry();
-
-    // The default command may want to be running.
-    // Not 100% sure if we want that or not, until then it'll be disabled.
-
-    // setDefaultCommand(new RunIntakeCommand(this, 0));
   }
 
   public void runIntake(double speed) {
