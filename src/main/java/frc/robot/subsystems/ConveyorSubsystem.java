@@ -51,8 +51,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     ConveyorMotor.configFactoryDefault();
     FeederWheelMotor.configFactoryDefault();
 
-    ConveyorMotor.setInverted(InvertType.None);
-    FeederWheelMotor.setInverted(InvertType.None);
+    ConveyorMotor.setInverted(InvertType.InvertMotorOutput);
+    FeederWheelMotor.setInverted(InvertType.InvertMotorOutput);
 
     // voltage compensation will help the consistency of this mechanism a bit.
     ConveyorMotor.configVoltageCompSaturation(12);

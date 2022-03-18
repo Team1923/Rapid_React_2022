@@ -32,16 +32,17 @@ public class RunIntakeCommand extends CommandBase {
   @Override
   public void execute() {
     if (controller.getSquareButtonPressed()) {
-      intake.runIntake(-1 * this.intake.intakeValue.getDouble(0));
-      conveyor.runConveyor(0, 0.9);
+      intake.runIntake(Constants.intakePercent);
+      conveyor.runConveyor(0, -0.9);
     }
+    // intake out button
     if (controller.getCrossButtonPressed()) {
-      intake.runIntake(this.intake.intakeValue.getDouble(0));
-      conveyor.runConveyor(-1 * Constants.conveyorPerent, -1 * Constants.feederWheelsPercent);
+      intake.runIntake(-Constants.intakePercent);
+      conveyor.runConveyor(Constants.conveyorPerent, Constants.feederWheelsPercent);
       // -1 * Constants.conveyorPerent
     }
     if (controller.getCircleButtonPressed()) {
-      intake.runIntake(-1 * this.intake.intakeValue.getDouble(0));
+      intake.runIntake(Constants.intakePercent);
     }
   }
 

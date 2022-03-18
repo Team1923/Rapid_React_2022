@@ -4,6 +4,7 @@
 
 package frc.robot.commands.DriveTrainCommands;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -13,6 +14,8 @@ public class ArcadeDriveCommand extends CommandBase {
   public DriveTrainSubsystem drive;
 
   public XboxController driver;
+
+  private SlewRateLimiter filter;
 
   public ArcadeDriveCommand(DriveTrainSubsystem drive, XboxController driver) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,8 +31,12 @@ public class ArcadeDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drive.kDrive.arcadeDrive(-1 * this.driver.getLeftY(), this.driver.getRightX());
-    // this.drive.kDrive.curvatureDrive(-1 * this.driver.getLeftY(), this.driver.getRightX(), true);
+    // this.drive.kDrive.arcadeDrive(-1 * this.driver.getLeftY(), this.driver.getRightX());  //MAIN
+
+    this.drive.kDrive.curvatureDrive(-1 * this.driver.getLeftY(), this.driver.getRightX(), true);
+
+    // this.drive.kDrive.arcadeDrive(filter.calculate(-1 * this.driver.getLeftY()),
+    // this.driver.getRightX());
   }
 
   // Called once the command ends or is interrupted.

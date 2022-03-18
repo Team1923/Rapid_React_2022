@@ -5,7 +5,9 @@
 package frc.robot.commands.Autons;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.AutoDrive;
 import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
@@ -19,7 +21,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ThreeBallAuto extends SequentialCommandGroup {
-  /** Creates a new ThreeBallAuto. */
+  /** Creates a new TwoBallHighAuto. */
   public ThreeBallAuto(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
@@ -29,20 +31,29 @@ public class ThreeBallAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new SequentialCommandGroup(
-            new AutoIntake(intake, 0.5).withTimeout(.2), // drop intake
-            new SequentialCommandGroup(
-                new NewSpinUpToRPM(drl, 4050),
-                new ParallelCommandGroup(
-                        new NewSpinUpToRPM(drl, 4050), new AutoConveyor(conveyor, -0.9, -0.9))
-                    .withTimeout(0.7),
-                new ParallelCommandGroup(
-                        new AutoIntake(intake, 0.9), new AutoDrive(drive, 0.675, -0.275))
-                    .withTimeout(2),
-                new ParallelCommandGroup(new AutoIntake(intake, 0.9), new AutoDrive(drive, 0.6, 0))
-                    .withTimeout(2.5),
-                new AutoDrive(drive, -0.75, 0.4),
-                new NewSpinUpToRPM(drl, 4050),
-                new ParallelCommandGroup(
-                    new NewSpinUpToRPM(drl, 4050), new AutoConveyor(conveyor, -0.9, -0.9)))));
+            new AutoIntake(intake, 0.5).withTimeout(0.2),
+            new ParallelCommandGroup(
+                new AutoIntake(intake, Constants.intakePercent),
+                new SequentialCommandGroup(
+                    new NewSpinUpToRPM(drl, 4050),
+                    new ParallelCommandGroup(
+                        new NewSpinUpToRPM(drl, 4050).withTimeout(3),
+                        new SequentialCommandGroup(
+                            new AutoConveyor(conveyor, -0.5, -0.5).withTimeout(3)),
+                        new RunCommand(() -> {}).withTimeout(0.5)),
+                    new SequentialCommandGroup(
+                        new ParallelCommandGroup(
+                            new NewSpinUpToRPM(drl, 0),
+                            new SequentialCommandGroup(
+                                new AutoDrive(drive, 0.55, -0.21).withTimeout(2.5),
+                                new AutoDrive(drive, 0.675, 0.9).withTimeout(0.48),
+                                new AutoDrive(drive, 0.675, 0).withTimeout(0.7))
+                        )
+                        
+                    )
+                            
+                            
+                            
+                            ))));
   }
 }

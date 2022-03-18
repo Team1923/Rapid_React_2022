@@ -36,10 +36,9 @@ public class ConveyorCommand extends CommandBase {
   public void execute() {
     if (drl.launcherInRange(Constants.launcherRPMHighGoal)
         || drl.launcherInRange(Constants.launcherRPMLowGoal)) {
-      this.conveyor.runConveyor(
-          this.conveyor.Conveyor.getDouble(0), this.conveyor.FeederWheels.getDouble(0));
-    } else {
       this.conveyor.runConveyor(-Constants.conveyorPerent, -Constants.feederWheelsPercent);
+    } else {
+      this.conveyor.runConveyor(0, 0);
     }
   }
 
