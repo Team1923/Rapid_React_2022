@@ -34,7 +34,7 @@ public class NewDRLCommand extends CommandBase {
 
     double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
 
-    this.drl.setLauncherSpeedRPM(vel);
+    this.drl.setLauncherSpeedCTR(vel);
   }
 
   // Called once the command ends or is interrupted.

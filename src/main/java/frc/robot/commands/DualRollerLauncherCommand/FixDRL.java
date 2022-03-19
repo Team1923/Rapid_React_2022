@@ -7,9 +7,7 @@ package frc.robot.commands.DualRollerLauncherCommand;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.utilities.UnitConversion;
@@ -41,9 +39,7 @@ public class FixDRL extends CommandBase {
 
     double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
     this.conveyor.runConveyor(-0.2, -0.2);
-    this.drl.setLauncherSpeedRPM(4050);
-    
-
+    this.drl.setLauncherSpeedCTR(4050);
 
     if (this.drl.launcherInRange(Constants.launcherRPMHighGoal)) {
       this.operator.setRumble(RumbleType.kRightRumble, 1);

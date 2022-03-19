@@ -77,8 +77,13 @@ public class DualRollerLauncher extends SubsystemBase {
     launcherMotorB.setInverted(InvertType.OpposeMaster);
   }
 
+    public void setLauncherSpeedRPM(double spd) {
+      spd = UnitConversion.nativeUnitstoRPM(spd);
+      setLauncherSpeedCTR(spd);
+    }
+
   /* Used to set for both auto and teleop.*/
-  public void setLauncherSpeedRPM(double spd) {
+  public void setLauncherSpeedCTR(double spd) {
     launcherMotorA.set(TalonFXControlMode.Velocity, spd);
     wheelTargetRPM = spd;
     updateRPM();

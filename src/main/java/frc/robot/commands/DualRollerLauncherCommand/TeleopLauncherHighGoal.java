@@ -35,7 +35,7 @@ public class TeleopLauncherHighGoal extends CommandBase {
   public void execute() {
 
     double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
-    this.drl.setLauncherSpeedRPM(vel);
+    this.drl.setLauncherSpeedCTR(vel);
 
     if (this.drl.launcherInRange(Constants.launcherRPMHighGoal)) {
       this.operator.setRumble(RumbleType.kRightRumble, 1);

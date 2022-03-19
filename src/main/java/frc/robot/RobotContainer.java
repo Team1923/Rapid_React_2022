@@ -28,7 +28,6 @@ import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.commands.DualRollerLauncherCommand.FixDRL;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
@@ -85,7 +84,8 @@ public class RobotContainer {
   public static MirroredLow2BallAuto mirroredLow2BallAuto =
       new MirroredLow2BallAuto(intake, drlSubsystem, drive, conveyor);
 
-  public static ThreeBallAuto threeBallAuto = new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+  public static ThreeBallAuto threeBallAuto =
+      new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
 
   public static Test test = new Test(intake, drive, conveyor);
 
@@ -114,8 +114,6 @@ public class RobotContainer {
 
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
         .toggleWhenPressed(new TeleopLauncherHighGoal(drlSubsystem, operator));
-
-
 
     /* new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     .toggleWhenPressed(new PerpetualCommand(new LaunchOneBallHigh(drlSubsystem, conveyor)));*/

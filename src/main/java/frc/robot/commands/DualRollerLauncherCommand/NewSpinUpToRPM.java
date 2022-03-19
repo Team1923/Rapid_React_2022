@@ -27,7 +27,7 @@ public class NewSpinUpToRPM extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drl.setLauncherSpeedRPM(UnitConversion.RPMtoNativeUnits(RPM));
+    this.drl.setLauncherSpeedCTR(UnitConversion.RPMtoNativeUnits(RPM));
   }
 
   // Called once the command ends or is interrupted.

@@ -36,7 +36,7 @@ public class TeleopLauncherLowGoal extends CommandBase {
 
     double vel = UnitConversion.RPMtoNativeUnits(Constants.launcherRPMLowGoal);
 
-    this.drl.setLauncherSpeedRPM(vel);
+    this.drl.setLauncherSpeedCTR(vel);
   }
 
   // Called once the command ends or is interrupted.
