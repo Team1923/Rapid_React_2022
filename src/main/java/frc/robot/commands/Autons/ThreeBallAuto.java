@@ -39,21 +39,33 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                     new ParallelCommandGroup(
                         new NewSpinUpToRPM(drl, 4050).withTimeout(3),
                         new SequentialCommandGroup(
-                            new AutoConveyor(conveyor, -0.5, -0.5).withTimeout(3)),
+                            new AutoConveyor(conveyor, -0.5, -0.5).withTimeout(1.5)),
                         new RunCommand(() -> {}).withTimeout(0.5)),
                     new SequentialCommandGroup(
                         new ParallelCommandGroup(
                             new NewSpinUpToRPM(drl, 0),
                             new SequentialCommandGroup(
-                                new AutoDrive(drive, 0.55, -0.21).withTimeout(2.5),
+                                new AutoDrive(drive, 0.55, -0.23).withTimeout(2.5),
                                 new AutoDrive(drive, 0.675, 0.9).withTimeout(0.48),
-                                new AutoDrive(drive, 0.675, 0).withTimeout(0.7))
-                        )
+                                new RunCommand(() -> {}).withTimeout(0.1),
+                                new AutoDrive(drive, 0.675, -.08).withTimeout(1.5), 
+                                new AutoDrive(drive, -.675, 0).withTimeout(0.9), 
+                                new RunCommand(() -> {}).withTimeout(0.2),
+                                new AutoDrive(drive, -.675, -.9).withTimeout(0.44),
+                                new AutoDrive(drive, -.675, 0).withTimeout(2))
+                        ), 
+                        new ParallelCommandGroup(
+                            new NewSpinUpToRPM(drl, Constants.launcherRPMLowGoal),
+                            new SequentialCommandGroup(
+                                new RunCommand(() -> {}).withTimeout(0.1),
+                                new AutoConveyor(conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent).withTimeout(10)
+
+                            )       
                         
                     )
                             
                             
                             
-                            ))));
+                            )))));
   }
 }

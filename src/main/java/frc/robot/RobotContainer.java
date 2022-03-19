@@ -22,11 +22,13 @@ import frc.robot.commands.Autons.MirroredLow2BallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
+import frc.robot.commands.Autons.Test;
 import frc.robot.commands.Autons.ThreeBallAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
+import frc.robot.commands.DualRollerLauncherCommand.FixDRL;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
@@ -85,6 +87,8 @@ public class RobotContainer {
 
   public static ThreeBallAuto threeBallAuto = new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
 
+  public static Test test = new Test(intake, drive, conveyor);
+
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
   public RobotContainer() {
@@ -110,6 +114,8 @@ public class RobotContainer {
 
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
         .toggleWhenPressed(new TeleopLauncherHighGoal(drlSubsystem, operator));
+
+
 
     /* new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     .toggleWhenPressed(new PerpetualCommand(new LaunchOneBallHigh(drlSubsystem, conveyor)));*/
@@ -155,6 +161,7 @@ public class RobotContainer {
     chooser.addOption("MIRRORED LOW 2 ball auto", mirroredLow2BallAuto);
     chooser.addOption("4 ball auto", fourballAuto);
     chooser.addOption("3 ball auto", threeBallAuto);
+    chooser.addOption("Test Turn", test);
     auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
