@@ -37,9 +37,9 @@ public class FixDRL extends CommandBase {
   @Override
   public void execute() {
 
-    double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
+    //double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
     this.conveyor.runConveyor(-0.2, -0.2);
-    this.drl.setLauncherSpeedCTR(4050);
+    this.drl.setLauncherSpeedCTR(UnitConversion.RPMtoNativeUnits((Constants.launcherRPMHighGoal)));
 
     if (this.drl.launcherInRange(Constants.launcherRPMHighGoal)) {
       this.operator.setRumble(RumbleType.kRightRumble, 1);
