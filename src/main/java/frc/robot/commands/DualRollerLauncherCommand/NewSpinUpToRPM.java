@@ -6,7 +6,6 @@ package frc.robot.commands.DualRollerLauncherCommand;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualRollerLauncher;
-import frc.robot.utilities.UnitConversion;
 
 public class NewSpinUpToRPM extends CommandBase {
 
@@ -27,7 +26,7 @@ public class NewSpinUpToRPM extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drl.setLauncherSpeedCTR(UnitConversion.RPMtoNativeUnits(this.rpm));
+    this.drl.setLauncherSpeedRPM(this.rpm);
   }
 
   // Called once the command ends or is interrupted.

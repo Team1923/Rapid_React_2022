@@ -15,7 +15,6 @@ import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
-import frc.robot.utilities.UnitConversion;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -35,7 +34,6 @@ public class LaunchOneBallHigh extends SequentialCommandGroup {
     this.drl = drl;
     this.conveyor = conveyor;
     addRequirements(this.drl, this.conveyor);
-    double vel = UnitConversion.RPMtoNativeUnits(Constants.launcherRPMHighGoal);
 
     addCommands(
         /* Before at RPM. */
