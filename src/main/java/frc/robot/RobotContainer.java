@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
-import frc.robot.commands.Autons.FourBallAuto;
+import frc.robot.commands.Autons.TrajectoryTesting;
 import frc.robot.commands.Autons.MirroredLow2BallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
@@ -71,7 +71,7 @@ public class RobotContainer {
       new OneBallHighAuto(intake, drive, conveyor, drlSubsystem);
   public static DriveForwardAuto driveForwardAuto = new DriveForwardAuto(intake, drive, conveyor);
 
-  public static FourBallAuto fourballAuto = new FourBallAuto(intake, drlSubsystem, drive, conveyor);
+  public static TrajectoryTesting fourballAuto = new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);
 
   public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
       new AlternativeTwoBallHighAuto(intake, drlSubsystem, drive, conveyor);

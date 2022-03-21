@@ -42,7 +42,7 @@ public class LaunchOneBallHigh extends SequentialCommandGroup {
         new PrintCommand("Starting spinup!"),
         new ParallelRaceGroup(
             new NewSpinUpToRPM(
-                this.drl, Constants.launcherRPMHighGoal), // spins us up to our target RPM.
+                this.drl, vel), // spins us up to our target RPM.
             new AutoConveyor(
                 this.conveyor,
                 -Constants.conveyorPerent,
@@ -53,7 +53,7 @@ public class LaunchOneBallHigh extends SequentialCommandGroup {
         new ParallelRaceGroup(
             new RunCommand(
                 () -> {
-                  this.drl.setLauncherSpeedRPM(Constants.launcherRPMHighGoal);
+                  this.drl.setLauncherSpeedRPM(vel);
                 }), // sets it to constantly run our target RPM until then.
             new AutoConveyor(
                 this.conveyor,
@@ -71,7 +71,7 @@ public class LaunchOneBallHigh extends SequentialCommandGroup {
         new ParallelRaceGroup(
             new RunCommand(
                 () -> {
-                  this.drl.setLauncherSpeedRPM(Constants.launcherRPMHighGoal);
+                  this.drl.setLauncherSpeedRPM(vel);
                 }), // keeps setting the target.
             new AutoConveyor(
                 this.conveyor,
@@ -80,8 +80,7 @@ public class LaunchOneBallHigh extends SequentialCommandGroup {
             new WaitUntilCommand(
                 () ->
                     (!this.drl.launcherInRange(
-                        Constants
-                            .launcherRPMHighGoal))) // waits for the RPM dip / not in the normal
+                        vel))) // waits for the RPM dip / not in the normal
             // range to end.
             ),
         new PrintCommand("Shot Made, done!"));

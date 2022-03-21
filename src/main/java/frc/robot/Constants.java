@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 public final class Constants {
 
   // Controller Ports
@@ -62,4 +64,26 @@ public final class Constants {
   public static final double elevatorMaxRevs = 32;
   public static final SupplyCurrentLimitConfiguration elevatorCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
+
+  /*constants for autonomous period*/
+
+  //feedforward gains
+  public static final double kS = 0;
+  public static final double kV = 0;
+  public static final double kA = 0;
+
+  //p term
+  public static final double kP = 0;
+
+  //create differential drive
+  public static final double kTrack = 0;
+  public static final DifferentialDriveKinematics kDrive = new DifferentialDriveKinematics(kTrack);
+
+  //max vel/accel
+  public static final double kMaxVel = 0;
+  public static final double kMaxAccel = 0;
+
+  //ramsete parameters(these are WPILib suggested, so we will have to use a unit conversion to meters)
+  public static final double KRamseteB = 2;
+  public static final double kRamseteZeta = 0.7;
 }
