@@ -71,7 +71,7 @@ public class TrajectoryTesting extends SequentialCommandGroup {
   catch(IOException ex){
     System.out.println("Unable to open trajectory");
   }
-//need to fix
+//need to fix this command
   RamseteCommand ramseteCommand = 
     new RamseteCommand(
       pickUp, 
