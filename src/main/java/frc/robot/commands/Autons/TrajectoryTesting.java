@@ -6,10 +6,15 @@ package frc.robot.commands.Autons;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
@@ -63,6 +68,7 @@ public class TrajectoryTesting extends SequentialCommandGroup {
   //get the actual trajectory from PathWeaver
   String file = "/PathWeaver/Paths/PickUp3and4.path";
   Trajectory pickUp = new Trajectory();
+{
 
   try{
     Path path = Filesystem.getDeployDirectory().toPath().resolve(file); 
@@ -72,18 +78,51 @@ public class TrajectoryTesting extends SequentialCommandGroup {
     System.out.println("Unable to open trajectory");
   }
 //need to fix this command
-  RamseteCommand ramseteCommand = 
-    new RamseteCommand(
-      pickUp, 
-     ()-> {},  //pose
-     new RamseteController(Constants.KRamseteB, Constants.kRamseteZeta), 
-     new SimpleMotorFeedforward(Constants.kS, Constants.kV, Constants.kDrive), 
-     Constants.kDrive,
-     ()-> {}, 
-     new PIDController(Constants.kP, 0, 0), 
-     new PIDController(Constants.kP, 0, 0),
-      () ->{},
-      drive);
+
+
+    RamseteController controller = new RamseteController(Constants.KRamseteB, Constants.kRamseteZeta);
+
+      Supplier<Pose2d> pose = new Supplier<Pose2d>() {
+
+        @Override
+        public Pose2d get() {
+          // TODO Auto-generated method stub
+          return null;
+        }
+        
+      };
+
+      SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.kS, Constants.kV);
+
+      DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(0.55); //Track width needs to be updated
+
+
+      Supplier<DifferentialDriveWheelSpeeds> wheelSpeeds = new Supplier<DifferentialDriveWheelSpeeds>() {
+
+        @Override
+        public DifferentialDriveWheelSpeeds get() {
+          // TODO Auto-generated method stub
+          return null;
+        }
+        
+      };
+      
+      PIDController leftController = new PIDController(Constants.kP, 0, 0);
+      PIDController rightController = new PIDController(Constants.kP, 0, 0);
+
+      BiConsumer<Double, Double> outputVolts = new BiConsumer<Double,Double>() {
+
+        @Override
+        public void accept(Double t, Double u) {
+          // TODO Auto-generated method stub
+          
+        }
+        
+      };
+
+
+      RamseteCommand ramseteCommand = new RamseteCommand(pickUp, pose, controller, feedforward, kinematics, wheelSpeeds, leftController, rightController, outputVolts, drive);
 }
 }
+
 
