@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -44,6 +45,8 @@ public class IntakeSubsystem extends SubsystemBase {
     // this will help de-noise our CAN bus ideally.
     intakeMotor.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 255);
     intakeMotor.setStatusFramePeriod(StatusFrame.Status_1_General, 255);
+
+    intakeMotor.setNeutralMode(NeutralMode.Brake);
 
     intakeValue = tuningTab.add("Intake Percentout", Constants.intakePercent).getEntry();
   }

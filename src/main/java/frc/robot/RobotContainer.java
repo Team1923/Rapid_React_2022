@@ -19,6 +19,7 @@ import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
 import frc.robot.commands.Autons.FourBallAuto;
 import frc.robot.commands.Autons.MirroredLow2BallAuto;
+import frc.robot.commands.Autons.MirroredThreeBallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
@@ -69,7 +70,13 @@ public class RobotContainer {
   public static OneBallHighAuto oneBallHighAuto =
       new OneBallHighAuto(intake, drive, conveyor, drlSubsystem);
   public static DriveForwardAuto driveForwardAuto = new DriveForwardAuto(intake, drive, conveyor);
-
+   
+  
+  
+  
+  public static MirroredThreeBallAuto threeballMirror = new MirroredThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+  
+  
   public static FourBallAuto fourballAuto = new FourBallAuto(intake, drlSubsystem, drive, conveyor);
 
   public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
@@ -160,6 +167,7 @@ public class RobotContainer {
     chooser.addOption("4 ball auto", fourballAuto);
     chooser.addOption("3 ball auto", threeBallAuto);
     chooser.addOption("Test Turn", test);
+    chooser.addOption("Mirrored 3 ball auto", threeballMirror);
     auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
