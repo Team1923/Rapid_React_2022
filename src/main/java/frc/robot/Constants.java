@@ -44,7 +44,7 @@ public final class Constants {
   public static final double intakePercent = 0.9;
 
   // conveyor speeds.
-  public static final double conveyorPerent = 0.3;
+  public static final double conveyorPerent = 0.9;
   public static final double feederWheelsPercent = 0.3;
 
   // to be changed, RPM targets for high and low shots at fender.

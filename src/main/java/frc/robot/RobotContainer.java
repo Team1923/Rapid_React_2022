@@ -14,6 +14,9 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
@@ -27,10 +30,12 @@ import frc.robot.commands.Autons.Test;
 import frc.robot.commands.Autons.ThreeBallAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
+import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -99,7 +104,7 @@ public class RobotContainer {
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
   public RobotContainer() {
-    LiveWindow.disableAllTelemetry();
+    //LiveWindow.disableAllTelemetry();
 
     // intake in (CROSS)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
@@ -114,13 +119,13 @@ public class RobotContainer {
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
         .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
 
-    new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));
+    /*new JoystickButton(operator, PS4Controller.Button.kCircle.value)
+        .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));*/
 
     // shoot ball High Goal (TRIANGLE)
 
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new TeleopLauncherHighGoal(drlSubsystem, operator));
+        .toggleWhenPressed(new BumpFeeder(drlSubsystem, conveyor, operator));
 
     /* new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     .toggleWhenPressed(new PerpetualCommand(new LaunchOneBallHigh(drlSubsystem, conveyor)));*/
@@ -175,3 +180,4 @@ public class RobotContainer {
     return chooser.getSelected();
   }
 }
+
