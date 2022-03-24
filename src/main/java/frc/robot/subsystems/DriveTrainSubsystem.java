@@ -4,6 +4,11 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.PigeonIMU;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -29,7 +34,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public DifferentialDrive kDrive = new DifferentialDrive(l1, r1);
 
+  private DifferentialDriveOdometry m_odometry;
+  public static PigeonIMU gyro = new PigeonIMU(Constants.pigeon);
+
+  private final double kEncoderTick2Meter = 1 / 2048 * 9.1 * Math.PI * 1 / 39.37;
+
   public DriveTrainSubsystem() {
+
+    m_odometry = new DifferentialDriveOdometry(getYaw());
+    resetEncoders();
+
     r1.configFactoryDefault();
     r2.configFactoryDefault();
     r3.configFactoryDefault();
@@ -67,7 +81,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     driveLVolts =
         driveLayout
-            .add("LVolts", 0)
+            .add("LrfggdfgVolts", 0)
             .withWidget(BuiltInWidgets.kNumberBar)
             .withSize(2, 1)
             .withPosition(0, 0)
@@ -94,5 +108,38 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     driveLVolts.setDouble(l1.getMotorOutputVoltage());
     driveRVolts.setDouble(r1.getMotorOutputVoltage());
+  }
+
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeed() {
+    return new DifferentialDriveWheelSpeeds(
+        l1.getSelectedSensorVelocity() * kEncoderTick2Meter,
+        r2.getSelectedSensorVelocity() * kEncoderTick2Meter);
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    l1.setVoltage(leftVolts);
+    r1.setVoltage(rightVolts);
+    kDrive.feed();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    m_odometry.resetPosition(pose, getYaw());
+  }
+
+  public void resetEncoders() {
+    l1.getSensorCollection().setIntegratedSensorPosition(0, 10);
+    l2.getSensorCollection().setIntegratedSensorPosition(0, 10);
+  }
+
+  // Converting rotation from pigeon to Rotation2d
+  public Rotation2d getYaw() {
+    double[] ypr = new double[3];
+    gyro.getYawPitchRoll(ypr);
+    return (false) ? Rotation2d.fromDegrees(360 - ypr[0]) : Rotation2d.fromDegrees(ypr[0]);
   }
 }

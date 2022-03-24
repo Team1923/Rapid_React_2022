@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class Constants {
@@ -67,23 +66,27 @@ public final class Constants {
 
   /*constants for autonomous period*/
 
-  //feedforward gains
-  public static final double kS = 0;
-  public static final double kV = 0;
-  public static final double kA = 0;
+  // feedforward gains
+  public static final double kS = 0.76615;
+  public static final double kV = 2.6529;
+  public static final double kA = 0.16605;
 
-  //p term
-  public static final double kP = 0;
+  // p term
+  public static final double kP = 2.8471;
 
-  //create differential drive
-  public static final double kTrack = 0;
+  // create differential drive
+  public static final double kTrack = 0.73111;
   public static final DifferentialDriveKinematics kDrive = new DifferentialDriveKinematics(kTrack);
 
-  //max vel/accel
-  public static final double kMaxVel = 0;
-  public static final double kMaxAccel = 0;
+  // max vel/accel
+  public static final double kMaxVel = 6.6;
+  public static final double kMaxAccel = 57.64;
 
-  //ramsete parameters(these are WPILib suggested, so we will have to use a unit conversion to meters)
+  // ramsete parameters(these are WPILib suggested, so we will have to use a unit conversion to
+  // meters)
   public static final double KRamseteB = 2;
   public static final double kRamseteZeta = 0.7;
+
+  public static final DifferentialDriveKinematics kDriveKinematics =
+      new DifferentialDriveKinematics(kTrack);
 }
