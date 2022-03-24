@@ -1,9 +1,19 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "Talon FX[1]": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX[21]": {
         "header": {
           "open": false
+        }
+      },
+      "Talon FX[5]": {
+        "header": {
+          "open": true
         }
       }
     }

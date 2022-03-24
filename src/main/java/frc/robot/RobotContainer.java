@@ -187,7 +187,7 @@ public class RobotContainer {
     chooser.addOption("3 ball auto", threeBallAuto);
     chooser.addOption("Test Turn", test);
     auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
-    //chooser.addOption("PathWeaver Trajactory Testing", trajectoryTesting);
+    
   }
 
   public Command getAutonomousCommand() {
@@ -209,19 +209,19 @@ public class RobotContainer {
             .setKinematics(Constants.kDriveKinematics)
             .addConstraint(autoVoltageConstraint);
 
-    Trajectory exampleTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(0.2, 0), new Translation2d(0.5, 0)),
-            new Pose2d(0.7, 0, new Rotation2d(30)),
-            config);
+    // Trajectory exampleTrajectory =
+    //     TrajectoryGenerator.generateTrajectory(
+    //         new Pose2d(0, 0, new Rotation2d(0)),
+    //         List.of(new Translation2d(0.2, 0), new Translation2d(0.5, 0)),
+    //         new Pose2d(0.7, 0, new Rotation2d(30)),
+    //         config);
 
     RamseteCommand ramseteCommand =
         new RamseteCommand(
             trajectory, // the path
-            drive::getPose, // get the method from the subsystem (for Pose2d)
+            drive::getPose, // get the method from the subsystem 
             new RamseteController(Constants.KRamseteB, Constants.kRamseteZeta),
-            new SimpleMotorFeedforward(Constants.kS, Constants.kA, Constants.kV),
+            new SimpleMotorFeedforward(Constants.kS, Constants.kV, Constants.kA),
             Constants.kDriveKinematics,
             drive::getWheelSpeed,
             new PIDController(Constants.kP, 0, 0),
@@ -229,7 +229,7 @@ public class RobotContainer {
             drive::tankDriveVolts,
             drive);
 
-    drive.resetOdometry(exampleTrajectory.getInitialPose());
+   // drive.resetOdometry(exampleTrajectory.getInitialPose());
 
     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
   }
