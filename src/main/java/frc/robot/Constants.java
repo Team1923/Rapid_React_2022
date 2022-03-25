@@ -79,8 +79,8 @@ public final class Constants {
   public static final DifferentialDriveKinematics kDrive = new DifferentialDriveKinematics(kTrack);
 
   // max vel/accel
-  public static final double kMaxVel = 6.6;
-  public static final double kMaxAccel = 57.64;
+  public static final double kMaxVel = 4;
+  public static final double kMaxAccel = 20;
 
   // ramsete parameters(these are WPILib suggested, so we will have to use a unit conversion to
   // meters)

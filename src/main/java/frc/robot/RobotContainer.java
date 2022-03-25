@@ -87,7 +87,7 @@ public class RobotContainer {
   public static DriveForwardAuto driveForwardAuto = new DriveForwardAuto(intake, drive, conveyor);
 
   /*public static TrajectoryTesting fourballAuto =
-      new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);*/
+  new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);*/
 
   public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
       new AlternativeTwoBallHighAuto(intake, drlSubsystem, drive, conveyor);
@@ -107,11 +107,11 @@ public class RobotContainer {
   public static Test test = new Test(intake, drive, conveyor);
 
   /*public static TrajectoryTesting trajectoryTesting =
-      new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);*/
+  new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);*/
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
-  String trajectoryJSON = "paths/StraightPath.wpilib.json";
+  String trajectoryJSON = "paths/output/Get1Ball.wpilib.json";
   Trajectory trajectory = new Trajectory();
 
   public RobotContainer() {
@@ -187,7 +187,6 @@ public class RobotContainer {
     chooser.addOption("3 ball auto", threeBallAuto);
     chooser.addOption("Test Turn", test);
     auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
-    
   }
 
   public Command getAutonomousCommand() {
@@ -219,7 +218,7 @@ public class RobotContainer {
     RamseteCommand ramseteCommand =
         new RamseteCommand(
             trajectory, // the path
-            drive::getPose, // get the method from the subsystem 
+            drive::getPose, // get the method from the subsystem
             new RamseteController(Constants.KRamseteB, Constants.kRamseteZeta),
             new SimpleMotorFeedforward(Constants.kS, Constants.kV, Constants.kA),
             Constants.kDriveKinematics,
@@ -229,7 +228,7 @@ public class RobotContainer {
             drive::tankDriveVolts,
             drive);
 
-   // drive.resetOdometry(exampleTrajectory.getInitialPose());
+    //drive.resetOdometry(exampleTrajectory.getInitialPose());
 
     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
   }
