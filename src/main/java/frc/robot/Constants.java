@@ -67,20 +67,20 @@ public final class Constants {
   /*constants for autonomous period*/
 
   // feedforward gains
-  public static final double kS = 0.76615;
-  public static final double kV = 2.6529;
-  public static final double kA = 0.16605;
+  public static final double kS = 0.60226;
+  public static final double kV = 0.96628;
+  public static final double kA = 0.11968;
 
   // p term
-  public static final double kP = 2.8471;
+  public static final double kP = 4.17;
 
   // create differential drive
   public static final double kTrack = 0.73111;
   public static final DifferentialDriveKinematics kDrive = new DifferentialDriveKinematics(kTrack);
 
   // max vel/accel
-  public static final double kMaxVel = 4;
-  public static final double kMaxAccel = 20;
+  public static final double kMaxVel = 6.6;
+  public static final double kMaxAccel = 57.14;
 
   // ramsete parameters(these are WPILib suggested, so we will have to use a unit conversion to
   // meters)

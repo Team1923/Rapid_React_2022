@@ -10,10 +10,8 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -53,7 +51,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 
 public class RobotContainer {
 
@@ -111,7 +108,7 @@ public class RobotContainer {
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
-  String trajectoryJSON = "paths/output/Get1Ball.wpilib.json";
+  String trajectoryJSON = "paths/output/NewTestingPath.wpilib.json";
   Trajectory trajectory = new Trajectory();
 
   public RobotContainer() {
@@ -228,7 +225,7 @@ public class RobotContainer {
             drive::tankDriveVolts,
             drive);
 
-    //drive.resetOdometry(exampleTrajectory.getInitialPose());
+    drive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
 
     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
   }

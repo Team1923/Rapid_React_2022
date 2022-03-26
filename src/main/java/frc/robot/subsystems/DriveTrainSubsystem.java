@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utilities.UnitConversion;
 import frc.robot.utilities.can.ctre.status_frame.StatusFrameHelper;
 import java.util.Map;
 
@@ -37,12 +38,20 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private DifferentialDriveOdometry m_odometry;
   public static PigeonIMU gyro = new PigeonIMU(Constants.pigeon);
 
-  private final double kEncoderTick2Meter = 1 / 2048 * 9.1 * Math.PI * 1 / 39.37;
+  private final double kEncoderTick2Meter = (1 / 2048 * 1 / 9.1 * Math.PI * 0.127);
+  
+
+  // getting the necessary conversion factor to convert for velocity
+
+  PigeonIMU.FusionStatus fusionStatus = new PigeonIMU.FusionStatus();
+  PigeonIMU.GeneralStatus generalStatus = new PigeonIMU.GeneralStatus();
 
   public DriveTrainSubsystem() {
 
     m_odometry = new DifferentialDriveOdometry(getYaw());
     resetEncoders();
+
+    gyro.setFusedHeading(0);
 
     r1.configFactoryDefault();
     r2.configFactoryDefault();
@@ -81,7 +90,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     driveLVolts =
         driveLayout
-            .add("LrfggdfgVolts", 0)
+            .add("LVolts", 0)
             .withWidget(BuiltInWidgets.kNumberBar)
             .withSize(2, 1)
             .withPosition(0, 0)
@@ -114,17 +123,37 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
+  public double encodeticks() {
+    return l1.getSelectedSensorPosition();
+  }
+
   public DifferentialDriveWheelSpeeds getWheelSpeed() {
     return new DifferentialDriveWheelSpeeds(
-        l1.getSelectedSensorVelocity() * kEncoderTick2Meter,
-        r2.getSelectedSensorVelocity() * kEncoderTick2Meter);
+      UnitConversion.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(l1.getSelectedSensorVelocity(), 0.127, true, 2048),
+      UnitConversion.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(r1.getSelectedSensorVelocity(), 0.127, true, 2048));
+
+        // l1.getSelectedSensorVelocity() * kEncoderTick2Meter,
+        // r1.getSelectedSensorVelocity() * kEncoderTick2Meter);
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
+    System.out.println("Stopping the auton command");
     l1.setVoltage(leftVolts);
     r1.setVoltage(rightVolts);
+
+    // l1.set(ControlMode.PercentOutput, leftVolts);
+    // r1.set(ControlMode.PercentOutput, rightVolts);
+
+    // l2.set(ControlMode.PercentOutput, leftVolts);
+    // r2.set(ControlMode.PercentOutput, rightVolts);
+
+    // l3.set(ControlMode.PercentOutput, leftVolts);
+    // r3.set(ControlMode.PercentOutput, rightVolts);
+
     kDrive.feed();
   }
+
+  public void tankDriveVelocity(double leftVel, double rightVel) {}
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
@@ -139,7 +168,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
   // Converting rotation from pigeon to Rotation2d
   public Rotation2d getYaw() {
     double[] ypr = new double[3];
-    gyro.getYawPitchRoll(ypr);
-    return (false) ? Rotation2d.fromDegrees(360 - ypr[0]) : Rotation2d.fromDegrees(ypr[0]);
+    // gyro.getYawPitchRoll(ypr);
+
+    gyro.getGeneralStatus(generalStatus);
+    gyro.getRawGyro(ypr);
+    double currentAngle = gyro.getFusedHeading(fusionStatus);
+
+    System.out.println(currentAngle);
+    return (false)
+        ? Rotation2d.fromDegrees(360 - (currentAngle))
+        : Rotation2d.fromDegrees(currentAngle);
   }
 }
