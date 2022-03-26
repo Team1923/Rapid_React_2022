@@ -4,12 +4,12 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.math.controller.PIDController;
+
 import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
@@ -19,18 +19,18 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
+//import frc.robot.commands.Autons.FourBallAuto;
 import frc.robot.commands.Autons.MirroredLow2BallAuto;
+//import frc.robot.commands.Autons.MirroredThreeBallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
@@ -38,9 +38,8 @@ import frc.robot.commands.Autons.Test;
 import frc.robot.commands.Autons.ThreeBallAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
-import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherHighGoal;
+//import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
@@ -50,10 +49,6 @@ import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
-import java.io.IOException;
-import java.nio.file.Path;
-
-import javax.sql.rowset.spi.TransactionalWriter;
 
 public class RobotContainer {
 
@@ -86,8 +81,10 @@ public class RobotContainer {
       new OneBallHighAuto(intake, drive, conveyor, drlSubsystem);
   public static DriveForwardAuto driveForwardAuto = new DriveForwardAuto(intake, drive, conveyor);
 
-  /*public static TrajectoryTesting fourballAuto =
-  new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);*/
+//   public static MirroredThreeBallAuto threeballMirror =
+//       new MirroredThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+
+//   public static FourBallAuto fourballAuto = new FourBallAuto(intake, drlSubsystem, drive, conveyor);
 
   public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
       new AlternativeTwoBallHighAuto(intake, drlSubsystem, drive, conveyor);
@@ -106,16 +103,14 @@ public class RobotContainer {
 
   public static Test test = new Test(intake, drive, conveyor);
 
-  /*public static TrajectoryTesting trajectoryTesting =
-  new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);*/
-
-//   public SendableChooser<Command> chooser = new SendableChooser<>();
-
+  public SendableChooser<Command> chooser = new SendableChooser<>();
+  
+  //auton Path from PathWeaver
   String trajectoryJSON = "paths/output/NewTestingPath.wpilib.json";
   Trajectory trajectory = new Trajectory();
 
   public RobotContainer() {
-    LiveWindow.disableAllTelemetry();
+    // LiveWindow.disableAllTelemetry();
 
     // intake in (CROSS)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
@@ -126,20 +121,17 @@ public class RobotContainer {
     new JoystickButton(operator, PS4Controller.Button.kSquare.value)
         .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
 
-    // intake, feeder, conveyor wheels IN (CIRCLE)
+    // intake, feeder, conveyor wheels IN (depCIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
         .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
 
-    new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));
+    /*new JoystickButton(operator, PS4Controller.Button.kCircle.value)
+    .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));*/
 
     // shoot ball High Goal (TRIANGLE)
 
-    new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new TeleopLauncherHighGoal(drlSubsystem, operator));
-
-    new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new ConveyorCommand(conveyor, drlSubsystem));
+    // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
+    //     .toggleWhenPressed(new BumpFeeder(drlSubsystem, conveyor, operator));
 
     /* new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     .toggleWhenPressed(new PerpetualCommand(new LaunchOneBallHigh(drlSubsystem, conveyor)));*/
@@ -171,72 +163,33 @@ public class RobotContainer {
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
-    double[] ypr = new double[3];
-    pigeon.getYawPitchRoll(ypr);
-    YAWangle.setDouble(ypr[0]);
-
-    // chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
-    // chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
-    // chooser.addOption("Drive Forward Auto", driveForwardAuto);
-    // chooser.addOption("OneBallHighAuto", oneBallHighAuto);
-    // chooser.addOption("Death Trap 2 ball", alternativeTwoBallHighAuto);
-    // chooser.addOption("Mirrored 2 Ball Auto", mirroredTwoBallHighAuto);
-    // chooser.addOption("Low 2 Ball Auto (NOT MIRRORED)", twoBallLowAuto);
-    // chooser.addOption("MIRRORED LOW 2 ball auto", mirroredLow2BallAuto);
-    // /*chooser.addOption("4 ball auto", fourballAuto);*/
-    // chooser.addOption("3 ball auto", threeBallAuto);
-    // chooser.addOption("Test Turn", test);
-    // auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
   public Command getAutonomousCommand() {
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory" + trajectoryJSON, ex.getStackTrace());
+    try{
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    }
+    catch(IOException ex){
+        DriverStation.reportError("not opening", ex.getStackTrace());
     }
 
-    var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(Constants.kS, Constants.kV, Constants.kA),
-            Constants.kDriveKinematics,
-            10);
+    var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(drive.getFeedForward(), Constants.kDriveKinematics, 12);
 
+    TrajectoryConfig config  = new TrajectoryConfig(Constants.kMaxVel, Constants.kMaxAccel).setKinematics(Constants.kDriveKinematics).addConstraint(autoVoltageConstraint);
 
-    TrajectoryConfig config =
-        new TrajectoryConfig(Constants.kMaxVel, Constants.kMaxAccel)
-            .setKinematics(Constants.kDriveKinematics)
-            .addConstraint(autoVoltageConstraint);
+    RamseteCommand ramseteCommand = 
+    new RamseteCommand(trajectory, 
+    drive::getPose, 
+    new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
+     drive.getFeedForward(), 
+     Constants.kDriveKinematics, 
+     drive::getWheelSpeeds, 
+     drive.getLeftPidController(), 
+     drive.getRightPidController(), 
+     drive::tankDriveVolts, 
+     drive);
 
-    // Trajectory exampleTrajectory =
-    //     TrajectoryGenerator.generateTrajectory(
-    //         new Pose2d(0, 0, new Rotation2d(0)),
-    //         List.of(new Translation2d(0.2, 0), new Translation2d(0.5, 0)),
-    //         new Pose2d(0.7, 0, new Rotation2d(30)),
-    //         config);
-
-    System.out.println("aTIME OF PATH : " + trajectory.getTotalTimeSeconds());
-
-    //drive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
-    
-    RamseteCommand ramseteCommand =
-        new RamseteCommand(
-            trajectory, // the path
-            drive::getPose, // get the method from the subsystem
-            new RamseteController(Constants.KRamseteB, Constants.kRamseteZeta),
-            new SimpleMotorFeedforward(Constants.kS, Constants.kV, Constants.kA),
-            Constants.kDriveKinematics,
-            drive::getWheelSpeed,
-            new PIDController(Constants.kP, 0, 0),
-            new PIDController(Constants.kP, 0, 0),
-            drive::tankDriveVolts,
-            drive);
-
-
-
-     //return ramseteCommand.andThen(() -> System.out.println(drive.encodeticks()));
      return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
-    //return ramseteCommand.andThen(() ->new ParallelCommandGroup(() -> System.out.println(drive.encodeticks()), () -> drive.tankDriveVolts(0, 0)))));
   }
 }

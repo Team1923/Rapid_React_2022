@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class Constants {
@@ -32,6 +33,8 @@ public final class Constants {
   public static final int ConveyorMotor = 13;
   public static final int FeederWheelMotor = 9;
 
+
+
   // Intake ID
   public static final int intakeMotor = 11;
   public static final SupplyCurrentLimitConfiguration intakeCurrentLimit =
@@ -45,7 +48,7 @@ public final class Constants {
   public static final double intakePercent = 0.9;
 
   // conveyor speeds.
-  public static final double conveyorPerent = 0.3;
+  public static final double conveyorPerent = 0.9;
   public static final double feederWheelsPercent = 0.3;
 
   // to be changed, RPM targets for high and low shots at fender.
@@ -64,29 +67,34 @@ public final class Constants {
   public static final SupplyCurrentLimitConfiguration elevatorCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
-  /*constants for autonomous period*/
 
-  // feedforward gains
-  public static final double kS = 0.60226;
-  public static final double kV = 0.96628;
-  public static final double kA = 0.11968;
+  //necessary constants for autonomous
 
-  // p term
-  public static final double kP = 4.27;
+  public static final double kTrackWidthMeters = 0.73111;
+  public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
 
-  // create differential drive
-  public static final double kTrack = 0.73111;
-  public static final DifferentialDriveKinematics kDrive = new DifferentialDriveKinematics(kTrack);
+  //sys-id values
+  public static final double ksVolts = 0.60226;
+  public static final double kvVoltsSecondsPerMeter = 0.96628;
+  public static final double kaVoltSecondsSquaredPerMeter = 0.11968;
+  public static final double kPDriveVel = 4.27;
 
-  // max vel/accel
+  //encoder counts per revolution
+  public static final int oneRevEncodeCount = 2048;
+
+  //wheel info
+  public static final double wheelDiameter = 0.127;
+  public static final double wheelCircumeference = 0.398982267;
+  public static final double kGearReduction = 1/9.1;
+
+  public static final double kEncoderDistancePerMeter = (wheelCircumeference * kGearReduction) / (double)oneRevEncodeCount;
+
+  public static final double kRamseteB = 2;
+  public static final double kRamseteZeta = 0.7;
+
+  //max parameters for movement
   public static final double kMaxVel = 6.6;
   public static final double kMaxAccel = 57.14;
 
-  // ramsete parameters(these are WPILib suggested, so we will have to use a unit conversion to
-  // meters)
-  public static final double KRamseteB = 2;
-  public static final double kRamseteZeta = 0.7;
 
-  public static final DifferentialDriveKinematics kDriveKinematics =
-      new DifferentialDriveKinematics(kTrack);
 }
