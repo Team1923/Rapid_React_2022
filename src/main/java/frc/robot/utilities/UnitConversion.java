@@ -20,7 +20,7 @@ public class UnitConversion {
     return nativeUnits / 2048;
   }
 
-  public static final double convertWPILibTrajectoryUnitsToTalonSRXNativeUnits(
+  public static double convertWPILibTrajectoryUnitsToTalonSRXNativeUnits(
       double metersPerSecond, double wheelDiameter, boolean givenMetric, int ticksPerRevolution) {
     double result = metersPerSecond;
     double circumference = 0;
@@ -37,20 +37,9 @@ public class UnitConversion {
     return result;
   }
 
-  public static final double convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(
-      double talonVelocity, double wheelDiameter, boolean usingMetric, int ticksPerRevolution) {
-    double result = talonVelocity;
-    result = result * 10; // Convert ticks/100ms to ticks/sec
-
-    double circumference = 0;
-    if (usingMetric) {
-      circumference = Math.PI * wheelDiameter;
-    } else {
-      double diameterInMeters = wheelDiameter * 0.3048;
-      circumference = Math.PI * diameterInMeters;
-    }
-    double metersPerTick = circumference / ticksPerRevolution;
-    result = result * metersPerTick;
-    return result;
+  public static double tickSecTomSec(double falconVel){
+    return falconVel * 0.127 * 9.1 * 10.0 / 2048;
   }
+  
+
 }

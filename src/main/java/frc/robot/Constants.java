@@ -72,7 +72,7 @@ public final class Constants {
   public static final double kA = 0.11968;
 
   // p term
-  public static final double kP = 4.17;
+  public static final double kP = 4.27;
 
   // create differential drive
   public static final double kTrack = 0.73111;

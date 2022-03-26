@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
@@ -51,6 +52,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
 import java.io.IOException;
 import java.nio.file.Path;
+
+import javax.sql.rowset.spi.TransactionalWriter;
 
 public class RobotContainer {
 
@@ -106,7 +109,7 @@ public class RobotContainer {
   /*public static TrajectoryTesting trajectoryTesting =
   new TrajectoryTesting(intake, drlSubsystem, drive, conveyor);*/
 
-  public SendableChooser<Command> chooser = new SendableChooser<>();
+//   public SendableChooser<Command> chooser = new SendableChooser<>();
 
   String trajectoryJSON = "paths/output/NewTestingPath.wpilib.json";
   Trajectory trajectory = new Trajectory();
@@ -172,18 +175,18 @@ public class RobotContainer {
     pigeon.getYawPitchRoll(ypr);
     YAWangle.setDouble(ypr[0]);
 
-    chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
-    chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
-    chooser.addOption("Drive Forward Auto", driveForwardAuto);
-    chooser.addOption("OneBallHighAuto", oneBallHighAuto);
-    chooser.addOption("Death Trap 2 ball", alternativeTwoBallHighAuto);
-    chooser.addOption("Mirrored 2 Ball Auto", mirroredTwoBallHighAuto);
-    chooser.addOption("Low 2 Ball Auto (NOT MIRRORED)", twoBallLowAuto);
-    chooser.addOption("MIRRORED LOW 2 ball auto", mirroredLow2BallAuto);
-    /*chooser.addOption("4 ball auto", fourballAuto);*/
-    chooser.addOption("3 ball auto", threeBallAuto);
-    chooser.addOption("Test Turn", test);
-    auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
+    // chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
+    // chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
+    // chooser.addOption("Drive Forward Auto", driveForwardAuto);
+    // chooser.addOption("OneBallHighAuto", oneBallHighAuto);
+    // chooser.addOption("Death Trap 2 ball", alternativeTwoBallHighAuto);
+    // chooser.addOption("Mirrored 2 Ball Auto", mirroredTwoBallHighAuto);
+    // chooser.addOption("Low 2 Ball Auto (NOT MIRRORED)", twoBallLowAuto);
+    // chooser.addOption("MIRRORED LOW 2 ball auto", mirroredLow2BallAuto);
+    // /*chooser.addOption("4 ball auto", fourballAuto);*/
+    // chooser.addOption("3 ball auto", threeBallAuto);
+    // chooser.addOption("Test Turn", test);
+    // auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
   public Command getAutonomousCommand() {
@@ -200,6 +203,7 @@ public class RobotContainer {
             Constants.kDriveKinematics,
             10);
 
+
     TrajectoryConfig config =
         new TrajectoryConfig(Constants.kMaxVel, Constants.kMaxAccel)
             .setKinematics(Constants.kDriveKinematics)
@@ -212,6 +216,10 @@ public class RobotContainer {
     //         new Pose2d(0.7, 0, new Rotation2d(30)),
     //         config);
 
+    System.out.println("aTIME OF PATH : " + trajectory.getTotalTimeSeconds());
+
+    //drive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+    
     RamseteCommand ramseteCommand =
         new RamseteCommand(
             trajectory, // the path
@@ -225,8 +233,10 @@ public class RobotContainer {
             drive::tankDriveVolts,
             drive);
 
-    drive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
 
-    return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
+
+     //return ramseteCommand.andThen(() -> System.out.println(drive.encodeticks()));
+     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
+    //return ramseteCommand.andThen(() ->new ParallelCommandGroup(() -> System.out.println(drive.encodeticks()), () -> drive.tankDriveVolts(0, 0)))));
   }
 }

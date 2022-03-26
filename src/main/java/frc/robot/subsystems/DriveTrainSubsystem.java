@@ -38,8 +38,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private DifferentialDriveOdometry m_odometry;
   public static PigeonIMU gyro = new PigeonIMU(Constants.pigeon);
 
-  private final double kEncoderTick2Meter = (1 / 2048 * 1 / 9.1 * Math.PI * 0.127);
-  
+  private final double kEncoderTick2Meter = 1.0 / 2048 * 1.0 / 9.1 * Math.PI * 0.127;
+
+
 
   // getting the necessary conversion factor to convert for velocity
 
@@ -48,7 +49,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public DriveTrainSubsystem() {
 
-    m_odometry = new DifferentialDriveOdometry(getYaw());
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
     resetEncoders();
 
     gyro.setFusedHeading(0);
@@ -75,9 +76,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l2.follow(l1);
     l3.follow(l1);
 
+    l1.setInverted(InvertType.InvertMotorOutput);
     l2.setInverted(InvertType.FollowMaster);
     l3.setInverted(InvertType.FollowMaster);
-    l1.setInverted(InvertType.InvertMotorOutput);
 
     // this denoises our followers so we don't have to worry about the CANbus being as noisy.
     // if this causes _any_ issues comment it out and we'll be fine.
@@ -117,6 +118,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     driveLVolts.setDouble(l1.getMotorOutputVoltage());
     driveRVolts.setDouble(r1.getMotorOutputVoltage());
+    m_odometry.update(Rotation2d.fromDegrees(getHeading()), getLeftDistance(), getRightDistance());
+    // System.out.println("Speed: " + UnitConversion.tickSecTomSec(r1.getSelectedSensorVelocity()));
+    //System.out.println("Distance: " + getLeftDistance());
   }
 
   public Pose2d getPose() {
@@ -128,12 +132,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeed() {
+    System.out.println("ACTUAL DISTANCE: " + getRightDistance());
     return new DifferentialDriveWheelSpeeds(
-      UnitConversion.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(l1.getSelectedSensorVelocity(), 0.127, true, 2048),
-      UnitConversion.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(r1.getSelectedSensorVelocity(), 0.127, true, 2048));
+        UnitConversion.tickSecTomSec(
+            l1.getSelectedSensorVelocity()),
+        UnitConversion.tickSecTomSec(
+            r1.getSelectedSensorVelocity()));
 
-        // l1.getSelectedSensorVelocity() * kEncoderTick2Meter,
-        // r1.getSelectedSensorVelocity() * kEncoderTick2Meter);
+    // l1.getSelectedSensorVelocity() * kEncoderTick2Meter,
+    // r1.getSelectedSensorVelocity() * kEncoderTick2Meter);
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -141,14 +148,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l1.setVoltage(leftVolts);
     r1.setVoltage(rightVolts);
 
-    // l1.set(ControlMode.PercentOutput, leftVolts);
-    // r1.set(ControlMode.PercentOutput, rightVolts);
-
-    // l2.set(ControlMode.PercentOutput, leftVolts);
-    // r2.set(ControlMode.PercentOutput, rightVolts);
-
-    // l3.set(ControlMode.PercentOutput, leftVolts);
-    // r3.set(ControlMode.PercentOutput, rightVolts);
 
     kDrive.feed();
   }
@@ -157,7 +156,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, getYaw());
+    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
   }
 
   public void resetEncoders() {
@@ -165,18 +164,32 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l2.getSensorCollection().setIntegratedSensorPosition(0, 10);
   }
 
+  public double getLeftDistance(){
+    return 1.0 * l1.getSelectedSensorPosition() * kEncoderTick2Meter;
+
+    //return 1.0 *l1.getSelectedSensorPosition() * (0.1257* Math.PI) * 9.1 / 2048;
+  }
+
+  public double getRightDistance(){
+    return 1.0 * r1.getSelectedSensorPosition() * kEncoderTick2Meter;
+  }
+
   // Converting rotation from pigeon to Rotation2d
-  public Rotation2d getYaw() {
-    double[] ypr = new double[3];
-    // gyro.getYawPitchRoll(ypr);
+  // public Rotation2d getYaw() {
+  //   double[] ypr = new double[3];
+  //   // gyro.getYawPitchRoll(ypr);
 
-    gyro.getGeneralStatus(generalStatus);
-    gyro.getRawGyro(ypr);
-    double currentAngle = gyro.getFusedHeading(fusionStatus);
+  //   gyro.getGeneralStatus(generalStatus);
+  //   gyro.getRawGyro(ypr);
+  //   double currentAngle = gyro.getFusedHeading(fusionStatus);
 
-    System.out.println(currentAngle);
-    return (false)
-        ? Rotation2d.fromDegrees(360 - (currentAngle))
-        : Rotation2d.fromDegrees(currentAngle);
+  //   System.out.println(currentAngle);
+  //   return (false)
+  //       ? Rotation2d.fromDegrees(360 - (currentAngle))
+  //       : Rotation2d.fromDegrees(currentAngle);
+  // }
+
+  public double getHeading(){
+    return Math.IEEEremainder(gyro.getFusedHeading(), 360) * (true ? -1.0 : 1.0);
   }
 }
