@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.UnitConversion;
+import frc.robot.utilities.Servo.LinearServo;
+
 import java.util.Map;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -26,6 +28,8 @@ public class ElevatorSubsystem extends SubsystemBase {
   public WPI_TalonFX leftMotor = new WPI_TalonFX(Constants.leftClimberMotor);
 
   private WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
+
+  private LinearServo servo = new LinearServo(0, 50, 32);
 
   // tuning tab setup
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
@@ -85,12 +89,17 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void runElevator(double leftSpeed, double rightSpeed) {
+
     if (rightSpeed > 0.1) {
       leftMotor.set(ControlMode.PercentOutput, -.5 * rightSpeed);
     }
     if (leftSpeed > 0.1) {
       leftMotor.set(ControlMode.PercentOutput, 0.8 * leftSpeed);
     }
+  }
+
+  public void runServo(double setpoint){
+    servo.setPosition(setpoint);
   }
 
   public void setZero() {

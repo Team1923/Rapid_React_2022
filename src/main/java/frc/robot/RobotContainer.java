@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
@@ -108,6 +109,20 @@ public class RobotContainer {
     // intake, feeder, conveyor wheels IN (CIRCLE)
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
         .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
+
+
+
+        //Servo Code
+        new JoystickButton(driver, XboxController.Button.kA.value)
+        .whileHeld(
+            new RunCommand(() -> {elevator.runServo(50);})
+                );
+
+        new JoystickButton(driver, XboxController.Button.kB.value).whileHeld(
+            new RunCommand(() -> {elevator.runServo(0);})
+        );
+
+            
 
     /*new JoystickButton(operator, PS4Controller.Button.kCircle.value)
     .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));*/
