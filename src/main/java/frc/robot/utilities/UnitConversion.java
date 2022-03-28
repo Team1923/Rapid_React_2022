@@ -37,9 +37,7 @@ public class UnitConversion {
     return result;
   }
 
-  public static double tickSecTomSec(double falconVel){
+  public static double tickSecTomSec(double falconVel) {
     return falconVel * 0.127 * 9.1 * 10.0 / 2048;
   }
-  
-
 }

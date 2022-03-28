@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class Constants {
@@ -32,8 +31,6 @@ public final class Constants {
   // Conveyor IDs
   public static final int ConveyorMotor = 13;
   public static final int FeederWheelMotor = 9;
-
-
 
   // Intake ID
   public static final int intakeMotor = 11;
@@ -67,34 +64,33 @@ public final class Constants {
   public static final SupplyCurrentLimitConfiguration elevatorCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 
-
-  //necessary constants for autonomous
+  // necessary constants for autonomous
 
   public static final double kTrackWidthMeters = 0.73111;
-  public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
+  public static final DifferentialDriveKinematics kDriveKinematics =
+      new DifferentialDriveKinematics(kTrackWidthMeters);
 
-  //sys-id values
+  // sys-id values
   public static final double ksVolts = 0.60226;
   public static final double kvVoltsSecondsPerMeter = 0.96628;
   public static final double kaVoltSecondsSquaredPerMeter = 0.11968;
-  public static final double kPDriveVel = 4.27;
+  public static final double kPDriveVel = 1.1;
 
-  //encoder counts per revolution
+  // encoder counts per revolution
   public static final int oneRevEncodeCount = 2048;
 
-  //wheel info
+  // wheel info
   public static final double wheelDiameter = 0.127;
   public static final double wheelCircumeference = 0.398982267;
-  public static final double kGearReduction = 1/9.1;
+  public static final double kGearReduction = 1 / 9.1;
 
-  public static final double kEncoderDistancePerMeter = (wheelCircumeference * kGearReduction) / (double)oneRevEncodeCount;
+  public static final double kEncoderDistancePerMeter =
+      (wheelCircumeference * kGearReduction) / (double) oneRevEncodeCount;
 
   public static final double kRamseteB = 2;
   public static final double kRamseteZeta = 0.7;
 
-  //max parameters for movement
+  // max parameters for movement
   public static final double kMaxVel = 6.6;
   public static final double kMaxAccel = 57.14;
-
-
 }

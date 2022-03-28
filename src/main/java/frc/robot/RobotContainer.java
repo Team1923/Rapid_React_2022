@@ -4,12 +4,9 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import com.ctre.phoenix.sensors.PigeonIMU;
-
 import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
@@ -28,9 +25,9 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
-//import frc.robot.commands.Autons.FourBallAuto;
+// import frc.robot.commands.Autons.FourBallAuto;
 import frc.robot.commands.Autons.MirroredLow2BallAuto;
-//import frc.robot.commands.Autons.MirroredThreeBallAuto;
+// import frc.robot.commands.Autons.MirroredThreeBallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
@@ -39,7 +36,7 @@ import frc.robot.commands.Autons.ThreeBallAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-//import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
+// import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
@@ -49,6 +46,8 @@ import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
+import java.io.IOException;
+import java.nio.file.Path;
 
 public class RobotContainer {
 
@@ -81,10 +80,11 @@ public class RobotContainer {
       new OneBallHighAuto(intake, drive, conveyor, drlSubsystem);
   public static DriveForwardAuto driveForwardAuto = new DriveForwardAuto(intake, drive, conveyor);
 
-//   public static MirroredThreeBallAuto threeballMirror =
-//       new MirroredThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+  //   public static MirroredThreeBallAuto threeballMirror =
+  //       new MirroredThreeBallAuto(intake, drlSubsystem, drive, conveyor);
 
-//   public static FourBallAuto fourballAuto = new FourBallAuto(intake, drlSubsystem, drive, conveyor);
+  //   public static FourBallAuto fourballAuto = new FourBallAuto(intake, drlSubsystem, drive,
+  // conveyor);
 
   public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
       new AlternativeTwoBallHighAuto(intake, drlSubsystem, drive, conveyor);
@@ -104,10 +104,8 @@ public class RobotContainer {
   public static Test test = new Test(intake, drive, conveyor);
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
-  
-  //auton Path from PathWeaver
-  String trajectoryJSON = "paths/output/NewTestingPath.wpilib.json";
-  Trajectory trajectory = new Trajectory();
+
+
 
   public RobotContainer() {
     // LiveWindow.disableAllTelemetry();
@@ -162,34 +160,49 @@ public class RobotContainer {
             0.1,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
-
   }
 
+
+    // auton Path from PathWeaver
+    String trajectoryJSON = "paths/Testing.Path.wpilib.json";
+    Trajectory trajectory = new Trajectory();
   public Command getAutonomousCommand() {
-    try{
-        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("not opening", ex.getStackTrace());
     }
-    catch(IOException ex){
-        DriverStation.reportError("not opening", ex.getStackTrace());
-    }
 
-    var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(drive.getFeedForward(), Constants.kDriveKinematics, 12);
+    // var autoVoltageConstraint =
+    //     new DifferentialDriveVoltageConstraint(
+    //         drive.getFeedForward(), Constants.kDriveKinematics, 12);
 
-    TrajectoryConfig config  = new TrajectoryConfig(Constants.kMaxVel, Constants.kMaxAccel).setKinematics(Constants.kDriveKinematics).addConstraint(autoVoltageConstraint);
+    // TrajectoryConfig config =
+    //     new TrajectoryConfig(Constants.kMaxVel, Constants.kMaxAccel)
+    //         .setKinematics(Constants.kDriveKinematics)
+    //         .addConstraint(autoVoltageConstraint);
 
-    RamseteCommand ramseteCommand = 
-    new RamseteCommand(trajectory, 
-    drive::getPose, 
-    new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-     drive.getFeedForward(), 
-     Constants.kDriveKinematics, 
-     drive::getWheelSpeeds, 
-     drive.getLeftPidController(), 
-     drive.getRightPidController(), 
-     drive::tankDriveVolts, 
-     drive);
+    RamseteCommand ramseteCommand =
+        new RamseteCommand(
+            trajectory,
+            drive::getPose,
+            new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
+            drive.getFeedForward(),
+            Constants.kDriveKinematics,
+            drive::getWheelSpeeds,
+            drive.getLeftPidController(),
+            drive.getRightPidController(),
+            drive::tankDriveVolts,
+            drive);
 
-     return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
+    
+
+    drive.setPose(trajectory.getInitialPose());
+    
+    
+    return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
+
+    //return chooser.getSelected();
   }
 }
