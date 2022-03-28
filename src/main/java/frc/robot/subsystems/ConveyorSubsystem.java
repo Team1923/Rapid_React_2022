@@ -70,7 +70,6 @@ public class ConveyorSubsystem extends SubsystemBase {
 
   public void runConveyor(double ConveyorSpd, double FeederWheelSpd) {
 
-    
     ConveyorMotor.set(ControlMode.PercentOutput, ConveyorSpd);
     FeederWheelMotor.set(ControlMode.PercentOutput, FeederWheelSpd);
 

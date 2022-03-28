@@ -59,7 +59,7 @@ public final class Constants {
 
   // climber elevator spool-out prevention
   // will have some slack(not intended to be precise)
-  public static final double elevatorMaxRevs = 32;
+  public static final double elevatorMaxRevs = 50;
   public static final SupplyCurrentLimitConfiguration elevatorCurrentLimit =
       new SupplyCurrentLimitConfiguration(true, 60, 65, 3);
 }

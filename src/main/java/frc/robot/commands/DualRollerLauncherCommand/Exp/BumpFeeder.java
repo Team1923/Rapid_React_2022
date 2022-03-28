@@ -5,7 +5,6 @@
 package frc.robot.commands.DualRollerLauncherCommand.Exp;
 
 import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -29,19 +28,22 @@ public class BumpFeeder extends SequentialCommandGroup {
     this.operator = operator;
 
     addRequirements(drl, conveyor);
-    addCommands( 
-    new AutoConveyor(this.conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(0.2), 
-    new ParallelCommandGroup(
-    new TeleopLauncherHighGoal(this.drl, this.operator),
-    new RunCommand(() -> {
-      if (operator.getCircleButton()) {
-    if (drl.launcherInRange(Constants.launcherRPMHighGoal)
-        || drl.launcherInRange(Constants.launcherRPMLowGoal)) {
-      this.conveyor.runConveyor(-Constants.conveyorPerent, -Constants.feederWheelsPercent);
-    } else {
-      this.conveyor.runConveyor(0, 0);
-    }
-      }
-    })));
+    addCommands(
+        new AutoConveyor(this.conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+            .withTimeout(0.2),
+        new ParallelCommandGroup(
+            new TeleopLauncherHighGoal(this.drl, this.operator),
+            new RunCommand(
+                () -> {
+                  if (operator.getCircleButton()) {
+                    if (drl.launcherInRange(Constants.launcherRPMHighGoal)
+                        || drl.launcherInRange(Constants.launcherRPMLowGoal)) {
+                      this.conveyor.runConveyor(
+                          -Constants.conveyorPerent, -Constants.feederWheelsPercent);
+                    } else {
+                      this.conveyor.runConveyor(0, 0);
+                    }
+                  }
+                })));
   }
 }

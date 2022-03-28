@@ -43,21 +43,23 @@ public class MirroredThreeBallAuto extends SequentialCommandGroup {
                         new RunCommand(() -> {}).withTimeout(0.5)),
                     new SequentialCommandGroup(
                         new ParallelCommandGroup(
-                           // new NewSpinUpToRPM(drl, 0),
+                            // new NewSpinUpToRPM(drl, 0),
                             new SequentialCommandGroup(
                                 new AutoDrive(drive, 0.55, 0.25).withTimeout(2.5),
-                                new AutoDrive(drive, 0.5, -0.8).withTimeout(0.62), //spin in place
+                                new AutoDrive(drive, 0.5, -0.8).withTimeout(0.62), // spin in place
                                 new RunCommand(() -> {}).withTimeout(0.2),
                                 new AutoDrive(drive, 0.5, 0).withTimeout(4.3),
                                 new RunCommand(() -> {}).withTimeout(0.2),
-                                //new AutoDrive(drive, -0.5, 0.35).withTimeout(5.2)
+                                // new AutoDrive(drive, -0.5, 0.35).withTimeout(5.2)
                                 new AutoDrive(drive, -0.5, 0).withTimeout(3),
                                 new AutoDrive(drive, 0.1, 0.8).withTimeout(0.43),
                                 new RunCommand(() -> {}).withTimeout(0.2),
                                 new AutoDrive(drive, -0.6, 0).withTimeout(1.5),
-                                
-
-                                new AutoConveyor(conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent).withTimeout(10)
+                                new AutoConveyor(
+                                        conveyor,
+                                        -Constants.conveyorPerent,
+                                        -Constants.feederWheelsPercent)
+                                    .withTimeout(10)
 
                                 /*new ParallelCommandGroup(
                                     new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
@@ -67,11 +69,6 @@ public class MirroredThreeBallAuto extends SequentialCommandGroup {
                                     )
                                 )*/
 
-          
-            
-
-            
-
-                                    )))))));
+                                )))))));
   }
 }
