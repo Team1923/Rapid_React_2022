@@ -6,14 +6,16 @@ package frc.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
@@ -31,6 +33,7 @@ import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
+import frc.robot.commands.ElevatorCommands.FourBar;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -110,24 +113,21 @@ public class RobotContainer {
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
         .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
 
+    // Servo Code
+    new JoystickButton(driver, XboxController.Button.kStart.value).whenPressed(new FourBar(elevator));
 
-
-        //Servo Code
-        new JoystickButton(driver, XboxController.Button.kA.value)
-        .whileHeld(
-            new RunCommand(() -> {elevator.runServo(50);})
-                );
-
-        new JoystickButton(driver, XboxController.Button.kB.value).whileHeld(
-            new RunCommand(() -> {elevator.runServo(0);})
-        );
-
-            
+    
 
     /*new JoystickButton(operator, PS4Controller.Button.kCircle.value)
     .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));*/
 
     // shoot ball High Goal (TRIANGLE)
+
+
+    if(DriverStation.isDisabled()){
+        elevator.servoZero();
+    }
+
 
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
         .toggleWhenPressed(new BumpFeeder(drlSubsystem, conveyor, operator));

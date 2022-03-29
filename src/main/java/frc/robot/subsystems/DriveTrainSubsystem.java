@@ -27,6 +27,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public NetworkTableEntry driveLVolts;
   public NetworkTableEntry driveRVolts;
 
+  public boolean reversed;
+
   public DifferentialDrive kDrive = new DifferentialDrive(l1, r1);
 
   public DriveTrainSubsystem() {
