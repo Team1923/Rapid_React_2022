@@ -6,11 +6,8 @@ package frc.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -33,12 +30,14 @@ import frc.robot.commands.Autons.MirroredLow2BallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
+import frc.robot.commands.Autons.PathweaverAutons.StraightLinePath;
+import frc.robot.commands.Autons.PathweaverAutons.TwoBallAutoPW;
 import frc.robot.commands.Autons.Test;
 import frc.robot.commands.Autons.ThreeBallAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
-import frc.robot.commands.Autons.PathweaverAutons.TwoBallAutoPW;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
+import frc.robot.commands.DriveTrainCommands.AutoDrive;
 // import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
@@ -109,8 +108,6 @@ public class RobotContainer {
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
-
-
   public RobotContainer() {
     // LiveWindow.disableAllTelemetry();
 
@@ -166,10 +163,10 @@ public class RobotContainer {
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
   }
 
+  // auton Path from PathWeaver
+  String trajectoryJSON = "paths/GoBack.wpilib.json";
+  Trajectory trajectory = new Trajectory();
 
-    // auton Path from PathWeaver
-    String trajectoryJSON = "paths/Pick2ndBall.Path.wpilib.json";
-    Trajectory trajectory = new Trajectory();
   public Command getAutonomousCommand() {
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
@@ -178,7 +175,7 @@ public class RobotContainer {
       DriverStation.reportError("not opening", ex.getStackTrace());
     }
 
-
+   // drive.reversed = true;
     RamseteCommand ramseteCommand =
         new RamseteCommand(
             trajectory,
@@ -192,11 +189,15 @@ public class RobotContainer {
             drive::tankDriveVolts,
             drive);
 
-    
-
     drive.setPose(trajectory.getInitialPose());
-    
-    return new TwoBallAutoPW(intake, drlSubsystem, drive, conveyor);
+   
+
+    // return new StraightLinePath(intake, drlSubsystem, drive, conveyor);
+
+    return new ParallelCommandGroup(
+        new AutoIntake(intake, Constants.intakePercent),
+        ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0))
+    );
 
     //return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
 

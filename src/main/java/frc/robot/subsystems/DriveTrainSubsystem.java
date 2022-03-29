@@ -1,8 +1,5 @@
 package frc.robot.subsystems;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -16,11 +13,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -36,6 +29,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public NetworkTableEntry driveLVolts;
   public NetworkTableEntry driveRVolts;
+
+  public boolean reversed = false;
 
   public final DifferentialDrive kDrive;
   private final SimpleMotorFeedforward m_feedforward =
@@ -114,7 +109,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     Pose2d currentPose = m_odometry.getPoseMeters();
 
     System.out.println("Current Pose: " + getPose().toString());
-    //DriverStation.reportError("Current Heading: " + getHeading(), false);
+    // DriverStation.reportError("Current Heading: " + getHeading(), false);
 
     System.out.println("Right Position Traveled: " + getRightPosition());
 
@@ -185,8 +180,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    l1.setVoltage(leftVolts);
-    r1.setVoltage(rightVolts);
+
+    if(reversed){
+      l1.setVoltage(-leftVolts);
+      r1.setVoltage(-rightVolts);
+    }
+    else{
+      l1.setVoltage(leftVolts);
+      r1.setVoltage(rightVolts);
+    }
+
     kDrive.feed();
   }
 
@@ -201,23 +204,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double getHeading() {
-    return Math.IEEEremainder(_getFusedHeading(), 360) * (false ? -1.0 : 1.0);
+    return Math.IEEEremainder(_getFusedHeading(), 360) * (reversed ? -1.0 : 1.0);
   }
 
-  public void setPose(double x, double y){
+  public void setPose(double x, double y) {
     resetOdometry(new Pose2d(x, y, Rotation2d.fromDegrees(_getFusedHeading())));
   }
 
-  public void setPose(Pose2d pose){
+  public void setPose(Pose2d pose) {
     resetEncoders();
     m_odometry.resetPosition(pose, Rotation2d.fromDegrees(_getFusedHeading()));
   }
 
-  public double _getFusedHeading(){
+  public double _getFusedHeading() {
     return m_gryo.getFusedHeading();
-  } 
-
-
-
-  
+  }
 }

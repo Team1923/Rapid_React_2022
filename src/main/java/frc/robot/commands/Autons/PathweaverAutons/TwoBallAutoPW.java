@@ -1,12 +1,8 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.ConveyorCommands.AutoConveyor;
-import frc.robot.commands.DriveTrainCommands.AutoDrive;
-import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -30,10 +26,8 @@ public class TwoBallAutoPW extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
             new ParallelCommandGroup(
-                new FollowPath("paths/Pick2ndBall.Path.wpilib.json", driveTrain).getTrajectory()
-                .andThen(() -> driveTrain.tankDriveVolts(0, 0))
-
-            )
-        ));
+                new FollowPath("paths/Pick2ndBall.Path.wpilib.json", driveTrain)
+                    .getTrajectory()
+                    .andThen(() -> driveTrain.tankDriveVolts(0, 0)))));
   }
 }

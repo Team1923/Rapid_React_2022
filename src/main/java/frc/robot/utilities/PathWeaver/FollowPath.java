@@ -4,9 +4,6 @@
 
 package frc.robot.utilities.PathWeaver;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
@@ -15,21 +12,22 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import java.io.IOException;
+import java.nio.file.Path;
 
-public class FollowPath{
+public class FollowPath {
   /** Creates a new FollowPath. */
-
   private String path;
+
   private DriveTrainSubsystem driveTrain;
   private Trajectory trajectory = new Trajectory();
 
   public FollowPath(String path, DriveTrainSubsystem driveTrain) {
     this.path = path;
     this.driveTrain = driveTrain;
-    
   }
 
-  public RamseteCommand getTrajectory(){
+  public RamseteCommand getTrajectory() {
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
       trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
@@ -37,23 +35,20 @@ public class FollowPath{
       DriverStation.reportError("not opening", ex.getStackTrace());
     }
 
-
     RamseteCommand ramseteCommand =
-    new RamseteCommand(
-        trajectory,
-        driveTrain::getPose,
-        new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-        driveTrain.getFeedForward(),
-        Constants.kDriveKinematics,
-        driveTrain::getWheelSpeeds,
-        driveTrain.getLeftPidController(),
-        driveTrain.getRightPidController(),
-        driveTrain::tankDriveVolts,
-        driveTrain);
+        new RamseteCommand(
+            trajectory,
+            driveTrain::getPose,
+            new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
+            driveTrain.getFeedForward(),
+            Constants.kDriveKinematics,
+            driveTrain::getWheelSpeeds,
+            driveTrain.getLeftPidController(),
+            driveTrain.getRightPidController(),
+            driveTrain::tankDriveVolts,
+            driveTrain);
 
-
-
-  driveTrain.setPose(trajectory.getInitialPose());
+    driveTrain.setPose(trajectory.getInitialPose());
     return ramseteCommand;
   }
 }
