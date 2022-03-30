@@ -96,16 +96,13 @@ public class ElevatorSubsystem extends SubsystemBase {
       leftMotor.set(ControlMode.PercentOutput, 0.8 * leftSpeed);
       runServo(40);
     }
-    
-
-    
   }
 
   public void runServo(double setpoint) {
     servo.setPosition(setpoint);
   }
 
-  public void servoZero(){
+  public void servoZero() {
     servo.setPosition(0);
   }
 

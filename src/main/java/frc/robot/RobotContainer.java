@@ -8,20 +8,16 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
-import frc.robot.commands.Autons.FourBallAuto;
 import frc.robot.commands.Autons.MirroredLow2BallAuto;
-import frc.robot.commands.Autons.MirroredThreeBallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
@@ -65,36 +61,6 @@ public class RobotContainer {
 
   public static boolean enableElevator = false;
 
-  public static TwoBallHighAuto twoBallHighAuto =
-      new TwoBallHighAuto(intake, drlSubsystem, drive, conveyor);
-  public static OneBallLowAuto oneBallLowAuto =
-      new OneBallLowAuto(intake, drive, conveyor, drlSubsystem);
-  public static OneBallHighAuto oneBallHighAuto =
-      new OneBallHighAuto(intake, drive, conveyor, drlSubsystem);
-  public static DriveForwardAuto driveForwardAuto = new DriveForwardAuto(intake, drive, conveyor);
-
-  public static MirroredThreeBallAuto threeballMirror =
-      new MirroredThreeBallAuto(intake, drlSubsystem, drive, conveyor);
-
-  public static FourBallAuto fourballAuto = new FourBallAuto(intake, drlSubsystem, drive, conveyor);
-
-  public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
-      new AlternativeTwoBallHighAuto(intake, drlSubsystem, drive, conveyor);
-
-  public static MirroredTwoBallHighAuto mirroredTwoBallHighAuto =
-      new MirroredTwoBallHighAuto(intake, drlSubsystem, drive, conveyor);
-
-  public static TwoBallLowAuto twoBallLowAuto =
-      new TwoBallLowAuto(intake, drlSubsystem, drive, conveyor);
-
-  public static MirroredLow2BallAuto mirroredLow2BallAuto =
-      new MirroredLow2BallAuto(intake, drlSubsystem, drive, conveyor);
-
-  public static ThreeBallAuto threeBallAuto =
-      new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
-
-  public static Test test = new Test(intake, drive, conveyor);
-
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
   public RobotContainer() {
@@ -114,19 +80,13 @@ public class RobotContainer {
         .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
 
     // Servo Code
-    new JoystickButton(driver, XboxController.Button.kStart.value).whenPressed(new FourBar(elevator));
-
-    
+    new JoystickButton(driver, XboxController.Button.kStart.value)
+        .whenPressed(new FourBar(elevator));
 
     /*new JoystickButton(operator, PS4Controller.Button.kCircle.value)
     .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));*/
 
     // shoot ball High Goal (TRIANGLE)
-
-
-    if(DriverStation.isDisabled()){
-        elevator.servoZero();
-    }
 
 
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
@@ -162,23 +122,7 @@ public class RobotContainer {
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
-    double[] ypr = new double[3];
-    pigeon.getYawPitchRoll(ypr);
-    YAWangle.setDouble(ypr[0]);
 
-    chooser.setDefaultOption("OneBallLowAuto", oneBallLowAuto);
-    chooser.addOption("TwoBallHighAuto", twoBallHighAuto);
-    chooser.addOption("Drive Forward Auto", driveForwardAuto);
-    chooser.addOption("OneBallHighAuto", oneBallHighAuto);
-    chooser.addOption("Death Trap 2 ball", alternativeTwoBallHighAuto);
-    chooser.addOption("Mirrored 2 Ball Auto", mirroredTwoBallHighAuto);
-    chooser.addOption("Low 2 Ball Auto (NOT MIRRORED)", twoBallLowAuto);
-    chooser.addOption("MIRRORED LOW 2 ball auto", mirroredLow2BallAuto);
-    chooser.addOption("4 ball auto", fourballAuto);
-    chooser.addOption("3 ball auto", threeBallAuto);
-    chooser.addOption("Test Turn", test);
-    chooser.addOption("Mirrored 3 ball auto", threeballMirror);
-    auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
   public Command getAutonomousCommand() {
