@@ -181,11 +181,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
 
-    if(reversed){
+    if (reversed) {
       l1.setVoltage(-leftVolts);
       r1.setVoltage(-rightVolts);
-    }
-    else{
+    } else {
       l1.setVoltage(leftVolts);
       r1.setVoltage(rightVolts);
     }
