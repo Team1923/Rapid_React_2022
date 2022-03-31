@@ -30,7 +30,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public NetworkTableEntry driveLVolts;
   public NetworkTableEntry driveRVolts;
 
-  public boolean reversed = false;
+  public boolean reversed = false;  
 
   public final DifferentialDrive kDrive;
   private final SimpleMotorFeedforward m_feedforward =
@@ -106,7 +106,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double rightDist = getRightPosition();
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftDist, rightDist);
 
-    Pose2d currentPose = m_odometry.getPoseMeters();
+    // Pose2d currentPose = m_odometry.getPoseMeters();
 
     System.out.println("Current Pose: " + getPose().toString());
     // DriverStation.reportError("Current Heading: " + getHeading(), false);
@@ -200,6 +200,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void zeroHeading() {
     m_gryo.setFusedHeading(0.0);
     m_gryo.setAccumZAngle(0.0);
+  }
+
+  public void setHeading(double angle){
+    m_gryo.setFusedHeading(angle);
   }
 
   public double getHeading() {

@@ -1,9 +1,14 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.AutonBumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -26,16 +31,28 @@ public class TwoBallAuto extends SequentialCommandGroup {
     addCommands(
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
+            new InstantCommand(() -> {    driveTrain.resetEncoders();
+                driveTrain.zeroHeading();
+                driveTrain.setPose(0,0);}),
             new SequentialCommandGroup(
-                new FollowPath("paths/Testing.Path.wpilib.json", driveTrain)
+                new FollowPath("pathplanner/generatedJSON/GetBall2.wpilib.json", driveTrain)
                     .getTrajectory()
                     .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-                new ParallelCommandGroup(
-                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                    new FollowPath("path directory here", driveTrain)
+            new InstantCommand(() -> {    driveTrain.resetEncoders();
+                driveTrain.zeroHeading();
+                driveTrain.setPose(0,0);}),
+                new ParallelRaceGroup(
+                    new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal),
+                    new FollowPath("pathplanner/generatedJSON/BackToFender.wpilib.json", driveTrain, true)
                         .getTrajectory()
                         .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
-                  new AutoConveyor(conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                        )));
+
+                new ParallelCommandGroup(
+                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                    new AutoConveyor(
+                        conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))
+                )
+            )
+        );
   }
 }

@@ -25,12 +25,23 @@ public class FollowPath {
   public FollowPath(String path, DriveTrainSubsystem driveTrain) {
     this.path = path;
     this.driveTrain = driveTrain;
+    driveTrain.resetEncoders();
+    driveTrain.zeroHeading();
+    driveTrain.setPose(0,0);
+  }
+
+  public FollowPath(String path, DriveTrainSubsystem driveTrain, boolean reversed){
+    this.path = path;
+    this.driveTrain = driveTrain;
+    driveTrain.resetEncoders();
+    driveTrain.setHeading(180);
+    driveTrain.setPose(0, 0);
   }
 
   public RamseteCommand getTrajectory() {
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(path);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      this.trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     } catch (IOException ex) {
       DriverStation.reportError("not opening", ex.getStackTrace());
     }

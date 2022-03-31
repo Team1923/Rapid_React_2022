@@ -35,7 +35,7 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
                     new FollowPath("path directory here", driveTrain)
                         .getTrajectory()
                         .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
-                  new AutoConveyor(conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                        )));
+                new AutoConveyor(
+                    conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))));
   }
 }

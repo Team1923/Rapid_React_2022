@@ -40,4 +40,8 @@ public class UnitConversion {
   public static double tickSecTomSec(double falconVel) {
     return falconVel * 0.127 * 9.1 * 10.0 / 2048;
   }
+
+  public static double inchesToMeters(double inches) {
+    return inches / 39.37;
+  }
 }
