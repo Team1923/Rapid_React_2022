@@ -1,8 +1,6 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -30,29 +28,21 @@ public class TwoBallAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ParallelCommandGroup(
-            new AutoIntake(intake, Constants.intakePercent),
-            new InstantCommand(() -> {    driveTrain.resetEncoders();
-                driveTrain.zeroHeading();
-                driveTrain.setPose(0,0);}),
+            new AutoIntake(intake, Constants.intakePercent).withTimeout(3),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/GetBall2.wpilib.json", driveTrain)
-                    .getTrajectory()
-                    .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-            new InstantCommand(() -> {    driveTrain.resetEncoders();
-                driveTrain.zeroHeading();
-                driveTrain.setPose(0,0);}),
-                new ParallelRaceGroup(
-                    new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal),
-                    new FollowPath("pathplanner/generatedJSON/BackToFender.wpilib.json", driveTrain, true)
-                        .getTrajectory()
-                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
-
+                new FollowPath("pathplanner/generatedJSON/working.wpilib.json", driveTrain)
+                    .getTrajectory(),
+                new RunCommand(
+                        () -> {
+                          driveTrain.tankDriveVolts(0, 0);
+                        })
+                    .withTimeout(0.5),
+                new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
                 new ParallelCommandGroup(
                     new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                    new AutoConveyor(
-                        conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))
-                )
-            )
-        );
+                    new SequentialCommandGroup(
+                        new WaitCommand(1),
+                        new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))));
   }
 }

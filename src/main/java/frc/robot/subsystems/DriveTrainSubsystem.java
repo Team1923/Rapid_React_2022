@@ -30,7 +30,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public NetworkTableEntry driveLVolts;
   public NetworkTableEntry driveRVolts;
 
-  public boolean reversed = false;  
+  public boolean reversed = false;
 
   public final DifferentialDrive kDrive;
   private final SimpleMotorFeedforward m_feedforward =
@@ -202,7 +202,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_gryo.setAccumZAngle(0.0);
   }
 
-  public void setHeading(double angle){
+  public void setHeading(double angle) {
     m_gryo.setFusedHeading(angle);
   }
 

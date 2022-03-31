@@ -14,11 +14,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
@@ -30,16 +29,16 @@ import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
 import frc.robot.commands.Autons.PathweaverAutons.FollowPath;
 import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
-import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.Autons.Test;
 import frc.robot.commands.Autons.ThreeBallAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
+import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.AutonBumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
 // import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
-import frc.robot.commands.DualRollerLauncherCommand.Exp.AutonBumpFeeder;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
@@ -107,6 +106,7 @@ public class RobotContainer {
   public static TwoBallAuto twoBallAuto = new TwoBallAuto(intake, drlSubsystem, drive, conveyor);
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
+  
 
   public RobotContainer() {
     // LiveWindow.disableAllTelemetry();
@@ -169,33 +169,18 @@ public class RobotContainer {
             0.1,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
+        auto.add(chooser);
+        chooser.addOption("Two Ball [NON MIRRORED]", twoBallAuto);
   }
 
-  // auton Path from PathWeaver
-  String trajectoryJSON = "paths/output/BackToFender.wpilib.json";
-  Trajectory trajectory = new Trajectory();
+  
+
+  
+
+
 
   public Command getAutonomousCommand() {
-
-//return twoBallAuto;
-
-return new ParallelCommandGroup(        new AutoIntake(intake, Constants.intakePercent),
-new SequentialCommandGroup(
-    new FollowPath("pathplanner/generatedJSON/GetBall2.wpilib.json", drive)
-        .getTrajectory()
-        .andThen(new FollowPath("pathplanner/generatedJSON/BackToFender.wpilib.json", drive)
-        .getTrajectory()
-        .andThen(() -> drive.tankDriveVolts(0, 0)
-        
-        )))
-        
-        );
-
-    //return new FollowPath("paths/output/GetBall2.wpilib.json", drive)
-     //               .getTrajectory()
-     //               .andThen(() -> drive.tankDriveVolts(0, 0));
-
-    // return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
+    return chooser.getSelected();
 
   }
 }

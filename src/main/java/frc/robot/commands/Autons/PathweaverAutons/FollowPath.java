@@ -5,6 +5,7 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
 import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -27,15 +28,19 @@ public class FollowPath {
     this.driveTrain = driveTrain;
     driveTrain.resetEncoders();
     driveTrain.zeroHeading();
-    driveTrain.setPose(0,0);
+    driveTrain.setPose(0, 0);
   }
 
-  public FollowPath(String path, DriveTrainSubsystem driveTrain, boolean reversed){
+  public FollowPath(String path, DriveTrainSubsystem driveTrain, boolean reversed) {
     this.path = path;
     this.driveTrain = driveTrain;
-    driveTrain.resetEncoders();
-    driveTrain.setHeading(180);
-    driveTrain.setPose(0, 0);
+    // driveTrain.resetEncoders();
+    // driveTrain.setHeading(180);
+    // driveTrain.setPose(0, 0);
+  }
+
+  public Pose2d getInitialPose() {
+    return trajectory.getInitialPose();
   }
 
   public RamseteCommand getTrajectory() {
