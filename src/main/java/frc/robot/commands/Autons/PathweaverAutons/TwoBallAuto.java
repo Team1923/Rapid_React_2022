@@ -1,14 +1,11 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
-import frc.robot.commands.DualRollerLauncherCommand.Exp.AutonBumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -20,39 +17,31 @@ import frc.robot.subsystems.IntakeSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TwoBallAuto extends SequentialCommandGroup {
+  private Trajectory get2BallTraj;
+  private Trajectory backToFender;
   /** Creates a new TwoBallHighAuto. */
   public TwoBallAuto(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem driveTrain,
       ConveyorSubsystem conveyor) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+
+    get2BallTraj = driveTrain.generateTrajectory("pathplanner/generatedJSON/GetBall2.wpilib.json");
+    backToFender =
+        driveTrain.generateTrajectory("pathplanner/generatedJSON/BackToFender.wpilib.json");
+
     addCommands(
+        new ZeroForAuto(driveTrain),
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
-            new InstantCommand(() -> {    driveTrain.resetEncoders();
-                driveTrain.zeroHeading();
-                driveTrain.setPose(0,0);}),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/GetBall2.wpilib.json", driveTrain)
-                    .getTrajectory()
+                new LazyRamseteCommand(driveTrain, () -> get2BallTraj)
                     .andThen(() -> driveTrain.tankDriveVolts(0, 0)),
-            new InstantCommand(() -> {    driveTrain.resetEncoders();
-                driveTrain.zeroHeading();
-                driveTrain.setPose(0,0);}),
-                new ParallelRaceGroup(
-                    new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal),
-                    new FollowPath("pathplanner/generatedJSON/BackToFender.wpilib.json", driveTrain, true)
-                        .getTrajectory()
-                        .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
-
-                new ParallelCommandGroup(
-                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                    new AutoConveyor(
-                        conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))
-                )
-            )
-        );
+                new ParallelRaceGroup(new LazyRamseteCommand(driveTrain, () -> backToFender))
+                    .andThen(() -> driveTrain.tankDriveVolts(0, 0))),
+            new ParallelCommandGroup(
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                new AutoConveyor(
+                    conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))));
   }
 }

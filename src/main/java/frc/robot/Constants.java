@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import frc.robot.utilities.UnitConversion;
 
@@ -81,6 +82,9 @@ public final class Constants {
   public static final int oneRevEncodeCount = 2048;
 
   // wheel info
+  // the wheel diameter was initially assumed to be 5in, then measured the smaller wheel to 4.65in,
+  // then calculated to be 4.445 for the sake of these autos.  Got us within 3in on a 5m path.
+  // Pretty handy!
   public static final double wheelDiameter = UnitConversion.inchesToMeters(4.445);
   public static final double wheelCircumeference = wheelDiameter * Math.PI;
   public static final double kGearReduction = 1.0 / 9.11;
@@ -89,6 +93,13 @@ public final class Constants {
   public static final double kRamseteZeta = 0.7;
 
   // max parameters for movement
-  public static final double kMaxVel = 6.6;
-  public static final double kMaxAccel = 57.14;
+  // these are not here to be used for trajectory pathing atm, but more for our reference.
+  public static final double kMaxVel = 5.0; // m/s
+  public static final double kMaxAccel = 2.0; // m/s^2
+
+  public static final SimpleMotorFeedforward m_feedforward =
+      new SimpleMotorFeedforward(
+          Constants.ksVolts,
+          Constants.kvVoltsSecondsPerMeter,
+          Constants.kaVoltSecondsSquaredPerMeter);
 }

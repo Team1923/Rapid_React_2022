@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -15,33 +14,21 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
 import frc.robot.commands.Autons.DriveForwardAuto;
-// import frc.robot.commands.Autons.FourBallAuto;
 import frc.robot.commands.Autons.MirroredLow2BallAuto;
-// import frc.robot.commands.Autons.MirroredThreeBallAuto;
 import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
-import frc.robot.commands.Autons.PathweaverAutons.FollowPath;
 import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
-import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.Autons.Test;
 import frc.robot.commands.Autons.ThreeBallAuto;
 import frc.robot.commands.Autons.TwoBallHighAuto;
 import frc.robot.commands.Autons.TwoBallLowAuto;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
-// import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
-import frc.robot.commands.DualRollerLauncherCommand.Exp.AutonBumpFeeder;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
-import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -80,12 +67,6 @@ public class RobotContainer {
   public static OneBallHighAuto oneBallHighAuto =
       new OneBallHighAuto(intake, drive, conveyor, drlSubsystem);
   public static DriveForwardAuto driveForwardAuto = new DriveForwardAuto(intake, drive, conveyor);
-
-  //   public static MirroredThreeBallAuto threeballMirror =
-  //       new MirroredThreeBallAuto(intake, drlSubsystem, drive, conveyor);
-
-  //   public static FourBallAuto fourballAuto = new FourBallAuto(intake, drlSubsystem, drive,
-  // conveyor);
 
   public static AlternativeTwoBallHighAuto alternativeTwoBallHighAuto =
       new AlternativeTwoBallHighAuto(intake, drlSubsystem, drive, conveyor);
@@ -139,8 +120,8 @@ public class RobotContainer {
     new JoystickButton(operator, 8).toggleWhenPressed(new TeleopLauncherLowGoal(drlSubsystem));
 
     new JoystickButton(driver, XboxController.Button.kA.value)
-        .whileActiveOnce(
-            new RunCommand(
+        .whenPressed(
+            new InstantCommand(
                 () -> {
                   drive.zeroHeading();
                   drive.resetEncoders();
@@ -171,31 +152,7 @@ public class RobotContainer {
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
   }
 
-  // auton Path from PathWeaver
-  String trajectoryJSON = "paths/output/BackToFender.wpilib.json";
-  Trajectory trajectory = new Trajectory();
-
   public Command getAutonomousCommand() {
-
-//return twoBallAuto;
-
-return new ParallelCommandGroup(        new AutoIntake(intake, Constants.intakePercent),
-new SequentialCommandGroup(
-    new FollowPath("pathplanner/generatedJSON/GetBall2.wpilib.json", drive)
-        .getTrajectory()
-        .andThen(new FollowPath("pathplanner/generatedJSON/BackToFender.wpilib.json", drive)
-        .getTrajectory()
-        .andThen(() -> drive.tankDriveVolts(0, 0)
-        
-        )))
-        
-        );
-
-    //return new FollowPath("paths/output/GetBall2.wpilib.json", drive)
-     //               .getTrajectory()
-     //               .andThen(() -> drive.tankDriveVolts(0, 0));
-
-    // return ramseteCommand.andThen(() -> drive.tankDriveVolts(0, 0));
-
+    return new TwoBallAuto(intake, drlSubsystem, drive, conveyor);
   }
 }

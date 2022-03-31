@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -7,17 +8,22 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utilities.UnitConversion;
 import frc.robot.utilities.can.ctre.status_frame.StatusFrameHelper;
+import java.io.IOException;
+import java.nio.file.Path;
 
 public class DriveTrainSubsystem extends SubsystemBase {
   private WPI_TalonFX r1 = new WPI_TalonFX(Constants.r1);
@@ -30,25 +36,20 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public NetworkTableEntry driveLVolts;
   public NetworkTableEntry driveRVolts;
 
-  public boolean reversed = false;  
+  public boolean reversed = false;
 
   public final DifferentialDrive kDrive;
-  private final SimpleMotorFeedforward m_feedforward =
-      new SimpleMotorFeedforward(
-          Constants.ksVolts,
-          Constants.kvVoltsSecondsPerMeter,
-          Constants.kaVoltSecondsSquaredPerMeter);
 
   private PIDController left_PIDController = new PIDController(Constants.kPDriveVel, 0, 0);
   private PIDController right_PIDController = new PIDController(Constants.kPDriveVel, 0, 0);
 
   private final DifferentialDriveOdometry m_odometry;
 
-  private PigeonIMU m_gryo = new PigeonIMU(Constants.pigeon);
+  private PigeonIMU m_gyro = new PigeonIMU(Constants.pigeon);
 
   public DriveTrainSubsystem() {
 
-    m_gryo.configFactoryDefault();
+    m_gyro.configFactoryDefault();
 
     kDrive = new DifferentialDrive(l1, r1);
 
@@ -100,6 +101,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     zeroHeading();
   }
 
+  /*
   @Override
   public void periodic() {
     double leftDist = getLeftPosition();
@@ -114,7 +116,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     System.out.println("Right Position Traveled: " + getRightPosition());
 
     System.out.println("Left Position Traveled: " + getLeftPosition());
-  }
+  }*/
 
   // methods to get everything in correct units
 
@@ -153,17 +155,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
-  public SimpleMotorFeedforward getFeedForward() {
-    return m_feedforward;
-  }
-
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(getLeftVelocity(), getRightVelocity());
-  }
-
-  // this may not be needed?
-  public ChassisSpeeds getChassisSpeeds() {
-    return Constants.kDriveKinematics.toChassisSpeeds(getWheelSpeeds());
   }
 
   public PIDController getLeftPidController() {
@@ -180,13 +173,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-
     if (reversed) {
-      l1.setVoltage(-leftVolts);
-      r1.setVoltage(-rightVolts);
+      l1.set(ControlMode.PercentOutput, UnitConversion.voltsToPercentOut(-leftVolts));
+      r1.set(ControlMode.PercentOutput, UnitConversion.voltsToPercentOut(-rightVolts));
     } else {
-      l1.setVoltage(leftVolts);
-      r1.setVoltage(rightVolts);
+      l1.set(ControlMode.PercentOutput, UnitConversion.voltsToPercentOut(leftVolts));
+      r1.set(ControlMode.PercentOutput, UnitConversion.voltsToPercentOut(rightVolts));
     }
 
     kDrive.feed();
@@ -198,28 +190,34 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void zeroHeading() {
-    m_gryo.setFusedHeading(0.0);
-    m_gryo.setAccumZAngle(0.0);
+    m_gyro.setFusedHeading(0.0);
+    m_gyro.setAccumZAngle(0.0);
   }
 
-  public void setHeading(double angle){
-    m_gryo.setFusedHeading(angle);
+  public void setHeading(double angle) {
+    m_gyro.setFusedHeading(angle);
   }
 
   public double getHeading() {
-    return Math.IEEEremainder(_getFusedHeading(), 360) * (reversed ? -1.0 : 1.0);
+    return Math.IEEEremainder(m_gyro.getFusedHeading(), 360) * (reversed ? -1.0 : 1.0);
   }
 
   public void setPose(double x, double y) {
-    resetOdometry(new Pose2d(x, y, Rotation2d.fromDegrees(_getFusedHeading())));
+    resetOdometry(new Pose2d(x, y, Rotation2d.fromDegrees(getHeading())));
   }
 
   public void setPose(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(_getFusedHeading()));
+    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
   }
 
-  public double _getFusedHeading() {
-    return m_gryo.getFusedHeading();
+  public Trajectory generateTrajectory(String pathFileName) {
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(pathFileName);
+      return TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException e) {
+      DriverStation.reportError("Unable to open trajectory: " + pathFileName, e.getStackTrace());
+    }
+    return null;
   }
 }

@@ -1,5 +1,6 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -13,6 +14,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StraightLinePath extends SequentialCommandGroup {
+  private Trajectory testPath;
   /** Creates a new TwoBallHighAuto. */
   public StraightLinePath(
       IntakeSubsystem intake,
@@ -21,12 +23,14 @@ public class StraightLinePath extends SequentialCommandGroup {
       ConveyorSubsystem conveyor) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+
+    this.testPath = driveTrain.generateTrajectory("paths/Testing.Path.wpilib.json");
+
     addCommands(
         new SequentialCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
             new ParallelCommandGroup(
-                new FollowPath("paths/Testing.Path.wpilib.json", driveTrain)
-                    .getTrajectory()
+                new LazyRamseteCommand(driveTrain, () -> testPath)
                     .andThen(() -> driveTrain.tankDriveVolts(0, 0)))));
   }
 }
