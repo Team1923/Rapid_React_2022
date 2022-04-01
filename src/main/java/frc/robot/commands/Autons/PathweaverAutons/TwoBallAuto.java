@@ -28,9 +28,9 @@ public class TwoBallAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ParallelCommandGroup(
-            new AutoIntake(intake, Constants.intakePercent).withTimeout(3),
+            new AutoIntake(intake, Constants.intakePercent),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/working.wpilib.json", driveTrain)
+                new FollowPath("pathplanner/generatedJSON/2Ball.wpilib.json", driveTrain)
                     .getTrajectory(),
                 new RunCommand(
                         () -> {
@@ -43,6 +43,12 @@ public class TwoBallAuto extends SequentialCommandGroup {
                     new SequentialCommandGroup(
                         new WaitCommand(1),
                         new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))));
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(0.3),
+                            new WaitCommand(0.8),
+                            new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            
+                            
+                            )))));
   }
 }

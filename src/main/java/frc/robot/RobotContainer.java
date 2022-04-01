@@ -28,6 +28,7 @@ import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
 import frc.robot.commands.Autons.OneBallHighAuto;
 import frc.robot.commands.Autons.OneBallLowAuto;
 import frc.robot.commands.Autons.PathweaverAutons.FollowPath;
+import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
 import frc.robot.commands.Autons.Test;
 import frc.robot.commands.Autons.ThreeBallAuto;
@@ -104,6 +105,7 @@ public class RobotContainer {
   public static Test test = new Test(intake, drive, conveyor);
 
   public static TwoBallAuto twoBallAuto = new TwoBallAuto(intake, drlSubsystem, drive, conveyor);
+  public static MirroredTwoBallAuto mirroredTwoBallAuto = new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
   
@@ -169,8 +171,8 @@ public class RobotContainer {
             0.1,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
-        auto.add(chooser);
-        chooser.addOption("Two Ball [NON MIRRORED]", twoBallAuto);
+        chooser.addObject("Two Ball [NON MIRRORED]", twoBallAuto);
+        chooser.addOption("MIRRORED Two Ball Auto", mirroredTwoBallAuto);
   }
 
   
@@ -180,7 +182,9 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return chooser.getSelected();
+
+    return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
+    //return mirroredTwoBallAuto;
 
   }
 }
