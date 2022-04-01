@@ -12,9 +12,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class StraightLinePath extends SequentialCommandGroup {
+public class MoveForward extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public StraightLinePath(
+  public MoveForward(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -25,7 +25,7 @@ public class StraightLinePath extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
             new ParallelCommandGroup(
-                new FollowPath("paths/Testing.Path.wpilib.json", drive)
+                new FollowPath("pathplanner/generatedJSON/MoveForward.wpilib.json", drive)
                     .getTrajectory()
                     .andThen(() -> drive.tankDriveVolts(0, 0)))));
   }
