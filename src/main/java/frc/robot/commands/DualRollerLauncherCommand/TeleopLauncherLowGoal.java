@@ -17,11 +17,12 @@ public class TeleopLauncherLowGoal extends CommandBase {
   private PS4Controller operator = new PS4Controller(1);
 
   /** Creates a new DRLTestRun. */
-  public TeleopLauncherLowGoal(DualRollerLauncher drl) {
+  public TeleopLauncherLowGoal(DualRollerLauncher drl, PS4Controller operator) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drl);
 
     this.drl = drl;
+    this.operator = operator;
   }
 
   // Called when the command is initially scheduled.
@@ -37,6 +38,12 @@ public class TeleopLauncherLowGoal extends CommandBase {
     double vel = UnitConversion.RPMtoNativeUnits(Constants.launcherRPMLowGoal);
 
     this.drl.setLauncherSpeedCTR(vel);
+
+    if (this.drl.launcherInRange(Constants.launcherRPMHighGoal)) {
+      this.operator.setRumble(RumbleType.kRightRumble, 1);
+    } else {
+      this.operator.setRumble(RumbleType.kRightRumble, 0);
+    }
   }
 
   // Called once the command ends or is interrupted.

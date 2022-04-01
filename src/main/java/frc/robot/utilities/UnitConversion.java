@@ -19,4 +19,8 @@ public class UnitConversion {
   public static double positionNativeToRots(double nativeUnits) {
     return nativeUnits / 2048;
   }
+
+  public static double inchesToMeters(double inches) {
+    return inches / 39.37;
+  }
 }

@@ -6,7 +6,6 @@ package frc.robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -15,19 +14,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Autons.AlternativeTwoBallHighAuto;
-import frc.robot.commands.Autons.DriveForwardAuto;
-import frc.robot.commands.Autons.MirroredLow2BallAuto;
-import frc.robot.commands.Autons.MirroredTwoBallHighAuto;
-import frc.robot.commands.Autons.OneBallHighAuto;
-import frc.robot.commands.Autons.OneBallLowAuto;
-import frc.robot.commands.Autons.Test;
-import frc.robot.commands.Autons.ThreeBallAuto;
-import frc.robot.commands.Autons.TwoBallHighAuto;
-import frc.robot.commands.Autons.TwoBallLowAuto;
+import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeeder;
-import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.ElevatorCommands.FourBar;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
@@ -83,20 +74,14 @@ public class RobotContainer {
     new JoystickButton(driver, XboxController.Button.kStart.value)
         .whenPressed(new FourBar(elevator));
 
-    /*new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-    .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));*/
-
     // shoot ball High Goal (TRIANGLE)
 
-
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new BumpFeeder(drlSubsystem, conveyor, operator));
-
-    /* new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-    .toggleWhenPressed(new PerpetualCommand(new LaunchOneBallHigh(drlSubsystem, conveyor)));*/
+        .toggleWhenPressed(new BumpFeederHighGoal(drlSubsystem, conveyor, operator));
 
     // shoot ball Low Goal (OPTION = 8)
-    new JoystickButton(operator, 8).toggleWhenPressed(new TeleopLauncherLowGoal(drlSubsystem));
+    new JoystickButton(operator, 8)
+        .toggleWhenPressed(new BumpFeederLowGoal(drlSubsystem, conveyor, operator));
 
     // drive (arcade)
     new SpectrumAxisButton(
@@ -122,7 +107,13 @@ public class RobotContainer {
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
+    // Auton
+    chooser.addOption(
+        "2 Ball Auto [NON MIRRORED]", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
+    chooser.addOption(
+        "2 Ball AUto [MIRRORED]", new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor));
 
+    auto.add(chooser);
   }
 
   public Command getAutonomousCommand() {

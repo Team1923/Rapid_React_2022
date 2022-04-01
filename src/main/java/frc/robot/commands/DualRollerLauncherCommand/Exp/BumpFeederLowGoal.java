@@ -10,29 +10,28 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
-import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherHighGoal;
+import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherLowGoal;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class BumpFeeder extends SequentialCommandGroup {
+public class BumpFeederLowGoal extends SequentialCommandGroup {
   private ConveyorSubsystem conveyor;
   private DualRollerLauncher drl;
-  private PS4Controller operator;
   /** Creates a new BumpFeeder. */
-  public BumpFeeder(DualRollerLauncher drl, ConveyorSubsystem conveyor, PS4Controller operator) {
+  public BumpFeederLowGoal(
+      DualRollerLauncher drl, ConveyorSubsystem conveyor, PS4Controller operator) {
     this.conveyor = conveyor;
     this.drl = drl;
-    this.operator = operator;
 
     addRequirements(drl, conveyor);
     addCommands(
         new AutoConveyor(this.conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
             .withTimeout(0.2),
         new ParallelCommandGroup(
-            new TeleopLauncherHighGoal(this.drl, this.operator),
+            new TeleopLauncherLowGoal(this.drl, operator),
             new RunCommand(
                 () -> {
                   if (operator.getCircleButton()) {

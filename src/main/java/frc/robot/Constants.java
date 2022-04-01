@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import frc.robot.utilities.UnitConversion;
 
 public final class Constants {
 
@@ -80,12 +81,9 @@ public final class Constants {
   public static final int oneRevEncodeCount = 2048;
 
   // wheel info
-  public static final double wheelDiameter = 0.127;
-  public static final double wheelCircumeference = 0.398982267;
+  public static final double wheelDiameter = UnitConversion.inchesToMeters(4.445);
+  public static final double wheelCircumeference = wheelDiameter * Math.PI;
   public static final double kGearReduction = 1 / 9.1;
-
-  public static final double kEncoderDistancePerMeter =
-      (wheelCircumeference * kGearReduction) / (double) oneRevEncodeCount;
 
   public static final double kRamseteB = 2;
   public static final double kRamseteZeta = 0.7;
