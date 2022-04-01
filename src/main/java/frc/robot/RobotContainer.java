@@ -74,7 +74,7 @@ public class RobotContainer {
 
     // Servo Code
     new JoystickButton(driver, XboxController.Button.kStart.value)
-        .whenPressed(new FourBar(elevator));
+        .whenPressed(new FourBar(elevator, driver));
 
     // shoot ball High Goal (TRIANGLE)
 
@@ -84,6 +84,8 @@ public class RobotContainer {
     // shoot ball Low Goal (OPTION = 8)
     new JoystickButton(operator, 8)
         .toggleWhenPressed(new BumpFeederLowGoal(drlSubsystem, conveyor, operator));
+
+    new JoystickButton(driver, XboxController.Button.kRightBumper.value).whenPressed(new FourBar(elevator, driver));
 
     // drive (arcade)
     new SpectrumAxisButton(
@@ -110,18 +112,17 @@ public class RobotContainer {
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
     // Auton
-    auto.add(chooser);
+    chooser.setDefaultOption("Move Forward", new MoveForward(intake, drlSubsystem, drive, conveyor));
     chooser.addOption(
         "[NON MIRRORED] 2 Ball Auto", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
     chooser.addOption(
         "[MIRRORED] 2 Ball Auto", new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor));
     chooser.addOption("3 Ball Auto", new ThreeBallAuto(intake, drlSubsystem, drive, conveyor));
-    chooser.addOption("Move Forward", new MoveForward(intake, drlSubsystem, drive, conveyor));
-
+    auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
     
   }
 
   public Command getAutonomousCommand() {
-    return chooser.getSelected();
+    return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
   }
 }

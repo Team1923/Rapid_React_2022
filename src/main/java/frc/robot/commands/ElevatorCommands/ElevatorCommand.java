@@ -25,7 +25,7 @@ public class ElevatorCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.elevator.servoZero();
+    //this.elevator.servoZero();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,10 +34,10 @@ public class ElevatorCommand extends CommandBase {
 
     if (this.elevator.overRevLimit() && xbox.getRightTriggerAxis() != 0) {
       xbox.setRumble(RumbleType.kLeftRumble, 1);
+      this.elevator.setZero();
       
     } else {
       this.elevator.runElevator(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
-      this.elevator.runServo(40);
     }
   }
 
@@ -45,7 +45,7 @@ public class ElevatorCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     this.elevator.setZero();
-    this.elevator.servoZero();
+    //this.elevator.servoZero();
     xbox.setRumble(RumbleType.kLeftRumble, 0);
   }
 

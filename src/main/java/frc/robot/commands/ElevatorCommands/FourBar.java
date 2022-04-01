@@ -4,15 +4,18 @@
 
 package frc.robot.commands.ElevatorCommands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class FourBar extends CommandBase {
   ElevatorSubsystem elevator;
+  XboxController driver;
   /** Creates a new FourBar. */
-  public FourBar(ElevatorSubsystem elevator) {
+  public FourBar(ElevatorSubsystem elevator, XboxController driver) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elevator = elevator;
+    this.driver = driver;
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +27,13 @@ public class FourBar extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.elevator.servoZero();
+    if(driver.getRightBumper()){
+      this.elevator.runServo(40);
+    }
+    else{
+      this.elevator.servoZero();
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

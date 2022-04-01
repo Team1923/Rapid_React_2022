@@ -39,7 +39,7 @@ public class TeleopLauncherLowGoal extends CommandBase {
 
     this.drl.setLauncherSpeedCTR(vel);
 
-    if (this.drl.launcherInRange(Constants.launcherRPMHighGoal)) {
+    if (this.drl.launcherInRange(Constants.launcherRPMLowGoal)) {
       this.operator.setRumble(RumbleType.kRightRumble, 1);
     } else {
       this.operator.setRumble(RumbleType.kRightRumble, 0);

@@ -33,7 +33,7 @@ public class RunIntakeCommand extends CommandBase {
   public void execute() {
     if (controller.getSquareButtonPressed()) {
       intake.runIntake(Constants.intakePercent);
-      conveyor.runConveyor(0, -0.9);
+      conveyor.runConveyor(0, 0.9);
     }
     // intake out button
     if (controller.getCrossButtonPressed()) {
