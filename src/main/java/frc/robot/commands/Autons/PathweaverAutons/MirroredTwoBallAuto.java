@@ -22,7 +22,7 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
   public MirroredTwoBallAuto(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
-      DriveTrainSubsystem driveTrain,
+      DriveTrainSubsystem drive,
       ConveyorSubsystem conveyor) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -30,11 +30,11 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/2BallMirrored.wpilib.json", driveTrain)
+                new FollowPath("pathplanner/generatedJSON/2BallMirrored.wpilib.json", drive)
                     .getTrajectory(),
                 new RunCommand(
                         () -> {
-                          driveTrain.tankDriveVolts(0, 0);
+                          drive.tankDriveVolts(0, 0);
                         })
                     .withTimeout(0.5),
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
@@ -43,10 +43,12 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
                     new SequentialCommandGroup(
                         new WaitCommand(1),
                         new AutoConveyor(
-                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                            .withTimeout(0.3),
-                        new WaitCommand(0.8),
-                        new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))));
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(0.3),
+                            new WaitCommand(0.8),
+                            new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            
+                            
+                            )))));
   }
 }

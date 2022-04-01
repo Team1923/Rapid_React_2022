@@ -30,8 +30,8 @@ public class ShuffleboardDRLCommand extends CommandBase {
   @Override
   public void execute() {
 
-    double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
-    this.drl.setLauncherSpeedCTR(vel);
+    //double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
+    //this.drl.setLauncherSpeedCTR(vel);
   }
 
   // Called once the command ends or is interrupted.

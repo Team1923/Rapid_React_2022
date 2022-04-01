@@ -34,7 +34,7 @@ public class TeleopLauncherHighGoal extends CommandBase {
   @Override
   public void execute() {
 
-    double vel = UnitConversion.RPMtoNativeUnits(this.drl.rpm.getDouble(0));
+    double vel = UnitConversion.RPMtoNativeUnits(Constants.launcherRPMLowGoal);
     this.drl.setLauncherSpeedCTR(vel);
 
     if (this.drl.launcherInRange(Constants.launcherRPMHighGoal)) {

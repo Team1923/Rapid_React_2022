@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
@@ -108,12 +109,14 @@ public class RobotContainer {
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
     // Auton
-    chooser.addOption(
-        "2 Ball Auto [NON MIRRORED]", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
-    chooser.addOption(
-        "2 Ball AUto [MIRRORED]", new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor));
-
     auto.add(chooser);
+    chooser.addOption(
+        "[NON MIRRORED] 2 Ball Auto", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
+    chooser.addOption(
+        "[MIRRORED] 2 Ball Auto", new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor));
+    chooser.addOption("3 Ball Auto", new ThreeBallAuto(intake, drlSubsystem, drive, conveyor));
+
+    
   }
 
   public Command getAutonomousCommand() {

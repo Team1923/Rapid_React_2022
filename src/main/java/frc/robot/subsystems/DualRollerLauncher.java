@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -12,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,28 +26,37 @@ public class DualRollerLauncher extends SubsystemBase {
   public WPI_TalonFX launcherMotorA = new WPI_TalonFX(Constants.WheelMotorCanIDA);
   public WPI_TalonFX launcherMotorB = new WPI_TalonFX(Constants.WheelMotorCANIDB);
 
-  ShuffleboardTab shooterTab = Shuffleboard.getTab("Shooter Tuning Tab");
-
   public RollingAvgDouble rollingRPMAvg = new RollingAvgDouble(.5);
 
-  /* Tuning RPM Pushes */
-  public NetworkTableEntry rpm =
-      shooterTab.add("Target RPM", Constants.launcherRPMHighGoal).getEntry();
 
-  public NetworkTableEntry PValue = shooterTab.add("P VALUE", 0.275).getEntry();
-  public NetworkTableEntry IValue = shooterTab.add("I VALUE", 0.00012).getEntry();
-  public NetworkTableEntry DValue = shooterTab.add("D VALUE", 0).getEntry();
-  public NetworkTableEntry FFValue = shooterTab.add("Feed Forward", 0.03).getEntry();
+  //shuffleboard coachDashboard
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  ShuffleboardLayout launcherLayout =
+  coachTab.getLayout("Launcher", "List Layout").withPosition(2, 0).withSize(1, 5);
 
-  public NetworkTableEntry CURRENTShooterWheelsRPM =
-      shooterTab
-          .add("CURRENT WHEEL RPM", 0)
-          .withPosition(0, 0)
-          .withSize(6, 3)
-          .withWidget(BuiltInWidgets.kGraph)
+  /* Coach Tab Pushes */
+  public NetworkTableEntry coachShooterRPM =
+      launcherLayout.add("Current Shooter RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
+
+
+  public NetworkTableEntry coachShooterTargetRPM =
+      launcherLayout
+          .add("Target Shooter RPM", Constants.launcherRPMHighGoal)
+          .withSize(1, 1)
+          .withPosition(0, 2)
           .getEntry();
 
-  public double wheelTargetRPM;
+
+  public NetworkTableEntry onTarget =
+      launcherLayout
+          .add("On Target", false)
+          .withSize(1, 1)
+          .withPosition(0, 4)
+          .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+          .getEntry();
+        
+
+  public double shooterTargetRPM;
 
   /** Creates a new DualRollerLauncher. */
   public DualRollerLauncher() {
@@ -85,8 +97,7 @@ public class DualRollerLauncher extends SubsystemBase {
   /* Used to set for both auto and teleop.*/
   public void setLauncherSpeedCTR(double spd) {
     launcherMotorA.set(TalonFXControlMode.Velocity, spd);
-    wheelTargetRPM = spd;
-    updateRPM();
+    shooterTargetRPM = spd;
   }
 
   public boolean inRange(double currentRPM, double targetRPM, double threshold) {
@@ -100,23 +111,14 @@ public class DualRollerLauncher extends SubsystemBase {
     return inRange(currentRPM, target, Constants.launcherRPMTolerance);
   }
 
-  public void updateRPM() {
-    CURRENTShooterWheelsRPM.setDouble(
-        UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
-  }
 
   public void setZero() {
     launcherMotorA.set(TalonFXControlMode.PercentOutput, 0);
     launcherMotorB.set(TalonFXControlMode.PercentOutput, 0);
-    wheelTargetRPM = 0;
-    CURRENTShooterWheelsRPM.setDouble(0);
+    shooterTargetRPM = 0;
   }
 
   public void pidShuffleboard() {
-    this.launcherMotorA.config_kP(0, PValue.getDouble(0), 30); // .25
-    this.launcherMotorA.config_kI(0, IValue.getDouble(0), 30); // .0001 per testing?
-    this.launcherMotorA.config_kD(0, DValue.getDouble(0), 30);
-
     this.launcherMotorA.setIntegralAccumulator(
         0); // this is used to reset the integral value when we try again so there's no extra windup
     // left-over from prior uses.
@@ -126,5 +128,14 @@ public class DualRollerLauncher extends SubsystemBase {
   public void periodic() {
     this.rollingRPMAvg.add(
         UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
+  
+  //coach dashboard stuff
+  coachShooterRPM.setDouble(UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
+  if ((launcherInRange(Constants.launcherRPMHighGoal))
+        || (launcherInRange(Constants.launcherRPMLowGoal))) {
+      onTarget.setBoolean(true);
+    } else {
+      onTarget.setBoolean(false);
+    }
   }
 }
