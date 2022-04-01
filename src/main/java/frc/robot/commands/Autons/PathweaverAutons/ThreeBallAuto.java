@@ -30,7 +30,13 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
         // shooting the first ball
         new SequentialCommandGroup(
-            new AutoConveyor(conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(1.5),
+            new ParallelCommandGroup(
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                new SequentialCommandGroup(
+                    new WaitCommand(1),
+                    new AutoConveyor(
+                        conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))).withTimeout(3),
+                        
             // Follow the path to pick up the 2 balls
             new ParallelCommandGroup(
                 new AutoIntake(intake, Constants.intakePercent),
