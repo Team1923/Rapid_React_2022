@@ -94,7 +94,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
     if (leftSpeed > 0.1) {
       leftMotor.set(ControlMode.PercentOutput, 0.8 * leftSpeed);
-      runServo(40);
+      //runServo(40);
     }
   }
 

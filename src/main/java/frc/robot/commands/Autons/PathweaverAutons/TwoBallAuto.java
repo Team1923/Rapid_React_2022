@@ -44,10 +44,10 @@ public class TwoBallAuto extends SequentialCommandGroup {
                     new SequentialCommandGroup(
                         new WaitCommand(1),
                         new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(0.3),
+                            conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent).withTimeout(0.3),
                             new WaitCommand(0.8),
                             new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent)
                             
                             
                             )))));
