@@ -30,7 +30,7 @@ public class BumpFeederHighGoal extends SequentialCommandGroup {
 
     addRequirements(drl, conveyor);
     addCommands(
-        new AutoConveyor(this.conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+        new AutoConveyor(this.conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent)
             .withTimeout(0.2),
         new ParallelCommandGroup(
             new TeleopLauncherHighGoal(this.drl, this.operator),
