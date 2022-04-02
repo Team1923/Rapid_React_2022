@@ -32,10 +32,10 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(0.2),
             new ParallelCommandGroup(
-                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(2),
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(2.5),
                 new SequentialCommandGroup(
-                    new WaitCommand(0.8),
-                    new AutoConveyor(conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(2)
+                    new WaitCommand(0.9),
+                    new AutoConveyor(conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(2.5)
                 )
 
             )
