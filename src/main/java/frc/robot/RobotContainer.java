@@ -37,7 +37,7 @@ public class RobotContainer {
   public static XboxController driver = new XboxController(0);
   public static PS4Controller operator = new PS4Controller(1);
 
-  public static DriveTrainSubsystem drive = new DriveTrainSubsystem();
+  public DriveTrainSubsystem drive = new DriveTrainSubsystem();
 
   public static final ConveyorSubsystem conveyor = new ConveyorSubsystem();
   public static IntakeSubsystem intake = new IntakeSubsystem();
@@ -85,7 +85,8 @@ public class RobotContainer {
     new JoystickButton(operator, 8)
         .toggleWhenPressed(new BumpFeederLowGoal(drlSubsystem, conveyor, operator));
 
-    new JoystickButton(driver, XboxController.Button.kRightBumper.value).whenPressed(new FourBar(elevator, driver));
+    new JoystickButton(driver, XboxController.Button.kRightBumper.value)
+        .whenPressed(new FourBar(elevator, driver));
 
     // drive (arcade)
     new SpectrumAxisButton(
@@ -112,14 +113,14 @@ public class RobotContainer {
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
     // Auton
-    chooser.setDefaultOption("Move Forward", new MoveForward(intake, drlSubsystem, drive, conveyor));
+    chooser.setDefaultOption(
+        "Move Forward", new MoveForward(intake, drlSubsystem, drive, conveyor));
     chooser.addOption(
         "[NON MIRRORED] 2 Ball Auto", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
     chooser.addOption(
         "[MIRRORED] 2 Ball Auto", new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor));
     chooser.addOption("3 Ball Auto", new ThreeBallAuto(intake, drlSubsystem, drive, conveyor));
     auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
-    
   }
 
   public Command getAutonomousCommand() {

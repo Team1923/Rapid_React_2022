@@ -35,38 +35,35 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                 new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(2.5),
                 new SequentialCommandGroup(
                     new WaitCommand(0.9),
-                    new AutoConveyor(conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(2.5)
-                )
+                    new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                        .withTimeout(2.5)))),
 
-            )
-
-        ),
-                        
-            // Follow the path to pick up the 2 balls
-            new ParallelCommandGroup(
-                new AutoIntake(intake, Constants.intakePercent).withTimeout(5),
-                new SequentialCommandGroup(
-                    new FollowPath("pathplanner/generatedJSON/3BallPath.wpilib.json", drive)
-                        .getTrajectory(),
-                    new RunCommand(
-                            () -> {
-                              drive.tankDriveVolts(0, 0);
-                            })
-                        .withTimeout(0.5))),
-
-            // shoot the 2 balls
-
+        // Follow the path to pick up the 2 balls
+        new ParallelCommandGroup(
+            new AutoIntake(intake, Constants.intakePercent).withTimeout(5),
             new SequentialCommandGroup(
-                new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
-                new ParallelCommandGroup(
-                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                    new SequentialCommandGroup(
-                        new WaitCommand(1),
-                        new AutoConveyor(
-                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                            .withTimeout(0.3),
-                        new WaitCommand(0.8),
-                        new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)))));
+                new FollowPath("pathplanner/generatedJSON/3BallPath.wpilib.json", drive)
+                    .getTrajectory(),
+                new RunCommand(
+                        () -> {
+                          drive.tankDriveVolts(0, 0);
+                        })
+                    .withTimeout(0.5))),
+
+        // shoot the 2 balls
+
+        new SequentialCommandGroup(
+            new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
+            new ParallelCommandGroup(
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                new SequentialCommandGroup(
+                    new WaitCommand(1),
+                    new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                        .withTimeout(0.3),
+                    new WaitCommand(0.8),
+                    new AutoConveyor(
+                        conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)))));
   }
 }

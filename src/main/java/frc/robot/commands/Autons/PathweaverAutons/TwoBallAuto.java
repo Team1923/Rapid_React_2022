@@ -11,7 +11,6 @@ import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -44,12 +43,12 @@ public class TwoBallAuto extends SequentialCommandGroup {
                     new SequentialCommandGroup(
                         new WaitCommand(1),
                         new AutoConveyor(
-                            conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent).withTimeout(0.3),
-                            new WaitCommand(0.8),
-                            new AutoConveyor(
-                            conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent)
-                            
-                            
-                            )))));
+                                conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent)
+                            .withTimeout(0.3),
+                        new WaitCommand(0.8),
+                        new AutoConveyor(
+                            conveyor,
+                            -Constants.conveyorPerent,
+                            -Constants.feederWheelsPercent))))));
   }
 }

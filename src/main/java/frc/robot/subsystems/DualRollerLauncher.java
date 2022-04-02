@@ -4,15 +4,12 @@
 
 package frc.robot.subsystems;
 
-import java.util.Map;
-
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -20,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.RollingAvgDouble;
 import frc.robot.utilities.UnitConversion;
+import java.util.Map;
 
 public class DualRollerLauncher extends SubsystemBase {
 
@@ -28,16 +26,14 @@ public class DualRollerLauncher extends SubsystemBase {
 
   public RollingAvgDouble rollingRPMAvg = new RollingAvgDouble(.5);
 
-
-  //shuffleboard coachDashboard
+  // shuffleboard coachDashboard
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
   ShuffleboardLayout launcherLayout =
-  coachTab.getLayout("Launcher", "List Layout").withPosition(2, 0).withSize(1, 5);
+      coachTab.getLayout("Launcher", "List Layout").withPosition(2, 0).withSize(1, 5);
 
   /* Coach Tab Pushes */
   public NetworkTableEntry coachShooterRPM =
       launcherLayout.add("Current Shooter RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
-
 
   public NetworkTableEntry coachShooterTargetRPM =
       launcherLayout
@@ -46,7 +42,6 @@ public class DualRollerLauncher extends SubsystemBase {
           .withPosition(0, 2)
           .getEntry();
 
-
   public NetworkTableEntry onTarget =
       launcherLayout
           .add("On Target", false)
@@ -54,7 +49,6 @@ public class DualRollerLauncher extends SubsystemBase {
           .withPosition(0, 4)
           .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
           .getEntry();
-        
 
   public double shooterTargetRPM;
 
@@ -111,7 +105,6 @@ public class DualRollerLauncher extends SubsystemBase {
     return inRange(currentRPM, target, Constants.launcherRPMTolerance);
   }
 
-
   public void setZero() {
     launcherMotorA.set(TalonFXControlMode.PercentOutput, 0);
     launcherMotorB.set(TalonFXControlMode.PercentOutput, 0);
@@ -128,10 +121,11 @@ public class DualRollerLauncher extends SubsystemBase {
   public void periodic() {
     this.rollingRPMAvg.add(
         UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
-  
-  //coach dashboard stuff
-  coachShooterRPM.setDouble(UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
-  if ((launcherInRange(Constants.launcherRPMHighGoal))
+
+    // coach dashboard stuff
+    coachShooterRPM.setDouble(
+        UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
+    if ((launcherInRange(Constants.launcherRPMHighGoal))
         || (launcherInRange(Constants.launcherRPMLowGoal))) {
       onTarget.setBoolean(true);
     } else {

@@ -27,13 +27,11 @@ public class FourBar extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(driver.getRightBumper()){
+    if (driver.getRightBumper()) {
       this.elevator.runServo(40);
-    }
-    else{
+    } else {
       this.elevator.servoZero();
     }
-    
   }
 
   // Called once the command ends or is interrupted.

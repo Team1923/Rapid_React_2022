@@ -22,7 +22,10 @@ public final class Constants {
   public static final int r2 = 5;
   public static final int r3 = 6;
 
-  public static final SupplyCurrentLimitConfiguration drivetrainCurrentLimit =
+  public static final SupplyCurrentLimitConfiguration drivetrainCurrentLimitForTeleop =
+      new SupplyCurrentLimitConfiguration(true, 60, 65, .2);
+
+  public static final SupplyCurrentLimitConfiguration drivetrainCurrentLimitForAuton =
       new SupplyCurrentLimitConfiguration(true, 60, 80, .2);
 
   // Launcher IDs

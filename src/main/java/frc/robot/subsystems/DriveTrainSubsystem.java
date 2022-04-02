@@ -1,11 +1,10 @@
 package frc.robot.subsystems;
 
-import java.util.Map;
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.math.controller.PIDController;
@@ -24,6 +23,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.can.ctre.status_frame.StatusFrameHelper;
+import java.util.Map;
 
 public class DriveTrainSubsystem extends SubsystemBase {
   private WPI_TalonFX r1 = new WPI_TalonFX(Constants.r1);
@@ -64,9 +64,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l1.configFactoryDefault();
     l2.configFactoryDefault();
     l3.configFactoryDefault();
-
-    r1.configSupplyCurrentLimit(Constants.drivetrainCurrentLimit);
-    l1.configSupplyCurrentLimit(Constants.drivetrainCurrentLimit);
 
     l1.enableVoltageCompensation(true);
     r1.enableVoltageCompensation(true);
@@ -144,6 +141,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     driveLVolts.setDouble(l1.getMotorOutputVoltage());
     driveRVolts.setDouble(r1.getMotorOutputVoltage());
+  }
+
+  public void setCurrentLimit(SupplyCurrentLimitConfiguration config) {
+    r1.configSupplyCurrentLimit(config);
+    l1.configSupplyCurrentLimit(config);
   }
 
   // methods to get everything in correct units
