@@ -123,6 +123,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
+    return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
   }
 }

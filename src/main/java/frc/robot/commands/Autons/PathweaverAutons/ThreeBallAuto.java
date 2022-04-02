@@ -32,10 +32,10 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(0.2),
             new ParallelCommandGroup(
-                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(3),
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(2),
                 new SequentialCommandGroup(
                     new WaitCommand(0.8),
-                    new AutoConveyor(conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent).withTimeout(3)
+                    new AutoConveyor(conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(2)
                 )
 
             )
@@ -44,7 +44,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                         
             // Follow the path to pick up the 2 balls
             new ParallelCommandGroup(
-                new AutoIntake(intake, Constants.intakePercent),
+                new AutoIntake(intake, Constants.intakePercent).withTimeout(5),
                 new SequentialCommandGroup(
                     new FollowPath("pathplanner/generatedJSON/3BallPath.wpilib.json", drive)
                         .getTrajectory(),
