@@ -132,12 +132,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     Pose2d currentPose = m_odometry.getPoseMeters();
 
-    System.out.println("Current Pose: " + getPose().toString());
-    // DriverStation.reportError("Current Heading: " + getHeading(), false);
+    // System.out.println("Current Pose: " + getPose().toString());
+    // // DriverStation.reportError("Current Heading: " + getHeading(), false);
 
-    System.out.println("Right Position Traveled: " + getRightPosition());
+    // System.out.println("Right Position Traveled: " + getRightPosition());
 
-    System.out.println("Left Position Traveled: " + getLeftPosition());
+    // System.out.println("Left Position Traveled: " + getLeftPosition());
 
     driveLVolts.setDouble(l1.getMotorOutputVoltage());
     driveRVolts.setDouble(r1.getMotorOutputVoltage());

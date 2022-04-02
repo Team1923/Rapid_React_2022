@@ -8,6 +8,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -57,7 +58,7 @@ public class RobotContainer {
   public SendableChooser<Command> chooser = new SendableChooser<>();
 
   public RobotContainer() {
-    // LiveWindow.disableAllTelemetry();
+    LiveWindow.disableAllTelemetry();
 
     // intake in (CROSS)
     new JoystickButton(operator, PS4Controller.Button.kCross.value)
