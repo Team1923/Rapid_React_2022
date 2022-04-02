@@ -29,7 +29,7 @@ public class DualRollerLauncher extends SubsystemBase {
   // shuffleboard coachDashboard
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
   ShuffleboardLayout launcherLayout =
-      coachTab.getLayout("Launcher", "List Layout").withPosition(2, 0).withSize(1, 5);
+      coachTab.getLayout("Launcher", "List Layout").withPosition(6, 0).withSize(1, 5);
 
   /* Coach Tab Pushes */
   public NetworkTableEntry coachShooterRPM =
@@ -49,6 +49,15 @@ public class DualRollerLauncher extends SubsystemBase {
           .withPosition(0, 4)
           .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
           .getEntry();
+  
+  
+  public NetworkTableEntry isSpinning =
+          launcherLayout
+              .add("SPINNING:", false)
+              .withSize(1, 1)
+              .withPosition(0, 8)
+              .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+              .getEntry();
 
   public double shooterTargetRPM;
 
@@ -130,6 +139,13 @@ public class DualRollerLauncher extends SubsystemBase {
       onTarget.setBoolean(true);
     } else {
       onTarget.setBoolean(false);
+    }
+
+    if(launcherMotorA.getMotorOutputVoltage() > 0.5){
+      isSpinning.setBoolean(true);
+    }
+    else{
+      isSpinning.setBoolean(false);
     }
   }
 }
