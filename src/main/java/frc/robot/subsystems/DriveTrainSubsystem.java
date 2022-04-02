@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -15,6 +17,10 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.can.ctre.status_frame.StatusFrameHelper;
@@ -98,6 +104,27 @@ public class DriveTrainSubsystem extends SubsystemBase {
     resetOdometry(new Pose2d());
 
     zeroHeading();
+
+    ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+    ShuffleboardLayout driveLayout =
+        coachTab.getLayout("Drivetrain", "List Layout").withPosition(1, 0).withSize(2, 5);
+
+    driveLVolts =
+        driveLayout
+            .add("LVolts", 0)
+            .withWidget(BuiltInWidgets.kNumberBar)
+            .withSize(2, 1)
+            .withPosition(0, 0)
+            .withProperties(Map.of("Min", -12, "Max", 12, "Title", "Leftside Volts"))
+            .getEntry();
+    driveRVolts =
+        driveLayout
+            .add("RVolts", 0)
+            .withWidget(BuiltInWidgets.kNumberBar)
+            .withSize(2, 1)
+            .withPosition(0, 1)
+            .withProperties(Map.of("Min", -12, "Max", 12, "Title", "Rightside Volts"))
+            .getEntry();
   }
 
   @Override
@@ -114,6 +141,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     System.out.println("Right Position Traveled: " + getRightPosition());
 
     System.out.println("Left Position Traveled: " + getLeftPosition());
+
+    driveLVolts.setDouble(l1.getMotorOutputVoltage());
+    driveRVolts.setDouble(r1.getMotorOutputVoltage());
   }
 
   // methods to get everything in correct units
