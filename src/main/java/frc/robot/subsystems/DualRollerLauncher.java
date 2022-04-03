@@ -49,15 +49,14 @@ public class DualRollerLauncher extends SubsystemBase {
           .withPosition(0, 4)
           .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
           .getEntry();
-  
-  
+
   public NetworkTableEntry isSpinning =
-          launcherLayout
-              .add("SPINNING:", false)
-              .withSize(1, 1)
-              .withPosition(0, 8)
-              .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
-              .getEntry();
+      launcherLayout
+          .add("SPINNING:", false)
+          .withSize(1, 1)
+          .withPosition(0, 8)
+          .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
+          .getEntry();
 
   public double shooterTargetRPM;
 
@@ -141,10 +140,9 @@ public class DualRollerLauncher extends SubsystemBase {
       onTarget.setBoolean(false);
     }
 
-    if(launcherMotorA.getMotorOutputVoltage() > 0.5){
+    if (launcherMotorA.getMotorOutputVoltage() > 0.5) {
       isSpinning.setBoolean(true);
-    }
-    else{
+    } else {
       isSpinning.setBoolean(false);
     }
   }

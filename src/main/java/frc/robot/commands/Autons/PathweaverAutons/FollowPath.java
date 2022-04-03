@@ -22,21 +22,16 @@ public class FollowPath {
 
   private DriveTrainSubsystem driveTrain;
   private Trajectory trajectory = new Trajectory();
+  private boolean setInitialHeading = false;
 
   public FollowPath(String path, DriveTrainSubsystem driveTrain) {
     this.path = path;
     this.driveTrain = driveTrain;
-    driveTrain.resetEncoders();
-    driveTrain.zeroHeading();
-    driveTrain.setPose(0, 0);
   }
 
-  public FollowPath(String path, DriveTrainSubsystem driveTrain, boolean reversed) {
-    this.path = path;
-    this.driveTrain = driveTrain;
-    // driveTrain.resetEncoders();
-    // driveTrain.setHeading(180);
-    // driveTrain.setPose(0, 0);
+  public FollowPath setInitialHeading(boolean setHeading) {
+    this.setInitialHeading = setHeading;
+    return this;
   }
 
   public Pose2d getInitialPose() {
@@ -49,6 +44,14 @@ public class FollowPath {
       this.trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     } catch (IOException ex) {
       DriverStation.reportError("not opening", ex.getStackTrace());
+    }
+
+    System.out.println(
+        "[path] running path for seconds (count): " + (trajectory.getTotalTimeSeconds()));
+
+    if (this.setInitialHeading) {
+      driveTrain.setPose(trajectory.getInitialPose());
+      System.out.println("Start of path, reset pose.");
     }
 
     RamseteCommand ramseteCommand =
@@ -64,7 +67,6 @@ public class FollowPath {
             driveTrain::tankDriveVolts,
             driveTrain);
 
-    driveTrain.setPose(trajectory.getInitialPose());
     return ramseteCommand;
   }
 }

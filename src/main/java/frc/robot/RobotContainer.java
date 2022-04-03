@@ -15,10 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
-import frc.robot.commands.Autons.PathweaverAutons.MoveForward;
-import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
-import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.FourBallStub;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
@@ -114,17 +111,18 @@ public class RobotContainer {
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
     // Auton
-    chooser.setDefaultOption(
-        "Move Forward", new MoveForward(intake, drlSubsystem, drive, conveyor));
-    chooser.addOption(
-        "[NON MIRRORED] 2 Ball Auto", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
-    chooser.addOption(
-        "[MIRRORED] 2 Ball Auto", new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor));
-    chooser.addOption("3 Ball Auto", new ThreeBallAuto(intake, drlSubsystem, drive, conveyor));
-    auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
+    // chooser.setDefaultOption(
+    //     "Move Forward", new MoveForward(intake, drlSubsystem, drive, conveyor));
+    // chooser.addOption(
+    //     "[NON MIRRORED] 2 Ball Auto", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
+    // chooser.addOption(
+    //     "[MIRRORED] 2 Ball Auto", new MirroredTwoBallAuto(intake, drlSubsystem, drive,
+    // conveyor));
+    // chooser.addOption("3 Ball Auto", new ThreeBallAuto(intake, drlSubsystem, drive, conveyor));
+    // auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
   public Command getAutonomousCommand() {
-    return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+    return new FourBallStub(intake, drlSubsystem, drive, conveyor);
   }
 }
