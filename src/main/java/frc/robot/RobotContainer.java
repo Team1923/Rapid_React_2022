@@ -86,7 +86,7 @@ public class RobotContainer {
     new JoystickButton(operator, 8)
         .toggleWhenPressed(new BumpFeederLowGoal(drlSubsystem, conveyor, operator));
 
-    new JoystickButton(driver, XboxController.Button.kRightBumper.value)
+    new JoystickButton(driver, XboxController.Button.kLeftBumper.value)
         .whenPressed(new FourBar(elevator, driver));
 
     // drive (arcade)

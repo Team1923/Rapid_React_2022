@@ -32,12 +32,12 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(0.2),
             new ParallelCommandGroup(
-                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(2.5),
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(2),
                 new SequentialCommandGroup(
                     new WaitCommand(0.9),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                        .withTimeout(2.5)))),
+                        .withTimeout(2)))),
 
         // Follow the path to pick up the 2 balls
         new ParallelCommandGroup(
@@ -54,15 +54,20 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         // shoot the 2 balls
 
         new SequentialCommandGroup(
-            new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
+            new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.35),
             new ParallelCommandGroup(
                 new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                new AutoIntake(intake, Constants.intakePercent),
                 new SequentialCommandGroup(
                     new WaitCommand(1),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                         .withTimeout(0.3),
-                    new WaitCommand(0.8),
+                    new WaitCommand(0.3),
+                    new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                        .withTimeout(0.3),
+                        new WaitCommand(0.3),
                     new AutoConveyor(
                         conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)))));
   }
