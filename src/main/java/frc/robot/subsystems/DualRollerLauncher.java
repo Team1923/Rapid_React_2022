@@ -66,7 +66,7 @@ public class DualRollerLauncher extends SubsystemBase {
     launcherMotorA.configFactoryDefault();
     launcherMotorB.configFactoryDefault();
 
-    launcherMotorB.follow(launcherMotorA);
+    //launcherMotorB.follow(launcherMotorA);
 
     this.launcherMotorB.setNeutralMode(NeutralMode.Coast);
     this.launcherMotorA.setNeutralMode(NeutralMode.Coast);
@@ -79,16 +79,26 @@ public class DualRollerLauncher extends SubsystemBase {
     launcherMotorA.configPeakOutputForward(1, 30);
     launcherMotorA.configPeakOutputReverse(-1, 30);
 
+    launcherMotorB.configNominalOutputForward(0, 30);
+    launcherMotorB.configNominalOutputReverse(0, 30);
+    launcherMotorB.configPeakOutputForward(1, 30);
+    launcherMotorB.configPeakOutputReverse(-1, 30);
+
     launcherMotorA.configVoltageCompSaturation(12);
     launcherMotorB.configVoltageCompSaturation(12);
 
     this.launcherMotorA.config_kP(0, .275, 30);
-    this.launcherMotorA.config_kI(0, .00012, 30);
+    this.launcherMotorA.config_kI(0, .00018, 30);
     this.launcherMotorA.config_kD(0, 0, 30);
     this.launcherMotorA.config_kF(0, .03, 30);
 
+    this.launcherMotorB.config_kP(0, .275, 30);
+    this.launcherMotorB.config_kI(0, .00018, 30);
+    this.launcherMotorB.config_kD(0, 0, 30);
+    this.launcherMotorB.config_kF(0, .03, 30);
+
     launcherMotorA.setInverted(InvertType.None); // can change this without changing below logic.
-    launcherMotorB.setInverted(InvertType.OpposeMaster);
+    launcherMotorB.setInverted(InvertType.InvertMotorOutput);
   }
 
   public void setLauncherSpeedRPM(double spd) {
@@ -99,6 +109,7 @@ public class DualRollerLauncher extends SubsystemBase {
   /* Used to set for both auto and teleop.*/
   public void setLauncherSpeedCTR(double spd) {
     launcherMotorA.set(TalonFXControlMode.Velocity, spd);
+    launcherMotorB.set(TalonFXControlMode.Velocity, spd);
     shooterTargetRPM = spd;
   }
 

@@ -15,7 +15,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Autons.PathweaverAutons.ElimTwoBall;
+import frc.robot.commands.Autons.PathweaverAutons.FourBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.FourBallStub;
+import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
@@ -123,6 +127,9 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new FourBallStub(intake, drlSubsystem, drive, conveyor);
+    //return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+    //return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
+    return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
+    //return new FourBallStub(intake, drlSubsystem, drive, conveyor);
   }
 }

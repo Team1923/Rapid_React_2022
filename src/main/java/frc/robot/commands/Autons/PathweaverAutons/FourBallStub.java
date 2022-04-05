@@ -1,5 +1,6 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -26,8 +27,9 @@ public class FourBallStub extends SequentialCommandGroup {
             new SequentialCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/testForward.wpilib.json", drive)
                     .setInitialHeading(true)
-                    .getTrajectory(),
-                new RunCommand(
+                    .getTrajectory()
+                    .withTimeout(10),
+                new InstantCommand(
                     () -> {
                       drive.tankDriveVolts(0, 0);
                     }))),

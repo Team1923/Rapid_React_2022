@@ -26,6 +26,7 @@ public class MoveForward extends SequentialCommandGroup {
             new AutoIntake(intake, Constants.intakePercent),
             new ParallelCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/MoveForward.wpilib.json", drive)
+                    .setInitialHeading(true)
                     .getTrajectory()
                     .andThen(() -> drive.tankDriveVolts(0, 0)))));
   }

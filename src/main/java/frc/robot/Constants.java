@@ -57,7 +57,7 @@ public final class Constants {
       2400; // TOOD: Verify.  This is mathematically similar to the "working" shot we had at 1600RPM
   // * 1.5 -> 2400.
   public static final int launcherRPMHighGoal = 4050;
-  public static final int launcherRPMTolerance = 45; // experimentally found.
+  public static final int launcherRPMTolerance = 40; // experimentally found.
 
   // pigeon ID
   public static final int pigeon = 14;

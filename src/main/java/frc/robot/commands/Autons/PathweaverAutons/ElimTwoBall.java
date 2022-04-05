@@ -1,7 +1,7 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -17,9 +17,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class MirroredTwoBallAuto extends SequentialCommandGroup {
+public class ElimTwoBall extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public MirroredTwoBallAuto(
+  public ElimTwoBall(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -30,25 +30,51 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/2BallMirrored.wpilib.json", drive)
+
+                // move forward, get ball 2
+                new FollowPath("pathplanner/generatedJSON/elim2BallForward.wpilib.json", drive)
                     .setInitialHeading(true)
                     .getTrajectory()
-                    .withTimeout(4.1),
-                new RunCommand(
-                        () -> {
-                          drive.tankDriveVolts(0, 0);
-                        })
-                    .withTimeout(0.1),
+                    .withTimeout(10),
+                new InstantCommand(
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }),
+                new WaitCommand(0.7),
+
+                // move backward into fender
+                new FollowPath("pathplanner/generatedJSON/elim2BallBackward.wpilib.json", drive)
+                    .getTrajectory()
+                    .withTimeout(10),
+                new InstantCommand(
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }),
+
+                // shoot balls
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
                 new ParallelCommandGroup(
-                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1.8),
                     new SequentialCommandGroup(
-                        new WaitCommand(0.15),
+                        new WaitCommand(0.6),
                         new AutoConveyor(
                                 conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                             .withTimeout(0.2),
-                        new WaitCommand(0.25),
+                        new WaitCommand(0.4),
                         new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))));
+                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(0.2),
+                        new WaitCommand(0.3),
+                        new AutoConveyor(
+                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            .withTimeout(0.6))),
+
+                // get out of the way
+                new FollowPath("pathplanner/generatedJSON/elim2BallOutOfWay.wpilib.json", drive)
+                    .getTrajectory()
+                    .withTimeout(10),
+                new InstantCommand(
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }))));
   }
 }

@@ -32,19 +32,21 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new SequentialCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(0.2),
             new ParallelCommandGroup(
-                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(2),
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(0.9),
                 new SequentialCommandGroup(
-                    new WaitCommand(0.9),
+                    new WaitCommand(0.2),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                        .withTimeout(2)))),
+                        .withTimeout(0.7)))),
 
         // Follow the path to pick up the 2 balls
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(5),
             new SequentialCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/3BallPath.wpilib.json", drive)
-                    .getTrajectory(),
+                    .setInitialHeading(true)
+                    .getTrajectory()
+                    .withTimeout(7.8),
                 new RunCommand(
                         () -> {
                           drive.tankDriveVolts(0, 0);
@@ -59,15 +61,15 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                 new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
                 new AutoIntake(intake, Constants.intakePercent),
                 new SequentialCommandGroup(
-                    new WaitCommand(1),
+                    new WaitCommand(0.15),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                        .withTimeout(0.3),
-                    new WaitCommand(0.3),
+                        .withTimeout(0.2),
+                    new WaitCommand(0.2),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                        .withTimeout(0.3),
-                        new WaitCommand(0.3),
+                        .withTimeout(0.2),
+                    new WaitCommand(0.2),
                     new AutoConveyor(
                         conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)))));
   }
