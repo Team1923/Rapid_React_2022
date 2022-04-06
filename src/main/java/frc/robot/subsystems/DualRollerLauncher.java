@@ -32,8 +32,10 @@ public class DualRollerLauncher extends SubsystemBase {
       coachTab.getLayout("Launcher", "List Layout").withPosition(6, 0).withSize(1, 5);
 
   /* Coach Tab Pushes */
-  public NetworkTableEntry coachShooterRPM =
-      launcherLayout.add("Current Shooter RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
+  public NetworkTableEntry coachShooter1RPM =
+      launcherLayout.add("Current MOTOR 1 RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
+  public NetworkTableEntry coachShooter2RPM =
+      launcherLayout.add("Current MOTOR 2 RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
 
   public NetworkTableEntry coachShooterTargetRPM =
       launcherLayout
@@ -66,7 +68,7 @@ public class DualRollerLauncher extends SubsystemBase {
     launcherMotorA.configFactoryDefault();
     launcherMotorB.configFactoryDefault();
 
-    //launcherMotorB.follow(launcherMotorA);
+    // launcherMotorB.follow(launcherMotorA);
 
     this.launcherMotorB.setNeutralMode(NeutralMode.Coast);
     this.launcherMotorA.setNeutralMode(NeutralMode.Coast);
@@ -106,6 +108,27 @@ public class DualRollerLauncher extends SubsystemBase {
     setLauncherSpeedCTR(spd);
   }
 
+
+
+
+
+  // public void runOneMotor(double spd){
+  //   double speed  = UnitConversion.nativeUnitstoRPM(spd);
+  //   launcherMotorA.set(TalonFXControlMode.Velocity, speed);
+
+  // }
+
+  // public void runOtherMotor(double spd){
+  //   double speed  = UnitConversion.nativeUnitstoRPM(spd);
+  //   launcherMotorB.set(TalonFXControlMode.Velocity, speed);
+
+  // }
+
+
+
+
+
+
   /* Used to set for both auto and teleop.*/
   public void setLauncherSpeedCTR(double spd) {
     launcherMotorA.set(TalonFXControlMode.Velocity, spd);
@@ -142,8 +165,10 @@ public class DualRollerLauncher extends SubsystemBase {
         UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
 
     // coach dashboard stuff
-    coachShooterRPM.setDouble(
+    coachShooter1RPM.setDouble(
         UnitConversion.nativeUnitstoRPM(launcherMotorA.getSelectedSensorVelocity()));
+    coachShooter2RPM.setDouble(
+        UnitConversion.nativeUnitstoRPM(launcherMotorB.getSelectedSensorVelocity()));
     if ((launcherInRange(Constants.launcherRPMHighGoal))
         || (launcherInRange(Constants.launcherRPMLowGoal))) {
       onTarget.setBoolean(true);

@@ -17,9 +17,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FourBallAuto extends SequentialCommandGroup {
+public class Different4Ball extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public FourBallAuto(
+  public Different4Ball(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -29,6 +29,7 @@ public class FourBallAuto extends SequentialCommandGroup {
     addCommands(
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
+            //new WaitCommand(0.05),
             new SequentialCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/StartFourBall.wpilib.json", drive)
                     .setInitialHeading(true)
@@ -40,7 +41,7 @@ public class FourBallAuto extends SequentialCommandGroup {
                     }),
                 new FollowPath("pathplanner/generatedJSON/ShootFirstFourBall.wpilib.json", drive)
                     .getTrajectory()
-                    .withTimeout(2.1),
+                    .withTimeout(2.8),
                 new InstantCommand(
                     () -> {
                       drive.tankDriveVolts(0, 0);
@@ -51,33 +52,30 @@ public class FourBallAuto extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1),
                         new SequentialCommandGroup(
-                            new WaitCommand(0.2),
+                            new WaitCommand(0.4),
                             new AutoConveyor(
                                     conveyor,
                                     Constants.conveyorPerent,
                                     Constants.feederWheelsPercent)
                                 .withTimeout(0.2),
-                            new WaitCommand(0.2),
+                            new WaitCommand(0.4),
                             new AutoConveyor(
                                     conveyor,
                                     Constants.conveyorPerent,
                                     Constants.feederWheelsPercent)
-                                .withTimeout(0.4)))
-                    .withTimeout(1),
-                new FollowPath("pathplanner/generatedJSON/GetTwoFourBall.wpilib.json", drive)
-                    .getTrajectory()
-                    .withTimeout(3.1),
+                                .withTimeout(0.5))
+                                
+                                
+                                ),
+                    //.withTimeout(1)
+                new FollowPath("pathplanner/generatedJSON/getThreeBallFourth.wpilib.json", drive)
+                    .getTrajectory(),
+                    //.withTimeout(3.1),
                 new InstantCommand(
                     () -> {
                       drive.tankDriveVolts(0, 0);
                     }),
-                new FollowPath("pathplanner/generatedJSON/ReturnFourBall.wpilib.json", drive)
-                    .getTrajectory()
-                    .withTimeout(3.6),
-                new InstantCommand(
-                    () -> {
-                      drive.tankDriveVolts(0, 0);
-                    }),
+                    
                 new SequentialCommandGroup(
                     new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal)
                         .withTimeout(.35),
@@ -90,13 +88,13 @@ public class FourBallAuto extends SequentialCommandGroup {
                                     Constants.conveyorPerent,
                                     Constants.feederWheelsPercent)
                                 .withTimeout(0.2),
-                            new WaitCommand(0.2),
+                            new WaitCommand(0.3),
                             new AutoConveyor(
                                     conveyor,
                                     Constants.conveyorPerent,
                                     Constants.feederWheelsPercent)
                                 .withTimeout(0.2),
-                            new WaitCommand(0.2),
+                            new WaitCommand(0.3),
                             new AutoConveyor(
                                 conveyor,
                                 Constants.conveyorPerent,

@@ -81,6 +81,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    m_robotContainer.drlSubsystem.setLauncherSpeedCTR(0);
   }
 
   /** This function is called periodically during operator control. */

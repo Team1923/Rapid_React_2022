@@ -62,7 +62,8 @@ public class ElimTwoBall extends SequentialCommandGroup {
                             .withTimeout(0.2),
                         new WaitCommand(0.4),
                         new AutoConveyor(
-                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent).withTimeout(0.2),
+                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            .withTimeout(0.2),
                         new WaitCommand(0.3),
                         new AutoConveyor(
                                 conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)

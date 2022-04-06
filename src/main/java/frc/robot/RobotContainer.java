@@ -14,11 +14,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Autons.PathweaverAutons.ElimTwoBall;
+import frc.robot.commands.Autons.PathweaverAutons.Different4Ball;
 import frc.robot.commands.Autons.PathweaverAutons.FourBallAuto;
-import frc.robot.commands.Autons.PathweaverAutons.FourBallStub;
-import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
@@ -90,6 +89,25 @@ public class RobotContainer {
     new JoystickButton(driver, XboxController.Button.kLeftBumper.value)
         .whenPressed(new FourBar(elevator, driver));
 
+
+
+    //Shooter single motor movement
+
+    // new SpectrumAxisButton(
+    //     operator, 
+    //     PS4Controller.Axis.kLeftX.value, 0.05,
+    //     SpectrumAxisButton.ThresholdType.DEADBAND).whileActiveOnce(new RunCommand(()->{
+    //         drlSubsystem.runOneMotor(2000);
+    //     }));
+
+    //     new SpectrumAxisButton(
+    //         operator, 
+    //         PS4Controller.Axis.kRightX.value, 0.05,
+    //         SpectrumAxisButton.ThresholdType.DEADBAND).whileActiveOnce(new RunCommand(()->{
+    //             drlSubsystem.runOtherMotor(2000);
+    //         }));
+
+
     // drive (arcade)
     new SpectrumAxisButton(
             driver,
@@ -127,9 +145,15 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    //return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
-    //return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
-    return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
-    //return new FourBallStub(intake, drlSubsystem, drive, conveyor);
+     //return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+    // return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
+
+   //return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
+
+      return new Different4Ball(intake, drlSubsystem, drive, conveyor);
+
+
+
+    // return new FourBallStub(intake, drlSubsystem, drive, conveyor);
   }
 }
