@@ -58,8 +58,6 @@ public class TrollTwoBall extends SequentialCommandGroup {
         // spit-out
         new ParallelCommandGroup(
             new AutoConveyor(conveyor, -0.3, -Constants.feederWheelsPercent),
-            new AutoIntake(intake, -0.2)
-        )
-        );
+            new AutoIntake(intake, -0.2)));
   }
 }

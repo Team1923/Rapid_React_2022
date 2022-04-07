@@ -34,7 +34,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
             new ParallelCommandGroup(
                 new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(0.9),
                 new SequentialCommandGroup(
-                    new WaitCommand(0.2),
+                    new WaitCommand(0.3),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                         .withTimeout(0.7)))),
@@ -43,7 +43,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(5),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/3BallPath.wpilib.json", drive)
+                new FollowPath("pathplanner/generatedJSON/3BallPath14.wpilib.json", drive)
                     .setInitialHeading(true)
                     .getTrajectory()
                     .withTimeout(7.8),
@@ -61,11 +61,11 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                 new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
                 new AutoIntake(intake, Constants.intakePercent),
                 new SequentialCommandGroup(
-                    new WaitCommand(0.15),
+                    new WaitCommand(0.3),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                         .withTimeout(0.2),
-                    new WaitCommand(0.2),
+                    new WaitCommand(0.3),
                     new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                         .withTimeout(0.2),
