@@ -2,9 +2,6 @@ package frc.robot.commands.Autons.PathweaverAutons;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -30,7 +27,7 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ParallelCommandGroup( 
+        new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
             new SequentialCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/2BallMirrored.wpilib.json", drive)
@@ -38,9 +35,9 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
                     .getTrajectory()
                     .withTimeout(4.1),
                 new InstantCommand(
-                        () -> {
-                          drive.tankDriveVolts(0, 0);
-                        }),
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }),
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
                 new ParallelCommandGroup(
                     new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),

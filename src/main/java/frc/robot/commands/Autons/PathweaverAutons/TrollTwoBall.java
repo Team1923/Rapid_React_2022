@@ -2,16 +2,13 @@ package frc.robot.commands.Autons.PathweaverAutons;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.AutonBumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
-import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherHighGoal;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -31,7 +28,7 @@ public class TrollTwoBall extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ParallelCommandGroup( 
+        new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(8.5),
             new SequentialCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/2BallMirrored.wpilib.json", drive)
@@ -39,28 +36,30 @@ public class TrollTwoBall extends SequentialCommandGroup {
                     .getTrajectory()
                     .withTimeout(4.1),
                 new InstantCommand(
-                        () -> {
-                          drive.tankDriveVolts(0, 0);
-                        }),
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }),
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
                 new ParallelRaceGroup(
-                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1),
+                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1.5),
                     new SequentialCommandGroup(
-                        new WaitCommand(0.15),
+                        new WaitCommand(0.3),
                         new AutoConveyor(
                                 conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                            .withTimeout(0.2),
-                        new WaitCommand(0.25),
+                            .withTimeout(0.3),
+                        new WaitCommand(0.3),
                         new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))),
-                //trolling heh
-                new FollowPath("pathplanner/generatedJSON/TrollPath.wpilib.json", drive).getTrajectory().withTimeout(4)
-                            
-                            
-                            
-                            )),
-                //spit-out
-                new AutoIntake(intake, -Constants.intakePercent)            
-                );
+                // trolling heh
+                new FollowPath("pathplanner/generatedJSON/TrollPath.wpilib.json", drive)
+                    .getTrajectory()
+                    .withTimeout(4))),
+
+        // spit-out
+        new ParallelCommandGroup(
+            new AutoConveyor(conveyor, -0.3, -Constants.feederWheelsPercent),
+            new AutoIntake(intake, -0.2)
+        )
+        );
   }
 }

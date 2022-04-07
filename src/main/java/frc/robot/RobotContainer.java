@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.PathweaverAutons.Different4Ball;
+import frc.robot.commands.Autons.PathweaverAutons.FourBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.TrollTwoBall;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
@@ -140,12 +143,14 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
-    // return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
+    //return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
 
-    // return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
+    return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
 
-    return new Different4Ball(intake, drlSubsystem, drive, conveyor);
+    //return new Different4Ball(intake, drlSubsystem, drive, conveyor);
 
     // return new FourBallStub(intake, drlSubsystem, drive, conveyor);
+
+    //return new TrollTwoBall(intake, drlSubsystem, drive, conveyor);
   }
 }
