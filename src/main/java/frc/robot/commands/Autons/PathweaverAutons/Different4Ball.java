@@ -29,7 +29,7 @@ public class Different4Ball extends SequentialCommandGroup {
     addCommands(
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
-            //new WaitCommand(0.05),
+            // new WaitCommand(0.05),
             new SequentialCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/StartFourBall.wpilib.json", drive)
                     .setInitialHeading(true)
@@ -50,32 +50,25 @@ public class Different4Ball extends SequentialCommandGroup {
                 // shoot balls
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
                 new ParallelCommandGroup(
-                        new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1),
-                        new SequentialCommandGroup(
-                            new WaitCommand(0.4),
-                            new AutoConveyor(
-                                    conveyor,
-                                    Constants.conveyorPerent,
-                                    Constants.feederWheelsPercent)
-                                .withTimeout(0.2),
-                            new WaitCommand(0.4),
-                            new AutoConveyor(
-                                    conveyor,
-                                    Constants.conveyorPerent,
-                                    Constants.feederWheelsPercent)
-                                .withTimeout(0.5))
-                                
-                                
-                                ),
-                    //.withTimeout(1)
+                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1),
+                    new SequentialCommandGroup(
+                        new WaitCommand(0.4),
+                        new AutoConveyor(
+                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            .withTimeout(0.2),
+                        new WaitCommand(0.4),
+                        new AutoConveyor(
+                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            .withTimeout(0.5))),
+
+                // .withTimeout(1)
                 new FollowPath("pathplanner/generatedJSON/getThreeBallFourth.wpilib.json", drive)
                     .getTrajectory(),
-                    //.withTimeout(3.1),
+                // .withTimeout(3.1),
                 new InstantCommand(
                     () -> {
                       drive.tankDriveVolts(0, 0);
                     }),
-                    
                 new SequentialCommandGroup(
                     new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal)
                         .withTimeout(.35),

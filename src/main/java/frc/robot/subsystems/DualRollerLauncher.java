@@ -108,10 +108,6 @@ public class DualRollerLauncher extends SubsystemBase {
     setLauncherSpeedCTR(spd);
   }
 
-
-
-
-
   // public void runOneMotor(double spd){
   //   double speed  = UnitConversion.nativeUnitstoRPM(spd);
   //   launcherMotorA.set(TalonFXControlMode.Velocity, speed);
@@ -123,11 +119,6 @@ public class DualRollerLauncher extends SubsystemBase {
   //   launcherMotorB.set(TalonFXControlMode.Velocity, speed);
 
   // }
-
-
-
-
-
 
   /* Used to set for both auto and teleop.*/
   public void setLauncherSpeedCTR(double spd) {

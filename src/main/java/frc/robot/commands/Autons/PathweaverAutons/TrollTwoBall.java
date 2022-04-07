@@ -11,6 +11,7 @@ import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.AutonBumpFeeder;
 import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
+import frc.robot.commands.DualRollerLauncherCommand.TeleopLauncherHighGoal;
 import frc.robot.commands.IntakeCommands.AutoIntake;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -20,9 +21,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class MirroredTwoBallAuto extends SequentialCommandGroup {
+public class TrollTwoBall extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public MirroredTwoBallAuto(
+  public TrollTwoBall(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -31,7 +32,7 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ParallelCommandGroup( 
-            new AutoIntake(intake, Constants.intakePercent),
+            new AutoIntake(intake, Constants.intakePercent).withTimeout(8.5),
             new SequentialCommandGroup(
                 new FollowPath("pathplanner/generatedJSON/2BallMirrored.wpilib.json", drive)
                     .setInitialHeading(true)
@@ -42,8 +43,8 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
                           drive.tankDriveVolts(0, 0);
                         }),
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
-                new ParallelCommandGroup(
-                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                new ParallelRaceGroup(
+                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1),
                     new SequentialCommandGroup(
                         new WaitCommand(0.15),
                         new AutoConveyor(
@@ -51,6 +52,15 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
                             .withTimeout(0.2),
                         new WaitCommand(0.25),
                         new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))));
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))),
+                //trolling heh
+                new FollowPath("pathplanner/generatedJSON/TrollPath.wpilib.json", drive).getTrajectory().withTimeout(4)
+                            
+                            
+                            
+                            )),
+                //spit-out
+                new AutoIntake(intake, -Constants.intakePercent)            
+                );
   }
 }
