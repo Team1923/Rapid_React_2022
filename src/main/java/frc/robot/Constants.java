@@ -52,12 +52,15 @@ public final class Constants {
   public static final double conveyorPerent = 0.9;
   public static final double feederWheelsPercent = 0.3;
 
+  public static final SupplyCurrentLimitConfiguration conveyorCurrentLimit =
+      new SupplyCurrentLimitConfiguration(true, 30, 40, .2);
+
   // to be changed, RPM targets for high and low shots at fender.
   public static final double launcherRPMLowGoal =
       2400; // TOOD: Verify.  This is mathematically similar to the "working" shot we had at 1600RPM
   // * 1.5 -> 2400.
   public static final int launcherRPMHighGoal = 4050;
-  public static final int launcherRPMTolerance = 40; // experimentally found.
+  public static final int launcherRPMTolerance = 35; // experimentally found.
 
   // pigeon ID
   public static final int pigeon = 14;
@@ -82,7 +85,7 @@ public final class Constants {
 
   // encoder counts per revolution
   public static final int oneRevEncodeCount = 2048;
-
+  
   // wheel info
   public static final double wheelDiameter = UnitConversion.inchesToMeters(4.445);
   public static final double wheelCircumeference = wheelDiameter * Math.PI;

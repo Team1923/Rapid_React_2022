@@ -132,7 +132,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     Pose2d currentPose = m_odometry.getPoseMeters();
 
-    System.out.println("Current Pose: " + getPose().toString());
+    // System.out.println("Current Pose: " + getPose().toString());
     // // DriverStation.reportError("Current Heading: " + getHeading(), false);
 
     // System.out.println("Right Position Traveled: " + getRightPosition());

@@ -15,12 +15,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Autons.PathweaverAutons.FourBallAuto;
-import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
-import frc.robot.commands.Autons.PathweaverAutons.TrollTwoBall;
+import frc.robot.commands.Autons.PathweaverAutons.GoonBall;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.LaunchBalls;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.ElevatorCommands.FourBar;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
@@ -78,14 +77,18 @@ public class RobotContainer {
 
     // shoot ball High Goal (TRIANGLE)
 
+    // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
+    //     .toggleWhenPressed(new BumpFeederHighGoal(drlSubsystem, conveyor, operator));
+
+    // experimental
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new BumpFeederHighGoal(drlSubsystem, conveyor, operator));
+    .toggleWhenPressed(new LaunchBalls(drlSubsystem, conveyor, intake));
 
     // shoot ball Low Goal (OPTION = 8)
     new JoystickButton(operator, 8)
         .toggleWhenPressed(new BumpFeederLowGoal(drlSubsystem, conveyor, operator));
 
-    new JoystickButton(driver, XboxController.Button.kRightBumper.value)
+    new JoystickButton(driver, XboxController.Button.kLeftBumper.value)
         .whenPressed(new FourBar(elevator, driver));
 
     // Shooter single motor movement
@@ -141,15 +144,16 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
+    // return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
     // return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
 
-    //return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
+    // return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
 
     // return new Different4Ball(intake, drlSubsystem, drive, conveyor);
 
     // return new FourBallStub(intake, drlSubsystem, drive, conveyor);
 
-    //return new TrollTwoBall(intake, drlSubsystem, drive, conveyor);
+    // return new TrollTwoBall(intake, drlSubsystem, drive, conveyor);
+    return new GoonBall(intake, drlSubsystem, drive, conveyor);
   }
 }

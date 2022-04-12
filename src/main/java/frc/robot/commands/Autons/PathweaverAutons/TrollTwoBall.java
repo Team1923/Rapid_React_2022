@@ -43,13 +43,14 @@ public class TrollTwoBall extends SequentialCommandGroup {
                 new ParallelRaceGroup(
                     new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1.5),
                     new SequentialCommandGroup(
-                        new WaitCommand(0.3),
+                        new WaitCommand(0.35),
                         new AutoConveyor(
                                 conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                             .withTimeout(0.3),
-                        new WaitCommand(0.3),
+                        new WaitCommand(0.35),
                         new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))),
+                new WaitCommand(1.2),
                 // trolling heh
                 new FollowPath("pathplanner/generatedJSON/TrollPath.wpilib.json", drive)
                     .getTrajectory()

@@ -5,6 +5,7 @@
 package frc.robot.commands.DualRollerLauncherCommand.Exp;
 
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -30,6 +31,7 @@ public class BumpFeederHighGoal extends SequentialCommandGroup {
 
     addRequirements(drl, conveyor);
     addCommands(
+      new InstantCommand(() -> this.drl.pidShuffleboard()),
         new AutoConveyor(this.conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent)
             .withTimeout(0.2),
         new ParallelCommandGroup(

@@ -58,6 +58,9 @@ public class ConveyorSubsystem extends SubsystemBase {
     ConveyorMotor.configVoltageCompSaturation(12);
     FeederWheelMotor.configVoltageCompSaturation(12);
 
+    ConveyorMotor.configSupplyCurrentLimit(Constants.intakeCurrentLimit);
+    FeederWheelMotor.configSupplyCurrentLimit(Constants.intakeCurrentLimit);
+
     // so will the current limit.
 
     Conveyor = tuningTab.add("Conveyor percentout", Constants.conveyorPerent).getEntry();

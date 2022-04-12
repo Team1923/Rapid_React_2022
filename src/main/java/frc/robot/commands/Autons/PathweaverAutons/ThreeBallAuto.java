@@ -56,7 +56,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         // shoot the 2 balls
 
         new SequentialCommandGroup(
-            new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.35),
+            new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.42),
             new ParallelCommandGroup(
                 new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
                 new AutoIntake(intake, Constants.intakePercent),

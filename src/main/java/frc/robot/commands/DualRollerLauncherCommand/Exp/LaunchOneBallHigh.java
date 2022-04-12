@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
-import frc.robot.commands.DualRollerLauncherCommand.NewSpinUpToRPM;
+import frc.robot.commands.DualRollerLauncherCommand.TestRPMSpinLogic;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
 
@@ -39,7 +39,7 @@ public class LaunchOneBallHigh extends SequentialCommandGroup {
         /* Before at RPM. */
         new PrintCommand("Starting spinup!"),
         new ParallelRaceGroup(
-            new NewSpinUpToRPM(
+            new TestRPMSpinLogic(
                 this.drl, Constants.launcherRPMHighGoal), // spins us up to our target RPM.
             new AutoConveyor(
                 this.conveyor,
@@ -83,5 +83,11 @@ public class LaunchOneBallHigh extends SequentialCommandGroup {
             // range to end.
             ),
         new PrintCommand("Shot Made, done!"));
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    this.drl.setZero();
+    this.conveyor.runConveyor(0, 0);
   }
 }

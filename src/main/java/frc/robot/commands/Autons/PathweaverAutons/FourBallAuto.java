@@ -64,16 +64,9 @@ public class FourBallAuto extends SequentialCommandGroup {
                                     Constants.feederWheelsPercent)
                                 .withTimeout(0.4)))
                     .withTimeout(1),
-                new FollowPath("pathplanner/generatedJSON/GetTwoFourBall.wpilib.json", drive)
+                new FollowPath("pathplanner/generatedJSON/3BallPath14Copy.wpilib.json", drive)
                     .getTrajectory()
-                    .withTimeout(3.1),
-                new InstantCommand(
-                    () -> {
-                      drive.tankDriveVolts(0, 0);
-                    }),
-                new FollowPath("pathplanner/generatedJSON/ReturnFourBall.wpilib.json", drive)
-                    .getTrajectory()
-                    .withTimeout(3.6),
+                    .withTimeout(7.9),
                 new InstantCommand(
                     () -> {
                       drive.tankDriveVolts(0, 0);
