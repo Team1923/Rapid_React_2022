@@ -17,8 +17,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.RollingAvgDouble;
 import frc.robot.utilities.UnitConversion;
-
-import java.net.NetPermission;
 import java.util.Map;
 
 public class DualRollerLauncher extends SubsystemBase {
@@ -40,11 +38,10 @@ public class DualRollerLauncher extends SubsystemBase {
       launcherLayout.add("Current MOTOR 1 RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
   public NetworkTableEntry coachShooter2RPM =
       launcherLayout.add("Current MOTOR 2 RPM", 0).withSize(1, 1).withPosition(0, 0).getEntry();
-    public NetworkTableEntry kP = tuningTab.add("kP", .275).getEntry();
-    public NetworkTableEntry kI = tuningTab.add("kI", 0.00012).getEntry();
-    public NetworkTableEntry kD = tuningTab.add("kD", 0.1).getEntry();
-    public NetworkTableEntry kFF = tuningTab.add("kFF", 0.03).getEntry();
-
+  public NetworkTableEntry kP = tuningTab.add("kP", .275).getEntry();
+  public NetworkTableEntry kI = tuningTab.add("kI", 0.00012).getEntry();
+  public NetworkTableEntry kD = tuningTab.add("kD", 0.1).getEntry();
+  public NetworkTableEntry kFF = tuningTab.add("kFF", 0.03).getEntry();
 
   public NetworkTableEntry coachShooterTargetRPM =
       launcherLayout
@@ -154,21 +151,20 @@ public class DualRollerLauncher extends SubsystemBase {
   }
 
   public void pidShuffleboard() {
-       this.launcherMotorA.setIntegralAccumulator(0);
-        this.launcherMotorB.setIntegralAccumulator(0);
+    this.launcherMotorA.setIntegralAccumulator(0);
+    this.launcherMotorB.setIntegralAccumulator(0);
 
-        this.launcherMotorA.config_kP(0, kP.getDouble(0), 30);
-        this.launcherMotorA.config_kI(0, kI.getDouble(0), 30);
-        this.launcherMotorA.config_kD(0, kD.getDouble(0), 30);
-        this.launcherMotorA.config_kF(0, kFF.getDouble(0), 30);
-    
+    this.launcherMotorA.config_kP(0, kP.getDouble(0), 30);
+    this.launcherMotorA.config_kI(0, kI.getDouble(0), 30);
+    this.launcherMotorA.config_kD(0, kD.getDouble(0), 30);
+    this.launcherMotorA.config_kF(0, kFF.getDouble(0), 30);
 
-        this.launcherMotorB.config_kP(0, kP.getDouble(0), 30);
-        this.launcherMotorB.config_kI(0, kI.getDouble(0), 30);
-        this.launcherMotorB.config_kD(0, kD.getDouble(0), 30);
-        this.launcherMotorB.config_kF(0, kFF.getDouble(0), 30);
-        
-        // this is used to reset the integral value when we try again so there's no extra windup
+    this.launcherMotorB.config_kP(0, kP.getDouble(0), 30);
+    this.launcherMotorB.config_kI(0, kI.getDouble(0), 30);
+    this.launcherMotorB.config_kD(0, kD.getDouble(0), 30);
+    this.launcherMotorB.config_kF(0, kFF.getDouble(0), 30);
+
+    // this is used to reset the integral value when we try again so there's no extra windup
     // left-over from prior uses.
   }
 

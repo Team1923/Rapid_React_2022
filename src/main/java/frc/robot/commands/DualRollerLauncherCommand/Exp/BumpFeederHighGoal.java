@@ -31,7 +31,7 @@ public class BumpFeederHighGoal extends SequentialCommandGroup {
 
     addRequirements(drl, conveyor);
     addCommands(
-      new InstantCommand(() -> this.drl.pidShuffleboard()),
+        new InstantCommand(() -> this.drl.pidShuffleboard()),
         new AutoConveyor(this.conveyor, -Constants.conveyorPerent, -Constants.feederWheelsPercent)
             .withTimeout(0.2),
         new ParallelCommandGroup(

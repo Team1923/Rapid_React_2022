@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -58,30 +57,27 @@ public class LaunchBalls extends SequentialCommandGroup {
             new TestRPMSpinLogic(drl, Constants.launcherRPMHighGoal)),
         new PrintCommand("at speed"),
         new ParallelRaceGroup(
-          new AutoConveyor(this.conveyor, -.1, -.3),
-          new WaitUntilCommand(() -> this.weGoodToGo()),
-          new WaitCommand(2)
-        ),
+            new AutoConveyor(this.conveyor, -.1, -.3),
+            new WaitUntilCommand(() -> this.weGoodToGo()),
+            new WaitCommand(2)),
         new ParallelRaceGroup(
-          new AutoConveyor(this.conveyor, Constants.conveyorPerent, 0.9),
-          new WaitUntilCommand(() -> !(this.weGoodToGo()))
-        ), 
+            new AutoConveyor(this.conveyor, Constants.conveyorPerent, 0.9),
+            new WaitUntilCommand(() -> !(this.weGoodToGo()))),
         new InstantCommand(
-          () -> {
-            this.timer.stop();
-            DriverStation.reportWarning("Time elapsed during spinup: " + this.timer.get(), false);
-            this.timer.start();
-          }),
+            () -> {
+              this.timer.stop();
+              DriverStation.reportWarning("Time elapsed during spinup: " + this.timer.get(), false);
+              this.timer.start();
+            }),
         new InstantCommand(
-                () -> {
-                  this.drl.rollingRPMAvg.emptyValues();
-                  //this.conveyor.runConveyor(0, 0);
-                },
-                conveyor),
+            () -> {
+              this.drl.rollingRPMAvg.emptyValues();
+              // this.conveyor.runConveyor(0, 0);
+            },
+            conveyor),
         new ParallelRaceGroup(
-          new AutoConveyor(this.conveyor, -.1, -.3),
-          new WaitUntilCommand(() -> this.weGoodToGo())
-        ),
+            new AutoConveyor(this.conveyor, -.1, -.3),
+            new WaitUntilCommand(() -> this.weGoodToGo())),
         new InstantCommand(() -> this.timer.stop()),
         new PrintCommand(" shot 2 timing: " + this.timer.get()),
         new ParallelCommandGroup(

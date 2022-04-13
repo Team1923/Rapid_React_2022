@@ -34,8 +34,8 @@ public class RunIntakeCommand extends CommandBase {
   public void execute() {
     if (controller.getSquareButtonPressed()) {
       intake.runIntake(Constants.intakePercent);
-      conveyor.runConveyorVel(UnitConversion.RPMtoNativeUnits(1000), UnitConversion.RPMtoNativeUnits(1000));
-
+      conveyor.runConveyorVel(
+          UnitConversion.RPMtoNativeUnits(1000), UnitConversion.RPMtoNativeUnits(1000));
     }
     // intake out button
     if (controller.getCrossButtonPressed()) {

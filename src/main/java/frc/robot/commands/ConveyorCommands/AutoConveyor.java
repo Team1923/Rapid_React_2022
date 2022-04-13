@@ -4,9 +4,6 @@
 
 package frc.robot.commands.ConveyorCommands;
 
-import java.sql.Driver;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -23,9 +20,7 @@ public class AutoConveyor extends CommandBase {
   Timer pulseTimer = new Timer();
 
   public AutoConveyor(
-      ConveyorSubsystem con,
-      double belts,
-      double wheels) { // ,double frontSpeed, double backSpeed
+      ConveyorSubsystem con, double belts, double wheels) { // ,double frontSpeed, double backSpeed
     // Use addRequirements() here to declare subsystem dependencies.
     this.conveyor = con;
     addRequirements(conveyor);
@@ -44,19 +39,21 @@ public class AutoConveyor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+
     double deltaSeconds = pulseTimer.get() - Math.floor(pulseTimer.get());
 
-    if(deltaSeconds < .5) {
+    if (deltaSeconds < .5) {
       this.conveyor.runConveyor(-belts, -wheels);
     } else {
-      this.conveyor.runConveyor(belts/2, wheels/2);
+      this.conveyor.runConveyor(belts / 2, wheels / 2);
     }
-  
-    SmartDashboard.putNumber("Conveyer RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getConveyorVel()));
-    SmartDashboard.putNumber("Feeder RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getFeederVel()));
-    //this.conveyor.runConveyorVel(-500, -500);
-  
+
+    SmartDashboard.putNumber(
+        "Conveyer RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getConveyorVel()));
+    SmartDashboard.putNumber(
+        "Feeder RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getFeederVel()));
+    // this.conveyor.runConveyorVel(-500, -500);
+
   }
 
   // Called once the command ends or is interrupted.

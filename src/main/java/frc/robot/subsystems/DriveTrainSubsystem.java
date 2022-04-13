@@ -67,10 +67,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     l1.enableVoltageCompensation(true);
     r1.enableVoltageCompensation(true);
-    
+
     l2.enableVoltageCompensation(true);
     r2.enableVoltageCompensation(true);
-    
+
     l3.enableVoltageCompensation(true);
     r3.enableVoltageCompensation(true);
 
@@ -168,7 +168,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     r1.configOpenloopRamp(.2);
     r2.configOpenloopRamp(.2);
     r3.configOpenloopRamp(.2);
-
   }
 
   // methods to get everything in correct units

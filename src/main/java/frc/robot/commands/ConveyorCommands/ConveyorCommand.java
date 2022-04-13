@@ -36,18 +36,19 @@ public class ConveyorCommand extends CommandBase {
   */
   @Override
   public void execute() {
-    
-    SmartDashboard.putNumber("Conveyer RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getConveyorVel()));
-    SmartDashboard.putNumber("Feeder RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getFeederVel()));
+
+    SmartDashboard.putNumber(
+        "Conveyer RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getConveyorVel()));
+    SmartDashboard.putNumber(
+        "Feeder RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getFeederVel()));
 
     if (drl.launcherInRange(Constants.launcherRPMHighGoal)) {
-        //|| drl.launcherInRange(Constants.launcherRPMLowGoal)) {
-      this.conveyor.runConveyorVel(UnitConversion.RPMtoNativeUnits(1000), UnitConversion.RPMtoNativeUnits(1000));
+      // || drl.launcherInRange(Constants.launcherRPMLowGoal)) {
+      this.conveyor.runConveyorVel(
+          UnitConversion.RPMtoNativeUnits(1000), UnitConversion.RPMtoNativeUnits(1000));
     } else {
       this.conveyor.runConveyor(0, 0);
     }
-
-    
   }
 
   // Called once the command ends or is interrupted.

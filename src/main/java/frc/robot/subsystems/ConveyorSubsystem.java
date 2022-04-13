@@ -6,17 +6,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.InvertType;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.UnitConversion;
@@ -72,7 +68,7 @@ public class ConveyorSubsystem extends SubsystemBase {
     Conveyor = tuningTab.add("Conveyor percentout", Constants.conveyorPerent).getEntry();
     FeederWheels =
         tuningTab.add("FeederWheels percentout", Constants.feederWheelsPercent).getEntry();
-    
+
     ConveyorMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
     FeederWheelMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
 
@@ -109,7 +105,7 @@ public class ConveyorSubsystem extends SubsystemBase {
     coachFeeder.setDouble(FeederWheelSpd);
   }
 
-  public void runConveyorVel(double rpm_1, double rpm_2){
+  public void runConveyorVel(double rpm_1, double rpm_2) {
     double spd1 = UnitConversion.RPMtoNativeUnits(rpm_1);
     double spd2 = UnitConversion.RPMtoNativeUnits(rpm_2);
 
@@ -128,11 +124,12 @@ public class ConveyorSubsystem extends SubsystemBase {
 
   }
 
-  public double getConveyorVel(){
+  public double getConveyorVel() {
     System.out.println("!!!");
     return UnitConversion.nativeUnitstoRPM(ConveyorMotor.getSelectedSensorVelocity());
   }
-  public double getFeederVel(){
+
+  public double getFeederVel() {
     System.out.println("???");
     return UnitConversion.nativeUnitstoRPM(FeederWheelMotor.getSelectedSensorVelocity());
   }
