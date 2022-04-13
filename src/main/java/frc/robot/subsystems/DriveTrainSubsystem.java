@@ -179,6 +179,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
         / Constants.oneRevEncodeCount;
   }
 
+  public void setCoast(){
+    r1.setNeutralMode(NeutralMode.Coast);
+    l1.setNeutralMode(NeutralMode.Coast);
+    r2.setNeutralMode(NeutralMode.Coast);
+    l2.setNeutralMode(NeutralMode.Coast);
+    r3.setNeutralMode(NeutralMode.Coast);
+    l3.setNeutralMode(NeutralMode.Coast);
+  }
+
   public double getRightPosition() {
     return r1.getSelectedSensorPosition()
         * Constants.wheelCircumeference

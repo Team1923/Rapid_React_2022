@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Autons.AutoChooser;
 import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
@@ -54,6 +55,13 @@ public class RobotContainer {
   public static boolean enableElevator = false;
 
   public SendableChooser<Command> chooser = new SendableChooser<>();
+
+  AutoChooser selector;
+
+  public void initializeAuto(AutoChooser selector){
+      this.selector = selector;
+      selector.startMode(intake, drlSubsystem, drive, conveyor);
+  }
 
   public RobotContainer() {
     LiveWindow.disableAllTelemetry();
@@ -135,31 +143,7 @@ public class RobotContainer {
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
 
-    // Auton
-    // chooser.setDefaultOption(
-    //     "Move Forward", new MoveForward(intake, drlSubsystem, drive, conveyor));
-    // chooser.addOption(
-    //     "[NON MIRRORED] 2 Ball Auto", new TwoBallAuto(intake, drlSubsystem, drive, conveyor));
-    // chooser.addOption(
-    //     "[MIRRORED] 2 Ball Auto", new MirroredTwoBallAuto(intake, drlSubsystem, drive,
-    // conveyor));
-    // chooser.addOption("3 Ball Auto", new ThreeBallAuto(intake, drlSubsystem, drive, conveyor));
-    // auto.add("Auto Routine", chooser).withSize(1, 1).withPosition(0, 0);
   }
 
-  public Command getAutonomousCommand() {
-    // return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
-    return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
 
-    // return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
-
-    // return new Different4Ball(intake, drlSubsystem, drive, conveyor);
-
-    // return new FourBallStub(intake, drlSubsystem, drive, conveyor);
-
-    // return new TrollTwoBall(intake, drlSubsystem, drive, conveyor);
-    // return new GoonBall(intake, drlSubsystem, drive, conveyor);
-
-    // return new MoveForward(intake, drlSubsystem, drive, conveyor);
-  }
 }

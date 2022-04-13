@@ -19,10 +19,6 @@ import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class AutoChooser {
-    IntakeSubsystem intake;
-    DualRollerLauncher drl;
-    ConveyorSubsystem conveyor;
-    DriveTrainSubsystem drive;
 
     public enum AutoMode{
         MOVE_FORWARD,
@@ -39,7 +35,7 @@ public class AutoChooser {
     ShuffleboardLayout auto =
       coachTab.getLayout("Auto Setup", "List Layout").withPosition(0, 0).withSize(1, 5);
 
-    public AutoChooser(IntakeSubsystem intake, DualRollerLauncher drl, ConveyorSubsystem conveyor, DriveTrainSubsystem drive){
+    public AutoChooser(){
         chooser = new SendableChooser<AutoMode>();
         chooser.setDefaultOption("Two Ball", AutoMode.TWO_BALL);
         chooser.addOption("Mirrored Two Ball", AutoMode.MIRRORED_TWO_BALL);
@@ -51,7 +47,7 @@ public class AutoChooser {
         auto.add("Auto Chooser", chooser);
     }
 
-    public void startMode(){
+    public void startMode(IntakeSubsystem intake, DualRollerLauncher drl, DriveTrainSubsystem drive, ConveyorSubsystem conveyor){
         AutoMode mode = (AutoMode)(chooser.getSelected());
         switch(mode){
             case MOVE_FORWARD:
