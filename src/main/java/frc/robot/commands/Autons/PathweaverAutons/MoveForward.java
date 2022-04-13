@@ -23,9 +23,8 @@ public class MoveForward extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new SequentialCommandGroup(
-            new AutoIntake(intake, Constants.intakePercent),
             new ParallelCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/MoveForward.wpilib.json", drive)
+                new FollowPath("pathplanner/generatedJSON/testForward.wpilib.json", drive)
                     .setInitialHeading(true)
                     .getTrajectory()
                     .andThen(() -> drive.tankDriveVolts(0, 0)))));

@@ -67,8 +67,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     l1.enableVoltageCompensation(true);
     r1.enableVoltageCompensation(true);
+    
+    l2.enableVoltageCompensation(true);
+    r2.enableVoltageCompensation(true);
+    
+    l3.enableVoltageCompensation(true);
+    r3.enableVoltageCompensation(true);
+
     l1.configVoltageCompSaturation(12);
     r1.configVoltageCompSaturation(12);
+    l2.configVoltageCompSaturation(12);
+    r2.configVoltageCompSaturation(12);
+    l3.configVoltageCompSaturation(12);
+    r3.configVoltageCompSaturation(12);
 
     r1.setNeutralMode(NeutralMode.Coast);
     l1.setNeutralMode(NeutralMode.Coast);
@@ -146,6 +157,18 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void setCurrentLimit(SupplyCurrentLimitConfiguration config) {
     r1.configSupplyCurrentLimit(config);
     l1.configSupplyCurrentLimit(config);
+    r2.configSupplyCurrentLimit(config);
+    l2.configSupplyCurrentLimit(config);
+    r3.configSupplyCurrentLimit(config);
+    l3.configSupplyCurrentLimit(config);
+
+    l1.configOpenloopRamp(.2);
+    l2.configOpenloopRamp(.2);
+    l3.configOpenloopRamp(.2);
+    r1.configOpenloopRamp(.2);
+    r2.configOpenloopRamp(.2);
+    r3.configOpenloopRamp(.2);
+
   }
 
   // methods to get everything in correct units

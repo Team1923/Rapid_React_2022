@@ -53,7 +53,7 @@ public final class Constants {
   public static final double feederWheelsPercent = 0.3;
 
   public static final SupplyCurrentLimitConfiguration conveyorCurrentLimit =
-      new SupplyCurrentLimitConfiguration(true, 30, 40, .2);
+      new SupplyCurrentLimitConfiguration(true, 30, 40, .1);
 
   // to be changed, RPM targets for high and low shots at fender.
   public static final double launcherRPMLowGoal =
@@ -78,18 +78,18 @@ public final class Constants {
       new DifferentialDriveKinematics(kTrackWidthMeters);
 
   // sys-id values
-  public static final double ksVolts = 0.60226;
-  public static final double kvVoltsSecondsPerMeter = 0.96628;
-  public static final double kaVoltSecondsSquaredPerMeter = 0.11968;
-  public static final double kPDriveVel = 1.1;
+  public static final double ksVolts = 0.60207;
+  public static final double kvVoltsSecondsPerMeter = 0.97072;
+  public static final double kaVoltSecondsSquaredPerMeter = 0.10142;
+  public static final double kPDriveVel = 1.2323;
 
   // encoder counts per revolution
   public static final int oneRevEncodeCount = 2048;
   
   // wheel info
-  public static final double wheelDiameter = UnitConversion.inchesToMeters(4.445);
+  public static final double wheelDiameter = UnitConversion.inchesToMeters(4.445 * 0.95465);
   public static final double wheelCircumeference = wheelDiameter * Math.PI;
-  public static final double kGearReduction = 1 / 9.1;
+  public static final double kGearReduction = 1 / 9.11;
 
   public static final double kRamseteB = 2;
   public static final double kRamseteZeta = 0.7;

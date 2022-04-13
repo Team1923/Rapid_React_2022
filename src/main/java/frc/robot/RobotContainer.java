@@ -14,8 +14,12 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.PathweaverAutons.GoonBall;
+import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.MoveForward;
+import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
@@ -29,6 +33,7 @@ import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
+import frc.robot.utilities.UnitConversion;
 
 public class RobotContainer {
 
@@ -68,8 +73,11 @@ public class RobotContainer {
         .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
 
     // intake, feeder, conveyor wheels IN (CIRCLE)
+    // new JoystickButton(operator, PS4Controller.Button.kCircle.value)
+    //     .whileHeld(new RunCommand(() -> {conveyor.runConveyorVel(UnitConversion.RPMtoNativeUnits(6000),UnitConversion.RPMtoNativeUnits(6000));}));
+
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
+        .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));
 
     // Servo Code
     new JoystickButton(driver, XboxController.Button.kStart.value)
@@ -145,7 +153,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
-    // return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
+     return new MirroredTwoBallAuto(intake, drlSubsystem, drive, conveyor);
 
     // return new FourBallAuto(intake, drlSubsystem, drive, conveyor);
 
@@ -154,6 +162,8 @@ public class RobotContainer {
     // return new FourBallStub(intake, drlSubsystem, drive, conveyor);
 
     // return new TrollTwoBall(intake, drlSubsystem, drive, conveyor);
-    return new GoonBall(intake, drlSubsystem, drive, conveyor);
+    //return new GoonBall(intake, drlSubsystem, drive, conveyor);
+
+    //return new MoveForward(intake, drlSubsystem, drive, conveyor);
   }
 }

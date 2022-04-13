@@ -4,20 +4,31 @@
 
 package frc.robot.commands.ConveyorCommands;
 
+import java.sql.Driver;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ConveyorSubsystem;
+import frc.robot.utilities.UnitConversion;
 
 public class AutoConveyor extends CommandBase {
   public ConveyorSubsystem conveyor;
   private double belts, wheels;
 
+  private double forward_weight = 1;
+  private double counter = 0;
+
+  Timer pulseTimer = new Timer();
+
   public AutoConveyor(
-      ConveyorSubsystem conveyor,
+      ConveyorSubsystem con,
       double belts,
       double wheels) { // ,double frontSpeed, double backSpeed
     // Use addRequirements() here to declare subsystem dependencies.
+    this.conveyor = con;
     addRequirements(conveyor);
-    this.conveyor = conveyor;
 
     this.belts = belts;
     this.wheels = wheels;
@@ -25,17 +36,33 @@ public class AutoConveyor extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pulseTimer.start();
+    counter = 0;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.conveyor.runConveyor(-belts, -wheels);
+    
+    double deltaSeconds = pulseTimer.get() - Math.floor(pulseTimer.get());
+
+    if(deltaSeconds < .5) {
+      this.conveyor.runConveyor(-belts, -wheels);
+    } else {
+      this.conveyor.runConveyor(belts/2, wheels/2);
+    }
+  
+    SmartDashboard.putNumber("Conveyer RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getConveyorVel()));
+    SmartDashboard.putNumber("Feeder RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getFeederVel()));
+    //this.conveyor.runConveyorVel(-500, -500);
+  
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    pulseTimer.stop();
     conveyor.runConveyor(0, 0);
   }
 

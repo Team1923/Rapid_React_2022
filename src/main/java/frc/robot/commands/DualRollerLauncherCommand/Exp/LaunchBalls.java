@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.commands.ConveyorCommands.AutoConveyor;
@@ -58,8 +59,13 @@ public class LaunchBalls extends SequentialCommandGroup {
         new PrintCommand("at speed"),
         new ParallelRaceGroup(
           new AutoConveyor(this.conveyor, -.1, -.3),
-          new WaitUntilCommand(() -> this.weGoodToGo())
+          new WaitUntilCommand(() -> this.weGoodToGo()),
+          new WaitCommand(2)
         ),
+        new ParallelRaceGroup(
+          new AutoConveyor(this.conveyor, Constants.conveyorPerent, 0.9),
+          new WaitUntilCommand(() -> !(this.weGoodToGo()))
+        ), 
         new InstantCommand(
           () -> {
             this.timer.stop();

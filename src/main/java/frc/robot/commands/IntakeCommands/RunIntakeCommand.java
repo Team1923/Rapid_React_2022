@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.utilities.UnitConversion;
 
 public class RunIntakeCommand extends CommandBase {
 
@@ -33,7 +34,8 @@ public class RunIntakeCommand extends CommandBase {
   public void execute() {
     if (controller.getSquareButtonPressed()) {
       intake.runIntake(Constants.intakePercent);
-      conveyor.runConveyor(0, 0.9);
+      conveyor.runConveyorVel(UnitConversion.RPMtoNativeUnits(1000), UnitConversion.RPMtoNativeUnits(1000));
+
     }
     // intake out button
     if (controller.getCrossButtonPressed()) {
