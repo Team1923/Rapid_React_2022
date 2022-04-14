@@ -65,11 +65,6 @@ public class AutoConveyor extends CommandBase {
 
 
 
-    SmartDashboard.putNumber(
-        "Conveyer RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getConveyorVel()));
-    SmartDashboard.putNumber(
-        "Feeder RPM: ", UnitConversion.nativeUnitstoRPM(conveyor.getFeederVel()));
-    // this.conveyor.runConveyorVel(-500, -500);
 
   }
 

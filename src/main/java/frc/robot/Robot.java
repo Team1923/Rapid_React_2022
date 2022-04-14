@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,7 +31,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 
     this.m_robotContainer = new RobotContainer();
-    //CameraServer.startAutomaticCapture(0);
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+    camera.setResolution(960, 720);
+    
     // CameraServer.startAutomaticCapture(1);
 
     this.selector = new AutoChooser();
@@ -51,7 +54,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("thing", System.currentTimeMillis());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

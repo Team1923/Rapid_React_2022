@@ -72,7 +72,6 @@ public class LaunchBalls extends SequentialCommandGroup {
         new InstantCommand(
             () -> {
               this.drl.rollingRPMAvg.emptyValues();
-              // this.conveyor.runConveyor(0, 0);
             },
             conveyor),
         new ParallelRaceGroup(
