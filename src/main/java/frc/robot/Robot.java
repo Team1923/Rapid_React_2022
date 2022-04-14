@@ -30,11 +30,11 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 
     this.m_robotContainer = new RobotContainer();
-    CameraServer.startAutomaticCapture(0);
+    //CameraServer.startAutomaticCapture(0);
     // CameraServer.startAutomaticCapture(1);
 
     this.selector = new AutoChooser();
-
+    
   }
 
   /**
@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-      m_robotContainer.drive.setCoast();
+   // m_robotContainer.drive.setCoast();
   }
 
   @Override
@@ -72,11 +72,16 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.drive.setCurrentLimit(Constants.drivetrainCurrentLimitForAuton);
     // schedule the autonomous command (example)
+    
+    m_autonomousCommand = m_robotContainer.initializeAuto(selector);
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
 
-    m_robotContainer.initializeAuto(selector);
+    
+
+   
   }
 
   /** This function is called periodically during autonomous. */

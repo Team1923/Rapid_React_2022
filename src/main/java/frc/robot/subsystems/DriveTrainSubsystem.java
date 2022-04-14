@@ -81,10 +81,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l3.configVoltageCompSaturation(12);
     r3.configVoltageCompSaturation(12);
 
-    r1.setNeutralMode(NeutralMode.Coast);
-    l1.setNeutralMode(NeutralMode.Coast);
-    r2.setNeutralMode(NeutralMode.Coast);
-    l2.setNeutralMode(NeutralMode.Coast);
+    r1.setNeutralMode(NeutralMode.Brake);
+    l1.setNeutralMode(NeutralMode.Brake);
+    r2.setNeutralMode(NeutralMode.Brake);
+    l2.setNeutralMode(NeutralMode.Brake);
     r3.setNeutralMode(NeutralMode.Brake);
     l3.setNeutralMode(NeutralMode.Brake);
 
@@ -179,7 +179,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
         / Constants.oneRevEncodeCount;
   }
 
-  public void setCoast(){
+  public void setCoast() {
     r1.setNeutralMode(NeutralMode.Coast);
     l1.setNeutralMode(NeutralMode.Coast);
     r2.setNeutralMode(NeutralMode.Coast);

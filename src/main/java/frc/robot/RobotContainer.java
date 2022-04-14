@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AutoChooser;
-import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
@@ -58,9 +57,10 @@ public class RobotContainer {
 
   AutoChooser selector;
 
-  public void initializeAuto(AutoChooser selector){
-      this.selector = selector;
-      selector.startMode(intake, drlSubsystem, drive, conveyor);
+  public Command initializeAuto(AutoChooser selector) {
+      System.out.println("REACHED");
+    this.selector = selector;
+    return selector.startMode(intake, drlSubsystem, drive, conveyor);
   }
 
   public RobotContainer() {
@@ -142,7 +142,6 @@ public class RobotContainer {
             0.1,
             SpectrumAxisButton.ThresholdType.DEADBAND)
         .whileActiveOnce(new ElevatorCommand(elevator, driver));
-
   }
 
 

@@ -61,7 +61,7 @@ public class LaunchBalls extends SequentialCommandGroup {
             new WaitUntilCommand(() -> this.weGoodToGo()),
             new WaitCommand(2)),
         new ParallelRaceGroup(
-            new AutoConveyor(this.conveyor, Constants.conveyorPerent, 0.9),
+            new AutoConveyor(this.conveyor, 0.7, 0.9),
             new WaitUntilCommand(() -> !(this.weGoodToGo()))),
         new InstantCommand(
             () -> {
@@ -81,8 +81,10 @@ public class LaunchBalls extends SequentialCommandGroup {
         new InstantCommand(() -> this.timer.stop()),
         new PrintCommand(" shot 2 timing: " + this.timer.get()),
         new ParallelCommandGroup(
-            new AutoConveyor(conveyor, Constants.conveyorPerent, 0.9),
-            new AutoIntake(intake, Constants.intakePercent)));
+            new AutoConveyor(conveyor, 0.7, 0.9),
+            new AutoIntake(intake, Constants.intakePercent))
+            
+            );
   }
 
   @Override
