@@ -37,19 +37,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   // just for coach tab.
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
   ShuffleboardLayout climberLayout =
-      coachTab.getLayout("Climber", "List Layout").withPosition(7, 0).withSize(1, 5);
+      coachTab.getLayout("Climber", "List Layout").withPosition(1, 0).withSize(1, 2);
 
-  // for coach tab
-  public NetworkTableEntry atLocation =
-      climberLayout
-          .add("At Limit", false)
-          .withSize(1, 2)
-          .withPosition(0, 0)
-          .withProperties(Map.of("Color when false", "#000000", "Color when true", "#17FC03"))
-          .getEntry();
+  
 
-  public NetworkTableEntry commandedOutput =
-      climberLayout.add("Elevator Percent Out", 0.0).withSize(1, 1).withPosition(0, 2).getEntry();
   public NetworkTableEntry rotationsCoach =
       climberLayout.add("Elevator Rotations", 0.0).withSize(1, 1).withPosition(0, 3).getEntry();
 
@@ -128,7 +119,5 @@ public class ElevatorSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     rotations.setDouble(UnitConversion.positionNativeToRots(encVal()));
     rotationsCoach.setDouble(UnitConversion.positionNativeToRots(encVal()));
-    commandedOutput.setDouble(leftMotor.get());
-    atLocation.setBoolean(overRevLimit());
   }
 }

@@ -5,8 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.AxisCamera;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -25,16 +29,22 @@ public class Robot extends TimedRobot {
 
   private AutoChooser selector;
 
+  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
+  ShuffleboardLayout cameraLayout =
+      coachTab.getLayout("Camera", "List Layout").withPosition(3, 0);
+
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
 
     this.m_robotContainer = new RobotContainer();
-    UsbCamera camera = CameraServer.startAutomaticCapture();
-    camera.setResolution(960, 720);
+
+    cameraLayout.add(CameraServer.startAutomaticCapture(0));
     
-    // CameraServer.startAutomaticCapture(1);
+    
+  
+
 
     this.selector = new AutoChooser();
     
@@ -59,7 +69,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-   // m_robotContainer.drive.setCoast();
+   m_robotContainer.drive.setCoast();
   }
 
   @Override
@@ -80,6 +90,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    m_robotContainer.drive.setConfig();
 
     
 
@@ -102,6 +114,8 @@ public class Robot extends TimedRobot {
     }
 
     m_robotContainer.drlSubsystem.setLauncherSpeedCTR(0);
+    
+    m_robotContainer.drive.setConfig();
   }
 
   /** This function is called periodically during operator control. */

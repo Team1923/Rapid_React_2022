@@ -81,10 +81,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l3.configVoltageCompSaturation(12);
     r3.configVoltageCompSaturation(12);
 
-    r1.setNeutralMode(NeutralMode.Brake);
-    l1.setNeutralMode(NeutralMode.Brake);
-    r2.setNeutralMode(NeutralMode.Brake);
-    l2.setNeutralMode(NeutralMode.Brake);
+    r1.setNeutralMode(NeutralMode.Coast);
+    l1.setNeutralMode(NeutralMode.Coast);
+    r2.setNeutralMode(NeutralMode.Coast);
+    l2.setNeutralMode(NeutralMode.Coast);
     r3.setNeutralMode(NeutralMode.Brake);
     l3.setNeutralMode(NeutralMode.Brake);
 
@@ -113,26 +113,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     zeroHeading();
 
-    ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
-    ShuffleboardLayout driveLayout =
-        coachTab.getLayout("Drivetrain", "List Layout").withPosition(1, 0).withSize(2, 5);
-
-    driveLVolts =
-        driveLayout
-            .add("LVolts", 0)
-            .withWidget(BuiltInWidgets.kNumberBar)
-            .withSize(2, 1)
-            .withPosition(0, 0)
-            .withProperties(Map.of("Min", -12, "Max", 12, "Title", "Leftside Volts"))
-            .getEntry();
-    driveRVolts =
-        driveLayout
-            .add("RVolts", 0)
-            .withWidget(BuiltInWidgets.kNumberBar)
-            .withSize(2, 1)
-            .withPosition(0, 1)
-            .withProperties(Map.of("Min", -12, "Max", 12, "Title", "Rightside Volts"))
-            .getEntry();
   }
 
   @Override
@@ -150,8 +130,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     // System.out.println("Left Position Traveled: " + getLeftPosition());
 
-    driveLVolts.setDouble(l1.getMotorOutputVoltage());
-    driveRVolts.setDouble(r1.getMotorOutputVoltage());
   }
 
   public void setCurrentLimit(SupplyCurrentLimitConfiguration config) {
@@ -186,6 +164,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l2.setNeutralMode(NeutralMode.Coast);
     r3.setNeutralMode(NeutralMode.Coast);
     l3.setNeutralMode(NeutralMode.Coast);
+  }
+
+  public void setConfig(){
+    r1.setNeutralMode(NeutralMode.Coast);
+    l1.setNeutralMode(NeutralMode.Coast);
+    r2.setNeutralMode(NeutralMode.Coast);
+    l2.setNeutralMode(NeutralMode.Coast);
+    r3.setNeutralMode(NeutralMode.Brake);
+    l3.setNeutralMode(NeutralMode.Brake);
   }
 
   public double getRightPosition() {

@@ -31,7 +31,7 @@ public class DualRollerLauncher extends SubsystemBase {
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
 
   ShuffleboardLayout launcherLayout =
-      coachTab.getLayout("Launcher", "List Layout").withPosition(6, 0).withSize(1, 5);
+      coachTab.getLayout("Launcher", "List Layout").withPosition(0, 1).withSize(1, 5);
 
   /* Coach Tab Pushes */
   public NetworkTableEntry coachShooter1RPM =

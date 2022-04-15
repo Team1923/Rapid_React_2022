@@ -24,26 +24,6 @@ public class ConveyorSubsystem extends SubsystemBase {
 
   ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
   ShuffleboardTab shootingTab = Shuffleboard.getTab("Shooter Tuning Tab");
-  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
-  ShuffleboardLayout intakeLayout =
-      coachTab.getLayout("Feeder + Conveyor", "List Layout").withPosition(4, 0).withSize(2, 5);
-  public NetworkTableEntry shotCount = shootingTab.add("Shot Count", 0).getEntry();
-  // just for the coach dashboard.
-  public NetworkTableEntry coachConveyor =
-      intakeLayout
-          .add("Conveyor Speed", 0)
-          .withWidget(BuiltInWidgets.kNumberBar)
-          .withSize(1, 1)
-          .withPosition(0, 0)
-          .getEntry();
-
-  public NetworkTableEntry coachFeeder =
-      intakeLayout
-          .add("Feeder Speed", 0)
-          .withWidget(BuiltInWidgets.kNumberBar)
-          .withSize(1, 1)
-          .withPosition(0, 1)
-          .getEntry();
 
   // used for other tuning.
   public NetworkTableEntry Conveyor;
@@ -100,9 +80,6 @@ public class ConveyorSubsystem extends SubsystemBase {
 
     ConveyorMotor.set(ControlMode.PercentOutput, ConveyorSpd);
     FeederWheelMotor.set(ControlMode.PercentOutput, FeederWheelSpd);
-
-    coachConveyor.setDouble(ConveyorSpd);
-    coachFeeder.setDouble(FeederWheelSpd);
   }
 
   public void runConveyorVel(double rpm_1, double rpm_2) {
@@ -116,8 +93,6 @@ public class ConveyorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    coachConveyor.setDouble(0);
-    coachFeeder.setDouble(0);
 
     // System.out.println("Conveyor Motor: " + getConveyorVel());
     // System.out.println("Feeder Motor: " + getFeederVel());

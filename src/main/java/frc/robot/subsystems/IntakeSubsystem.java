@@ -21,19 +21,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private WPI_TalonFX intakeMotor = new WPI_TalonFX(Constants.intakeMotor);
 
-  ShuffleboardTab tuningTab = Shuffleboard.getTab("Tuning Tab");
-  ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
-  ShuffleboardLayout intakeLayout =
-      coachTab.getLayout("Intake", "List Layout").withPosition(3, 0).withSize(1, 5);
-
-  public NetworkTableEntry intakeValue;
-  public NetworkTableEntry coachIntakeSetpoint =
-      intakeLayout
-          .add("Intake Speed", 0)
-          .withWidget(BuiltInWidgets.kNumberBar)
-          .withSize(1, 1)
-          .withPosition(0, 0)
-          .getEntry();
 
   /** Creates a new Intake. */
   public IntakeSubsystem() {
@@ -48,16 +35,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
     intakeMotor.setNeutralMode(NeutralMode.Brake);
 
-    intakeValue = tuningTab.add("Intake Percentout", Constants.intakePercent).getEntry();
   }
 
   public void runIntake(double speed) {
     intakeMotor.set(ControlMode.PercentOutput, speed);
-    coachIntakeSetpoint.setDouble(speed);
   }
 
   @Override
   public void periodic() {
-    coachIntakeSetpoint.setDouble(intakeMotor.getMotorOutputPercent());
   }
 }

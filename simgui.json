@@ -42,6 +42,7 @@
       "/LiveWindow/Ungrouped/Talon FX [6]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [7]": "Motor Controller",
       "/LiveWindow/Ungrouped/Talon FX [8]": "Motor Controller",
+      "/Shuffleboard/Coach Dashboard/Auto Setup/Auto Chooser": "String Chooser",
       "/Shuffleboard/Coach Dashboard/Auto Setup/Auto Routine": "String Chooser",
       "/Shuffleboard/Coach Dashboard/Climber/Re-Zero Encoder": "Command",
       "/Shuffleboard/Tuning Tab/re-zero encoder": "Command",

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AutoChooser;
 import frc.robot.commands.ConveyorCommands.ConveyorCommand;
+import frc.robot.commands.ConveyorCommands.ManualConveyor;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.LaunchBalls;
@@ -81,7 +82,7 @@ public class RobotContainer {
     // {conveyor.runConveyorVel(UnitConversion.RPMtoNativeUnits(6000),UnitConversion.RPMtoNativeUnits(6000));}));
 
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new ConveyorCommand(conveyor, drlSubsystem));
+        .whileHeld(new ManualConveyor(conveyor, intake));
 
     // Servo Code
     new JoystickButton(driver, XboxController.Button.kStart.value)
