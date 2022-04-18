@@ -56,21 +56,21 @@ public class AutoChooser {
       case MOVE_FORWARD:
         return new MoveForward(intake, drl, drive, conveyor);
       case TWO_BALL:
-      System.out.println("Running");
-      return new TwoBallAuto(intake, drl, drive, conveyor);
+        System.out.println("Running");
+        return new TwoBallAuto(intake, drl, drive, conveyor);
       case MIRRORED_TWO_BALL:
-      System.out.println("2 ball mirrored");
-      return new MirroredTwoBallAuto(intake, drl, drive, conveyor);
+        System.out.println("2 ball mirrored");
+        return new MirroredTwoBallAuto(intake, drl, drive, conveyor);
       case THREE_BALL:
-      return new ThreeBallAuto(intake, drl, drive, conveyor);
+        return new ThreeBallAuto(intake, drl, drive, conveyor);
       case FOUR_BALL:
-      return new FourBallAuto(intake, drl, drive, conveyor);
+        return new FourBallAuto(intake, drl, drive, conveyor);
       case TROLL_TWO_BALL:
-      return new TrollTwoBall(intake, drl, drive, conveyor);
+        return new TrollTwoBall(intake, drl, drive, conveyor);
       case GOON_BALL:
-      return new GoonBall(intake, drl, drive, conveyor);
+        return new GoonBall(intake, drl, drive, conveyor);
       default:
-      return new MoveForward(intake, drl, drive, conveyor);
+        return new MoveForward(intake, drl, drive, conveyor);
     }
   }
 }

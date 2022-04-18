@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.Servo.LinearServo;
 import frc.robot.utilities.UnitConversion;
-import java.util.Map;
 
 public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
@@ -38,8 +37,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
   ShuffleboardLayout climberLayout =
       coachTab.getLayout("Climber", "List Layout").withPosition(1, 0).withSize(1, 2);
-
-  
 
   public NetworkTableEntry rotationsCoach =
       climberLayout.add("Elevator Rotations", 0.0).withSize(1, 1).withPosition(0, 3).getEntry();

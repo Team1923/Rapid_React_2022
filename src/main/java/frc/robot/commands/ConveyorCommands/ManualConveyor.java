@@ -4,13 +4,10 @@
 
 package frc.robot.commands.ConveyorCommands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ConveyorSubsystem;
-import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.utilities.UnitConversion;
 
 public class ManualConveyor extends CommandBase {
 

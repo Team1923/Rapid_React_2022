@@ -38,16 +38,28 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
                     () -> {
                       drive.tankDriveVolts(0, 0);
                     }),
-                new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
-                new ParallelCommandGroup(
-                    new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                    new SequentialCommandGroup(
-                        new WaitCommand(0.3),
-                        new AutoConveyor(
-                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                            .withTimeout(0.2),
-                        new WaitCommand(0.3),
-                        new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))));
+                // shoot the 2 balls
+
+        new SequentialCommandGroup(
+            new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.3),
+            new ParallelCommandGroup(
+                new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
+                new AutoIntake(intake, Constants.intakePercent),
+                new SequentialCommandGroup(
+                    new WaitCommand(0.4),
+                    new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                        .withTimeout(0.2),
+                    new WaitCommand(0.3),
+                    new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                        .withTimeout(0.2),
+                    new WaitCommand(0.2),
+                    new AutoConveyor(
+                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                        .withTimeout(0.2),
+                    new WaitCommand(0.3),
+                    new AutoConveyor(
+                        conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)))))));
   }
 }

@@ -5,13 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.AxisCamera;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Autons.AutoChooser;
@@ -30,8 +27,7 @@ public class Robot extends TimedRobot {
   private AutoChooser selector;
 
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
-  ShuffleboardLayout cameraLayout =
-      coachTab.getLayout("Camera", "List Layout").withPosition(3, 0);
+  ShuffleboardLayout cameraLayout = coachTab.getLayout("Camera", "List Layout").withPosition(3, 0);
 
   @Override
   public void robotInit() {
@@ -41,13 +37,8 @@ public class Robot extends TimedRobot {
     this.m_robotContainer = new RobotContainer();
 
     cameraLayout.add(CameraServer.startAutomaticCapture(0));
-    
-    
-  
-
 
     this.selector = new AutoChooser();
-    
   }
 
   /**
@@ -69,7 +60,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-   m_robotContainer.drive.setCoast();
+    m_robotContainer.drive.setCoast();
   }
 
   @Override
@@ -84,18 +75,14 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.drive.setCurrentLimit(Constants.drivetrainCurrentLimitForAuton);
     // schedule the autonomous command (example)
-    
+
     m_autonomousCommand = m_robotContainer.initializeAuto(selector);
-    
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
 
     m_robotContainer.drive.setConfig();
-
-    
-
-   
   }
 
   /** This function is called periodically during autonomous. */
@@ -114,7 +101,7 @@ public class Robot extends TimedRobot {
     }
 
     m_robotContainer.drlSubsystem.setLauncherSpeedCTR(0);
-    
+
     m_robotContainer.drive.setConfig();
   }
 

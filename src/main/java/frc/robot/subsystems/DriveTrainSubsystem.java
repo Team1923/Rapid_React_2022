@@ -16,14 +16,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utilities.can.ctre.status_frame.StatusFrameHelper;
-import java.util.Map;
 
 public class DriveTrainSubsystem extends SubsystemBase {
   private WPI_TalonFX r1 = new WPI_TalonFX(Constants.r1);
@@ -112,7 +107,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     resetOdometry(new Pose2d());
 
     zeroHeading();
-
   }
 
   @Override
@@ -166,7 +160,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     l3.setNeutralMode(NeutralMode.Coast);
   }
 
-  public void setConfig(){
+  public void setConfig() {
     r1.setNeutralMode(NeutralMode.Coast);
     l1.setNeutralMode(NeutralMode.Coast);
     r2.setNeutralMode(NeutralMode.Coast);

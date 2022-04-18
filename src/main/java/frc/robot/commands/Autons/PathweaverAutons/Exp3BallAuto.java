@@ -1,5 +1,6 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -17,9 +18,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ThreeBallAuto extends SequentialCommandGroup {
+public class Exp3BallAuto extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public ThreeBallAuto(
+  public Exp3BallAuto(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -39,19 +40,23 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                         .withTimeout(0.7)))),
 
-        // Follow the path to pick up the 2 balls
+        // Follow the paths to pick up the 2 balls
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(5),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/3BallPath14.wpilib.json", drive)
+                new FollowPath("pathplanner/generatedJSON/Exp3BallForward.wpilib.json", drive)
                     .setInitialHeading(true)
                     .getTrajectory()
-                    .withTimeout(7.8),
-                new RunCommand(
-                        () -> {
-                          drive.tankDriveVolts(0, 0);
-                        })
-                    .withTimeout(0.5))),
+                    .withTimeout(4),
+                new InstantCommand(() -> {drive.tankDriveVolts(0, 0);}),
+
+                new FollowPath("pathplanner/generatedJSON/Exp3BallBackward.wpilib.json", drive)
+                    .getTrajectory()
+                    .withTimeout(4),
+                new InstantCommand(() -> {drive.tankDriveVolts(0, 0);})
+                
+                
+                )),
 
         // shoot the 2 balls
 

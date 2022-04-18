@@ -4,7 +4,6 @@
 
 package frc.robot.commands.ConveyorCommands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ConveyorSubsystem;
@@ -36,7 +35,6 @@ public class ConveyorCommand extends CommandBase {
   */
   @Override
   public void execute() {
-
 
     if (drl.launcherInRange(Constants.launcherRPMHighGoal)) {
       // || drl.launcherInRange(Constants.launcherRPMLowGoal)) {

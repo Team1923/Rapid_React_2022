@@ -80,10 +80,7 @@ public class LaunchBalls extends SequentialCommandGroup {
         new InstantCommand(() -> this.timer.stop()),
         new PrintCommand(" shot 2 timing: " + this.timer.get()),
         new ParallelCommandGroup(
-            new AutoConveyor(conveyor, 0.7, 0.9),
-            new AutoIntake(intake, Constants.intakePercent))
-            
-            );
+            new AutoConveyor(conveyor, 0.7, 0.9), new AutoIntake(intake, Constants.intakePercent)));
   }
 
   @Override

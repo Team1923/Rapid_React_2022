@@ -21,8 +21,8 @@ public class FourBar extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //this.elevator.servoZero();
-    //new servo logic:
+    // this.elevator.servoZero();
+    // new servo logic:
     this.elevator.runServo(40);
   }
 
@@ -30,10 +30,10 @@ public class FourBar extends CommandBase {
   @Override
   public void execute() {
     if (driver.getLeftBumper()) {
-      //this.elevator.runServo(40);
+      // this.elevator.runServo(40);
       this.elevator.servoZero();
     } else {
-      //this.elevator.servoZero();
+      // this.elevator.servoZero();
       this.elevator.runServo(40);
     }
   }
@@ -42,7 +42,7 @@ public class FourBar extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     // this.elevator.runServo(0);
-    //this.elevator.servoZero();
+    // this.elevator.servoZero();
     this.elevator.runServo(40);
   }
 
