@@ -49,8 +49,14 @@ public class FourBallAuto extends SequentialCommandGroup {
                 // shoot balls
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.25),
                 new ParallelCommandGroup(
-                        new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1),
+                        new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1.3),
                         new SequentialCommandGroup(
+                            new WaitCommand(0.3),
+                            new AutoConveyor(
+                                    conveyor,
+                                    Constants.conveyorPerent,
+                                    Constants.feederWheelsPercent)
+                                .withTimeout(0.2),
                             new WaitCommand(0.2),
                             new AutoConveyor(
                                     conveyor,
@@ -62,11 +68,20 @@ public class FourBallAuto extends SequentialCommandGroup {
                                     conveyor,
                                     Constants.conveyorPerent,
                                     Constants.feederWheelsPercent)
-                                .withTimeout(0.4)))
-                    .withTimeout(1),
-                new FollowPath("pathplanner/generatedJSON/3BallPath14Copy.wpilib.json", drive)
+                                .withTimeout(0.2)))
+                    .withTimeout(1.3),
+                new FollowPath("pathplanner/generatedJSON/Exp3BallForward.wpilib.json", drive)
                     .getTrajectory()
-                    .withTimeout(7.9),
+                    .withTimeout(4),
+                new InstantCommand(
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }),
+                //timeout for ball feeding                    
+                new WaitCommand(1),
+                new FollowPath("pathplanner/generatedJSON/Exp3BallBackward.wpilib.json", drive)
+                .getTrajectory()
+                .withTimeout(3.9),
                 new InstantCommand(
                     () -> {
                       drive.tankDriveVolts(0, 0);

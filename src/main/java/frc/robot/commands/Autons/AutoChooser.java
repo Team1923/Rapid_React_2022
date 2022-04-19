@@ -5,10 +5,14 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.Autons.PathweaverAutons.Exp3BallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.ExpGoonBall;
 import frc.robot.commands.Autons.PathweaverAutons.FourBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.GoonBall;
+import frc.robot.commands.Autons.PathweaverAutons.LeftDeStage;
 import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.MoveForward;
+import frc.robot.commands.Autons.PathweaverAutons.RightDeStage;
 import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.TrollTwoBall;
 import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
@@ -26,7 +30,11 @@ public class AutoChooser {
     THREE_BALL,
     TROLL_TWO_BALL,
     GOON_BALL,
-    FOUR_BALL
+    FOUR_BALL, 
+    EXP_GOON_BALL,
+    EXP_THREE_BALL,
+    LEFT_STAGE, 
+    RIGHT_STAGE
   }
 
   private SendableChooser<AutoMode> chooser;
@@ -43,6 +51,10 @@ public class AutoChooser {
     chooser.addOption("Troll Ball (1)", AutoMode.TROLL_TWO_BALL);
     chooser.addOption("Goon Ball (2)", AutoMode.GOON_BALL);
     chooser.addOption("Move Forward (TEST ONLY)", AutoMode.MOVE_FORWARD);
+    chooser.addOption("EXP: Goon Ball", AutoMode.EXP_GOON_BALL);
+    chooser.addOption("EXP: Three Ball", AutoMode.EXP_THREE_BALL);
+    chooser.addOption("Left Stage", AutoMode.LEFT_STAGE);
+    chooser.addOption("Right Stage", AutoMode.RIGHT_STAGE);
     auto.add("Auto Chooser", chooser);
   }
 
@@ -69,6 +81,14 @@ public class AutoChooser {
         return new TrollTwoBall(intake, drl, drive, conveyor);
       case GOON_BALL:
         return new GoonBall(intake, drl, drive, conveyor);
+      case EXP_GOON_BALL:
+        return new ExpGoonBall(intake, drl, drive, conveyor);
+      case EXP_THREE_BALL:
+        return new Exp3BallAuto(intake, drl, drive, conveyor);
+      case LEFT_STAGE:
+        return new LeftDeStage(intake, drl, drive, conveyor);
+      case RIGHT_STAGE:
+        return new RightDeStage(intake, drl, drive, conveyor);
       default:
         return new MoveForward(intake, drl, drive, conveyor);
     }
