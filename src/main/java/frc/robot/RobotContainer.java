@@ -16,9 +16,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AutoChooser;
+import frc.robot.commands.ConveyorCommands.ConveyorCommand;
 import frc.robot.commands.ConveyorCommands.ManualConveyor;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.LaunchBalls;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.ElevatorCommands.FourBar;
@@ -81,7 +83,7 @@ public class RobotContainer {
     // {conveyor.runConveyorVel(UnitConversion.RPMtoNativeUnits(6000),UnitConversion.RPMtoNativeUnits(6000));}));
 
     new JoystickButton(operator, PS4Controller.Button.kCircle.value)
-        .whileHeld(new ManualConveyor(conveyor, intake));
+        .whileHeld(new RunIntakeCommand(intake, operator, conveyor));
 
     // Servo Code
     new JoystickButton(driver, XboxController.Button.kStart.value)
@@ -92,7 +94,7 @@ public class RobotContainer {
     // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     //     .toggleWhenPressed(new BumpFeederHighGoal(drlSubsystem, conveyor, operator));
 
-    // experimental
+    //experimental
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
         .toggleWhenPressed(new LaunchBalls(drlSubsystem, conveyor, intake));
 
