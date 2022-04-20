@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AutoChooser;
 import frc.robot.commands.ConveyorCommands.ManualConveyor;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
-import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.LaunchBalls;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.ElevatorCommands.FourBar;
