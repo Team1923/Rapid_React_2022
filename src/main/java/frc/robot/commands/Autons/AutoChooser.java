@@ -30,10 +30,10 @@ public class AutoChooser {
     THREE_BALL,
     TROLL_TWO_BALL,
     GOON_BALL,
-    FOUR_BALL, 
+    FOUR_BALL,
     EXP_GOON_BALL,
     EXP_THREE_BALL,
-    LEFT_STAGE, 
+    LEFT_STAGE,
     RIGHT_STAGE
   }
 

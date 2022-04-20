@@ -2,7 +2,6 @@ package frc.robot.commands.Autons.PathweaverAutons;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -48,15 +47,17 @@ public class Exp3BallAuto extends SequentialCommandGroup {
                     .setInitialHeading(true)
                     .getTrajectory()
                     .withTimeout(4),
-                new InstantCommand(() -> {drive.tankDriveVolts(0, 0);}),
-
+                new InstantCommand(
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }),
                 new FollowPath("pathplanner/generatedJSON/Exp3BallBackward.wpilib.json", drive)
                     .getTrajectory()
                     .withTimeout(4),
-                new InstantCommand(() -> {drive.tankDriveVolts(0, 0);})
-                
-                
-                )),
+                new InstantCommand(
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }))),
 
         // shoot the 2 balls
 

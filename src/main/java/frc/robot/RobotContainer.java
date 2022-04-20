@@ -98,7 +98,7 @@ public class RobotContainer {
 
     // shoot ball Low Goal (OPTION = 8)
     new JoystickButton(operator, 8)
-        .toggleWhenPressed(new BumpFeederLowGoal(drlSubsystem, conveyor, operator));
+        .toggleWhenPressed(new BumpFeederHighGoal(drlSubsystem, conveyor, operator));
 
     new JoystickButton(driver, XboxController.Button.kLeftBumper.value)
         .whenPressed(new FourBar(elevator, driver));

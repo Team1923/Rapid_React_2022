@@ -76,7 +76,9 @@ public class LaunchBalls extends SequentialCommandGroup {
             conveyor),
         new ParallelRaceGroup(
             new AutoConveyor(this.conveyor, -.1, -.3),
-            new WaitUntilCommand(() -> this.weGoodToGo())),
+            new WaitUntilCommand(() -> this.weGoodToGo()),
+            new WaitCommand(2)
+            ),
         new InstantCommand(() -> this.timer.stop()),
         new PrintCommand(" shot 2 timing: " + this.timer.get()),
         new ParallelCommandGroup(

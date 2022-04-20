@@ -49,12 +49,11 @@ public class ExpGoonBall extends SequentialCommandGroup {
                             .withTimeout(0.2),
                         new WaitCommand(0.2),
                         new AutoConveyor(
-                            conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
-                        .withTimeout(0.2),
-                    new WaitCommand(0.2),
+                                conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
+                            .withTimeout(0.2),
+                        new WaitCommand(0.2),
                         new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))),
-
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(8.85),
             new SequentialCommandGroup(
