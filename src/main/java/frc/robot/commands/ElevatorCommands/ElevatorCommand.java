@@ -39,6 +39,8 @@ public class ElevatorCommand extends CommandBase {
     } else {
       this.elevator.runElevator(xbox.getLeftTriggerAxis(), xbox.getRightTriggerAxis());
     }
+    System.out.println("Left Motor: "+ elevator.leftMotor.getSelectedSensorPosition());
+    System.out.println("Right Motor :" + elevator.rightMotor.getSelectedSensorPosition());
   }
 
   // Called once the command ends or is interrupted.

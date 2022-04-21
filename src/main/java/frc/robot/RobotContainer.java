@@ -14,10 +14,9 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autons.AutoChooser;
-import frc.robot.commands.ConveyorCommands.ConveyorCommand;
-import frc.robot.commands.ConveyorCommands.ManualConveyor;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
@@ -31,6 +30,9 @@ import frc.robot.subsystems.DualRollerLauncher;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utilities.SpectrumAxisButton;
+
+
+import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
 
 public class RobotContainer {
 
@@ -62,6 +64,7 @@ public class RobotContainer {
   public Command initializeAuto(AutoChooser selector) {
     System.out.println("REACHED");
     this.selector = selector;
+    //return new ThreeBallAuto(intake, drlSubsystem, drive, conveyor);
     return selector.startMode(intake, drlSubsystem, drive, conveyor);
   }
 
@@ -94,16 +97,25 @@ public class RobotContainer {
     // new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
     //     .toggleWhenPressed(new BumpFeederHighGoal(drlSubsystem, conveyor, operator));
 
-    //experimental
+    // experimental
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new LaunchBalls(drlSubsystem, conveyor, intake));
-
-    // shoot ball Low Goal (OPTION = 8)
-    new JoystickButton(operator, 8)
         .toggleWhenPressed(new BumpFeederHighGoal(drlSubsystem, conveyor, operator));
 
-    new JoystickButton(driver, XboxController.Button.kLeftBumper.value)
+    // shoot ball manual High Goal (OPTION = 8)
+    new JoystickButton(operator, 8)
+        .toggleWhenPressed(new BumpFeederLowGoal(drlSubsystem, conveyor, operator));//new LaunchBalls(drlSubsystem, conveyor, intake, operator)
+
+
+    //Share button for low goal manual
+    new JoystickButton(operator, 7)
+    .toggleWhenPressed(new LaunchBalls(drlSubsystem, conveyor, intake, operator)); //new LaunchBalls(drlSubsystem, conveyor, intake, operator)
+
+    new JoystickButton(driver, XboxController.Button.kRightBumper.value)
         .whenPressed(new FourBar(elevator, driver));
+    
+
+    new JoystickButton(driver, XboxController.Button.kA.value)
+        .whenPressed(new InstantCommand(()->{elevator.setEncZero();}));
 
     // Shooter single motor movement
 

@@ -60,15 +60,15 @@ public class ConveyorSubsystem extends SubsystemBase {
     FeederWheelMotor.configPeakOutputForward(1, 30);
     FeederWheelMotor.configPeakOutputReverse(-1, 30);
 
-    ConveyorMotor.config_kP(0, 2.275, 30);
-    ConveyorMotor.config_kI(0, 0, 30);
-    ConveyorMotor.config_kD(0, 0, 30);
-    ConveyorMotor.config_kF(0, .03, 30);
+    // ConveyorMotor.config_kP(0, 2.275, 30);
+    // ConveyorMotor.config_kI(0, 0, 30);
+    // ConveyorMotor.config_kD(0, 0, 30);
+    // ConveyorMotor.config_kF(0, .03, 30);
 
-    FeederWheelMotor.config_kP(0, 2.275, 30);
-    FeederWheelMotor.config_kI(0, 0, 30);
-    FeederWheelMotor.config_kD(0, 0, 30);
-    FeederWheelMotor.config_kF(0, 0.03, 30);
+    // FeederWheelMotor.config_kP(0, 2.275, 30);
+    // FeederWheelMotor.config_kI(0, 0, 30);
+    // FeederWheelMotor.config_kD(0, 0, 30);
+    // FeederWheelMotor.config_kF(0, 0.03, 30);
   }
 
   // positive is in with InvertType.None.

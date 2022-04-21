@@ -39,7 +39,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent)
                         .withTimeout(0.7)))),
 
-        // Follow the path to pick up the 2 balls
+        // Follow the path to pick up the 2 and 3 balls
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(5),
             new SequentialCommandGroup(

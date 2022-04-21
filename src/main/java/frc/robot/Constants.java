@@ -87,7 +87,7 @@ public final class Constants {
   public static final int oneRevEncodeCount = 2048;
 
   // wheel info
-  public static final double wheelDiameter = UnitConversion.inchesToMeters(4.445 * 0.95465);
+  public static final double wheelDiameter = UnitConversion.inchesToMeters(4.445 * 0.95465 * 0.9017);
   public static final double wheelCircumeference = wheelDiameter * Math.PI;
   public static final double kGearReduction = 1 / 9.11;
 

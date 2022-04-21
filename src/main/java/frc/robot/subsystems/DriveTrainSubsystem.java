@@ -126,6 +126,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   }
 
+  public void setDefaultMotorConfig(){
+
+    r1.setNeutralMode(NeutralMode.Coast);
+    l1.setNeutralMode(NeutralMode.Coast);
+    r2.setNeutralMode(NeutralMode.Coast);
+    l2.setNeutralMode(NeutralMode.Coast);
+    r3.setNeutralMode(NeutralMode.Brake);
+    l3.setNeutralMode(NeutralMode.Brake);
+
+  }
+
   public void setCurrentLimit(SupplyCurrentLimitConfiguration config) {
     r1.configSupplyCurrentLimit(config);
     l1.configSupplyCurrentLimit(config);

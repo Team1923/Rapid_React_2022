@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -27,7 +28,7 @@ public class Robot extends TimedRobot {
   private AutoChooser selector;
 
   ShuffleboardTab coachTab = Shuffleboard.getTab("Coach Dashboard");
-  ShuffleboardLayout cameraLayout = coachTab.getLayout("Camera", "List Layout").withPosition(3, 0);
+  ShuffleboardLayout cameraLayout = coachTab.getLayout("Camera", "List Layout").withPosition(3, 0).withSize(10,10);
 
   @Override
   public void robotInit() {
@@ -36,7 +37,13 @@ public class Robot extends TimedRobot {
 
     this.m_robotContainer = new RobotContainer();
 
-    cameraLayout.add(CameraServer.startAutomaticCapture(0));
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+
+    camera.setFPS(6);
+    camera.setResolution(240, 360);
+   
+
+    cameraLayout.add(camera);
 
     this.selector = new AutoChooser();
   }
@@ -60,7 +67,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_robotContainer.drive.setCoast();
+   // m_robotContainer.drive.setCoast();
   }
 
   @Override
@@ -78,11 +85,17 @@ public class Robot extends TimedRobot {
 
     m_autonomousCommand = m_robotContainer.initializeAuto(selector);
 
+
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
 
     m_robotContainer.drive.setConfig();
+
+    m_robotContainer.drive.setDefaultMotorConfig();
+
+
   }
 
   /** This function is called periodically during autonomous. */
@@ -103,6 +116,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.drlSubsystem.setLauncherSpeedCTR(0);
 
     m_robotContainer.drive.setConfig();
+    m_robotContainer.drive.setDefaultMotorConfig();
+    m_robotContainer.elevator.setEncZero();
   }
 
   /** This function is called periodically during operator control. */
@@ -113,6 +128,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
   }
 
   /** This function is called periodically during test mode. */

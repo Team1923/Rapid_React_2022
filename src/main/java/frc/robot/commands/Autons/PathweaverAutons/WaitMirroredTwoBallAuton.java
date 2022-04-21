@@ -1,7 +1,7 @@
 package frc.robot.commands.Autons.PathweaverAutons;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -17,9 +17,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TwoBallAuto extends SequentialCommandGroup {
+public class WaitMirroredTwoBallAuton extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public TwoBallAuto(
+  public WaitMirroredTwoBallAuton(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -27,18 +27,19 @@ public class TwoBallAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+
+        new WaitCommand(5),
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent),
             new SequentialCommandGroup(
-                new FollowPath("pathplanner/generatedJSON/2Ball.wpilib.json", drive)
+                new FollowPath("pathplanner/generatedJSON/2BallMirrored.wpilib.json", drive)
                     .setInitialHeading(true)
                     .getTrajectory()
-                    .withTimeout(3.9),
-                new RunCommand(
-                        () -> {
-                          drive.tankDriveVolts(0, 0);
-                        })
-                    .withTimeout(0.5),
+                    .withTimeout(4.1),
+                new InstantCommand(
+                    () -> {
+                      drive.tankDriveVolts(0, 0);
+                    }),
                 // shoot the 2 balls
 
                 new SequentialCommandGroup(
@@ -46,7 +47,7 @@ public class TwoBallAuto extends SequentialCommandGroup {
                         .withTimeout(.3),
                     new ParallelCommandGroup(
                         new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                      //  new AutoIntake(intake, Constants.intakePercent),
+                        new AutoIntake(intake, Constants.intakePercent),
                         new SequentialCommandGroup(
                             new WaitCommand(0.4),
                             new AutoConveyor(
@@ -70,12 +71,6 @@ public class TwoBallAuto extends SequentialCommandGroup {
                             new AutoConveyor(
                                 conveyor,
                                 Constants.conveyorPerent,
-                                Constants.feederWheelsPercent)))
-                                )
-                                
-                                
-                                
-                                
-                                )));
+                                Constants.feederWheelsPercent)))))));
   }
 }

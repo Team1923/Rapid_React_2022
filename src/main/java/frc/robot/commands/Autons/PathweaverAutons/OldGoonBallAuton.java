@@ -18,9 +18,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class GoonBall extends SequentialCommandGroup {
+public class OldGoonBallAuton extends SequentialCommandGroup {
   /** Creates a new TwoBallHighAuto. */
-  public GoonBall(
+  public OldGoonBallAuton(
       IntakeSubsystem intake,
       DualRollerLauncher drl,
       DriveTrainSubsystem drive,
@@ -40,7 +40,7 @@ public class GoonBall extends SequentialCommandGroup {
                       drive.tankDriveVolts(0, 0);
                     }),
                 new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal).withTimeout(.37),
-                new ParallelCommandGroup(
+                new ParallelRaceGroup(
                     new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal).withTimeout(1.5),
                     new SequentialCommandGroup(
                         new WaitCommand(0.3),
@@ -50,7 +50,7 @@ public class GoonBall extends SequentialCommandGroup {
                         new WaitCommand(0.35),
                         new AutoConveyor(
                             conveyor, Constants.conveyorPerent, Constants.feederWheelsPercent))))),
-        new WaitCommand(0.5),
+        new WaitCommand(0.8),
         new ParallelCommandGroup(
             new AutoIntake(intake, Constants.intakePercent).withTimeout(10.51),
             new SequentialCommandGroup(
@@ -58,7 +58,10 @@ public class GoonBall extends SequentialCommandGroup {
                 new FollowPath("pathplanner/generatedJSON/GoonBall.wpilib.json", drive)
                     .getTrajectory()
                     .withTimeout(10),
-                new FollowPath("pathplanner/generatedJSON/GoonBallBack.wpilib.json", drive)
+                new FollowPath("pathplanner/generatedJSON/OldGoonBallBack.wpilib.json", drive)
+                    .getTrajectory()
+                    .withTimeout(10),
+                new FollowPath("pathplanner/generatedJSON/TrollPath.wpilib.json", drive)
                     .getTrajectory()
                     .withTimeout(10))),
         new ParallelCommandGroup(

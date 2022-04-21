@@ -12,10 +12,12 @@ import frc.robot.commands.Autons.PathweaverAutons.GoonBall;
 import frc.robot.commands.Autons.PathweaverAutons.LeftDeStage;
 import frc.robot.commands.Autons.PathweaverAutons.MirroredTwoBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.MoveForward;
+import frc.robot.commands.Autons.PathweaverAutons.OldGoonBallAuton;
 import frc.robot.commands.Autons.PathweaverAutons.RightDeStage;
 import frc.robot.commands.Autons.PathweaverAutons.ThreeBallAuto;
 import frc.robot.commands.Autons.PathweaverAutons.TrollTwoBall;
 import frc.robot.commands.Autons.PathweaverAutons.TwoBallAuto;
+import frc.robot.commands.Autons.PathweaverAutons.WaitMirroredTwoBallAuton;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.DualRollerLauncher;
@@ -34,7 +36,9 @@ public class AutoChooser {
     EXP_GOON_BALL,
     EXP_THREE_BALL,
     LEFT_STAGE,
-    RIGHT_STAGE
+    RIGHT_STAGE,
+    Wait_2_Ball_Mirrored,
+    Old_Goon_Ball
   }
 
   private SendableChooser<AutoMode> chooser;
@@ -55,6 +59,8 @@ public class AutoChooser {
     chooser.addOption("EXP: Three Ball", AutoMode.EXP_THREE_BALL);
     chooser.addOption("Left Stage", AutoMode.LEFT_STAGE);
     chooser.addOption("Right Stage", AutoMode.RIGHT_STAGE);
+    chooser.addOption("Wait 2 ball Mirrored", AutoMode.Wait_2_Ball_Mirrored);
+    chooser.addOption("Old Goon Ball", AutoMode.Old_Goon_Ball);
     auto.add("Auto Chooser", chooser);
   }
 
@@ -68,10 +74,8 @@ public class AutoChooser {
       case MOVE_FORWARD:
         return new MoveForward(intake, drl, drive, conveyor);
       case TWO_BALL:
-        System.out.println("Running");
         return new TwoBallAuto(intake, drl, drive, conveyor);
       case MIRRORED_TWO_BALL:
-        System.out.println("2 ball mirrored");
         return new MirroredTwoBallAuto(intake, drl, drive, conveyor);
       case THREE_BALL:
         return new ThreeBallAuto(intake, drl, drive, conveyor);
@@ -89,6 +93,10 @@ public class AutoChooser {
         return new LeftDeStage(intake, drl, drive, conveyor);
       case RIGHT_STAGE:
         return new RightDeStage(intake, drl, drive, conveyor);
+      case Wait_2_Ball_Mirrored:
+        return new WaitMirroredTwoBallAuton(intake, drl, drive, conveyor);
+      case Old_Goon_Ball:
+        return new OldGoonBallAuton(intake, drl, drive, conveyor);
       default:
         return new MoveForward(intake, drl, drive, conveyor);
     }

@@ -25,7 +25,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ClimberSubsystem. */
   public WPI_TalonFX leftMotor = new WPI_TalonFX(Constants.leftClimberMotor);
 
-  private WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
+  public WPI_TalonFX rightMotor = new WPI_TalonFX(Constants.rightClimberMotor);
 
   private LinearServo servo = new LinearServo(0, 50, 100);
 
@@ -109,6 +109,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public void setEncZero() {
     System.out.println("Zeroed Elevator");
     leftMotor.setSelectedSensorPosition(0);
+    rightMotor.setSelectedSensorPosition(0);
   }
 
   @Override
