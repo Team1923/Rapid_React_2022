@@ -21,6 +21,7 @@ import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.LaunchBalls;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.PeppaPigShot;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.ElevatorCommands.FourBar;
 import frc.robot.commands.IntakeCommands.RunIntakeCommand;
@@ -108,7 +109,7 @@ public class RobotContainer {
 
     //Share button for low goal manual
     new JoystickButton(operator, 7)
-    .toggleWhenPressed(new LaunchBalls(drlSubsystem, conveyor, intake, operator)); //new LaunchBalls(drlSubsystem, conveyor, intake, operator)
+    .toggleWhenPressed(new PeppaPigShot(drlSubsystem, conveyor, intake, operator)); //new LaunchBalls(drlSubsystem, conveyor, intake, operator)
 
     new JoystickButton(driver, XboxController.Button.kRightBumper.value)
         .whenPressed(new FourBar(elevator, driver));
