@@ -21,6 +21,7 @@ import frc.robot.commands.ConveyorCommands.ManualConveyor;
 import frc.robot.commands.DriveTrainCommands.ArcadeDriveCommand;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederHighGoal;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.BumpFeederLowGoal;
+import frc.robot.commands.DualRollerLauncherCommand.Exp.PeppaPigShot;
 import frc.robot.commands.DualRollerLauncherCommand.Exp.LaunchBalls;
 import frc.robot.commands.ElevatorCommands.ElevatorCommand;
 import frc.robot.commands.ElevatorCommands.FourBar;
@@ -96,7 +97,7 @@ public class RobotContainer {
 
     //experimental
     new JoystickButton(operator, PS4Controller.Button.kTriangle.value)
-        .toggleWhenPressed(new LaunchBalls(drlSubsystem, conveyor, intake));
+        .toggleWhenPressed(new PeppaPigShot(drlSubsystem, conveyor, intake, operator));
 
     // shoot ball Low Goal (OPTION = 8)
     new JoystickButton(operator, 8)

@@ -68,7 +68,7 @@ public class ExpGoonBall extends SequentialCommandGroup {
                     .getTrajectory()
                     .withTimeout(10))),
         new ParallelCommandGroup(
-            new AutoConveyor(conveyor, -0.3, -Constants.feederWheelsPercent),
-            new AutoIntake(intake, -0.2)));
+            new AutoConveyor(conveyor, -0.9, 0.9),
+            new AutoIntake(intake, -0.6)));
   }
 }

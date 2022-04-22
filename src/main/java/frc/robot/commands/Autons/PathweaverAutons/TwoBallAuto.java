@@ -46,7 +46,6 @@ public class TwoBallAuto extends SequentialCommandGroup {
                         .withTimeout(.3),
                     new ParallelCommandGroup(
                         new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                        new AutoIntake(intake, Constants.intakePercent),
                         new SequentialCommandGroup(
                             new WaitCommand(0.4),
                             new AutoConveyor(

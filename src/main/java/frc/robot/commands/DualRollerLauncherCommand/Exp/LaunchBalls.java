@@ -5,11 +5,14 @@
 package frc.robot.commands.DualRollerLauncherCommand.Exp;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -27,6 +30,7 @@ public class LaunchBalls extends SequentialCommandGroup {
 
   private ConveyorSubsystem conveyor;
   private IntakeSubsystem intake;
+  private PS4Controller operator;
   private Timer timer;
 
   public boolean weGoodToGo() {
@@ -35,17 +39,21 @@ public class LaunchBalls extends SequentialCommandGroup {
             Constants.launcherRPMTolerance, Constants.launcherRPMHighGoal)));
   }
 
-  public LaunchBalls(DualRollerLauncher drl, ConveyorSubsystem conveyor, IntakeSubsystem intake) {
+  public LaunchBalls(DualRollerLauncher drl, ConveyorSubsystem conveyor, IntakeSubsystem intake, PS4Controller operator) {
     this.drl = drl;
     this.conveyor = conveyor;
     this.intake = intake;
+    this.operator = operator;
     this.timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
 
     addRequirements(drl, conveyor, intake);
 
     addCommands(
-        new InstantCommand(
+        new ParallelCommandGroup(
+          new RunCommand(() -> {this.operator.setRumble(RumbleType.kRightRumble, 1);}),
+          new SequentialCommandGroup(
+              new InstantCommand(
             () -> {
               this.timer.reset();
               this.timer.start();
@@ -57,9 +65,9 @@ public class LaunchBalls extends SequentialCommandGroup {
             new TestRPMSpinLogic(drl, Constants.launcherRPMHighGoal)),
         new PrintCommand("at speed"),
         new ParallelRaceGroup(
-            new AutoConveyor(this.conveyor, -.1, -.3),
-            new WaitUntilCommand(() -> this.weGoodToGo()),
-            new WaitCommand(2)),
+            new AutoConveyor(this.conveyor, -.1, -.3).withTimeout(1.5),
+            new WaitUntilCommand(() -> this.weGoodToGo())
+),
         new ParallelRaceGroup(
             new AutoConveyor(this.conveyor, 0.7, 0.9),
             new WaitUntilCommand(() -> !(this.weGoodToGo()))),
@@ -75,13 +83,26 @@ public class LaunchBalls extends SequentialCommandGroup {
             },
             conveyor),
         new ParallelRaceGroup(
-            new AutoConveyor(this.conveyor, -.1, -.3),
-            new WaitUntilCommand(() -> this.weGoodToGo()),
-            new WaitCommand(2)),
+            new AutoConveyor(this.conveyor, -.1, -.3).withTimeout(1.5),
+            new WaitUntilCommand(() -> this.weGoodToGo())
+),
         new InstantCommand(() -> this.timer.stop()),
-        new PrintCommand(" shot 2 timing: " + this.timer.get()),
+        new PrintCommand("shot 2 timing: " + this.timer.get()),
         new ParallelCommandGroup(
-            new AutoConveyor(conveyor, 0.7, 0.9), new AutoIntake(intake, Constants.intakePercent)));
+            new AutoConveyor(conveyor, 0.7, 0.9), new AutoIntake(intake, Constants.intakePercent))
+
+            ) 
+
+
+        )
+
+
+        
+            
+            
+            
+            
+            );
   }
 
   @Override
@@ -89,5 +110,6 @@ public class LaunchBalls extends SequentialCommandGroup {
     this.drl.setZero();
     this.conveyor.runConveyor(0, 0);
     this.intake.runIntake(0);
+    this.operator.setRumble(RumbleType.kRightRumble, 0);
   }
 }

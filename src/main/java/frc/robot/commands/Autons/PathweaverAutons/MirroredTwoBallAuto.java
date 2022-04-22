@@ -42,10 +42,9 @@ public class MirroredTwoBallAuto extends SequentialCommandGroup {
 
                 new SequentialCommandGroup(
                     new AutonBumpFeeder(drl, conveyor, Constants.launcherRPMHighGoal)
-                        .withTimeout(.3),
+                        .withTimeout(.37),
                     new ParallelCommandGroup(
                         new NewSpinUpToRPM(drl, Constants.launcherRPMHighGoal),
-                        new AutoIntake(intake, Constants.intakePercent),
                         new SequentialCommandGroup(
                             new WaitCommand(0.4),
                             new AutoConveyor(

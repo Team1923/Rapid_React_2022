@@ -48,7 +48,7 @@ public class AutoConveyor extends CommandBase {
       this.conveyor.runConveyor(-belts, -wheels);
       System.out.println("RUNNING FORWARDS");
     } else {
-      this.conveyor.runConveyor(belts / 10, wheels);
+      this.conveyor.runConveyor(belts/10, wheels);
       System.out.println("RUNNING BACKWARDS");
     }
   }
